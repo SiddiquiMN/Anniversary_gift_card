@@ -1,1422 +1,1905 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-<title>Happy 1st Anniversary — Sowmik & Mohua 💍</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>Happy 1st Anniversary — Sowmik & Mohua 💍</title>
 
-<!-- SweetAlert2 for Romantic Animated Draining Alerts -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SweetAlert2 for Romantic Animated Draining Alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap');
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap");
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-:root{
-  --bg-gradient: linear-gradient(135deg, #fff2f6 0%, #fde4ec 35%, #fdf5f8 70%, #fae3ec 100%);
-  --rose-primary: #d64a70;
-  --rose-deep: #a82e52;
-  --rose-soft: #f88fa9;
-  --rose-light: #fff0f4;
-  --gold: #b38234;
-  --gold-light: #dfb36b;
-  --text-dark: #4a1525;
-  --text-muted: #8a485d;
-  --card-bg: rgba(255, 255, 255, 0.76);
-  --card-border: rgba(255, 255, 255, 0.92);
-  --shadow-soft: 0 16px 36px rgba(214, 74, 112, 0.12);
-  --shadow-glow: 0 10px 30px rgba(214, 74, 112, 0.28);
-}
+      :root {
+        --bg-gradient: linear-gradient(
+          135deg,
+          #fff2f6 0%,
+          #fde4ec 35%,
+          #fdf5f8 70%,
+          #fae3ec 100%
+        );
+        --rose-primary: #d64a70;
+        --rose-deep: #a82e52;
+        --rose-soft: #f88fa9;
+        --rose-light: #fff0f4;
+        --gold: #b38234;
+        --gold-light: #dfb36b;
+        --text-dark: #4a1525;
+        --text-muted: #8a485d;
+        --card-bg: rgba(255, 255, 255, 0.76);
+        --card-border: rgba(255, 255, 255, 0.92);
+        --shadow-soft: 0 16px 36px rgba(214, 74, 112, 0.12);
+        --shadow-glow: 0 10px 30px rgba(214, 74, 112, 0.28);
+      }
 
-html,body{
-  width:100%;height:100%;
-  overflow:hidden;
-  background: var(--bg-gradient);
-  font-family:'Montserrat',sans-serif;
-  color: var(--text-dark);
-  user-select:none;
-  -webkit-tap-highlight-color: transparent;
-  cursor: grab;
-}
-body:active{
-  cursor: grabbing;
-}
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg-gradient);
+        font-family: "Montserrat", sans-serif;
+        color: var(--text-dark);
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        cursor: grab;
+      }
+      body:active {
+        cursor: grabbing;
+      }
 
-/* ═══════════════════════════════════════
+      /* ═══════════════════════════════════════
    FLOATING CANVAS LAYERS
 ═══════════════════════════════════════ */
-#particle-canvas, #sparkle-canvas, #firework-canvas {
-  position:fixed;inset:0;
-  pointer-events:none;
-}
-#particle-canvas{z-index:1;}
-#sparkle-canvas{z-index:95;}
-#firework-canvas{z-index:90;display:none;}
+      #particle-canvas,
+      #sparkle-canvas,
+      #firework-canvas {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+      }
+      #particle-canvas {
+        z-index: 1;
+      }
+      #sparkle-canvas {
+        z-index: 95;
+      }
+      #firework-canvas {
+        z-index: 90;
+        display: none;
+      }
 
-/* ═══════════════════════════════════════
+      /* ═══════════════════════════════════════
    FLOATING PETALS
 ═══════════════════════════════════════ */
-.petal{
-  position:fixed;top:-40px;
-  font-size:1.1rem;opacity:0;
-  animation:petalFall linear infinite;
-  z-index:2;pointer-events:none;
-}
-@keyframes petalFall{
-  0%  {opacity:0;transform:translateY(-40px) rotate(0deg) scale(.75);}
-  15% {opacity:.75;}
-  85% {opacity:.55;}
-  100%{opacity:0;transform:translateY(110vh) rotate(380deg) scale(1.15);}
-}
+      .petal {
+        position: fixed;
+        top: -40px;
+        font-size: 1.1rem;
+        opacity: 0;
+        animation: petalFall linear infinite;
+        z-index: 2;
+        pointer-events: none;
+      }
+      @keyframes petalFall {
+        0% {
+          opacity: 0;
+          transform: translateY(-40px) rotate(0deg) scale(0.75);
+        }
+        15% {
+          opacity: 0.75;
+        }
+        85% {
+          opacity: 0.55;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(110vh) rotate(380deg) scale(1.15);
+        }
+      }
 
-/* ═══════════════════════════════════════
+      /* ═══════════════════════════════════════
    TOP CONTROLS
 ═══════════════════════════════════════ */
-.top-bar{
-  position:fixed;top:18px;left:0;right:0;
-  padding:0 24px;
-  display:flex;justify-content:space-between;align-items:center;
-  z-index:120;pointer-events:none;
-}
-.brand-tag{
-  font-family:'Great Vibes',cursive;
-  font-size:1.6rem;color:var(--rose-primary);
-  opacity:.9;letter-spacing:1px;
-  text-shadow:0 2px 10px rgba(214,74,112,0.15);
-}
-.top-actions{
-  display:flex;gap:10px;pointer-events:all;
-}
-.icon-btn{
-  width:42px;height:42px;border-radius:50%;
-  border:1.5px solid var(--rose-soft);
-  background:rgba(255, 255, 255, 0.85);
-  color:var(--rose-primary);font-size:1.1rem;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  box-shadow:var(--shadow-soft);
-  transition:all .25s ease;
-  backdrop-filter:blur(8px);
-}
-.icon-btn:hover{
-  transform:scale(1.08);background:#fff;
-  border-color:var(--rose-primary);box-shadow:var(--shadow-glow);
-}
-.icon-btn.muted{opacity:.5;}
+      .top-bar {
+        position: fixed;
+        top: 18px;
+        left: 0;
+        right: 0;
+        padding: 0 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 120;
+        pointer-events: none;
+      }
+      .brand-tag {
+        font-family: "Great Vibes", cursive;
+        font-size: 1.6rem;
+        color: var(--rose-primary);
+        opacity: 0.9;
+        letter-spacing: 1px;
+        text-shadow: 0 2px 10px rgba(214, 74, 112, 0.15);
+      }
+      .top-actions {
+        display: flex;
+        gap: 10px;
+        pointer-events: all;
+      }
+      .icon-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1.5px solid var(--rose-soft);
+        background: rgba(255, 255, 255, 0.85);
+        color: var(--rose-primary);
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-soft);
+        transition: all 0.25s ease;
+        backdrop-filter: blur(8px);
+      }
+      .icon-btn:hover {
+        transform: scale(1.08);
+        background: #fff;
+        border-color: var(--rose-primary);
+        box-shadow: var(--shadow-glow);
+      }
+      .icon-btn.muted {
+        opacity: 0.5;
+      }
 
-/* ═══════════════════════════════════════
+      /* ═══════════════════════════════════════
    PROGRESS DOTS & ARROWS
 ═══════════════════════════════════════ */
-.nav-arrows{
-  position:fixed;bottom:32px;width:100%;
-  display:flex;justify-content:space-between;
-  padding:0 24px;z-index:110;pointer-events:none;
-}
-.nav-arr{
-  pointer-events:all;cursor:pointer;
-  width:44px;height:44px;border-radius:50%;
-  background:rgba(255,255,255,0.85);
-  border:1px solid rgba(214,74,112,0.2);
-  color:var(--rose-primary);
-  font-size:1rem;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 6px 18px rgba(214,74,112,0.12);
-  transition:all .25s ease;
-}
-.nav-arr:hover{
-  background:var(--rose-primary);color:#fff;
-  transform:scale(1.1);
-  box-shadow:var(--shadow-glow);
-}
-.nav-arr.hide{opacity:0;pointer-events:none;}
+      .nav-arrows {
+        position: fixed;
+        bottom: 32px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 24px;
+        z-index: 110;
+        pointer-events: none;
+      }
+      .nav-arr {
+        pointer-events: all;
+        cursor: pointer;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(214, 74, 112, 0.2);
+        color: var(--rose-primary);
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 18px rgba(214, 74, 112, 0.12);
+        transition: all 0.25s ease;
+      }
+      .nav-arr:hover {
+        background: var(--rose-primary);
+        color: #fff;
+        transform: scale(1.1);
+        box-shadow: var(--shadow-glow);
+      }
+      .nav-arr.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
 
-.dots{
-  position:fixed;bottom:38px;left:50%;transform:translateX(-50%);
-  display:flex;gap:7px;z-index:110;pointer-events:none;
-}
-.dot{
-  width:8px;height:8px;border-radius:50%;
-  background:#f3becd;
-  transition:all .35s cubic-bezier(0.25, 1, 0.5, 1);
-  cursor:pointer;pointer-events:all;
-}
-.dot.on{
-  background:var(--rose-primary);
-  width:22px;border-radius:12px;
-  box-shadow:0 0 10px rgba(214,74,112,0.4);
-}
+      .dots {
+        position: fixed;
+        bottom: 38px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 7px;
+        z-index: 110;
+        pointer-events: none;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #f3becd;
+        transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        cursor: pointer;
+        pointer-events: all;
+      }
+      .dot.on {
+        background: var(--rose-primary);
+        width: 22px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(214, 74, 112, 0.4);
+      }
 
-/* ═══════════════════════════════════════
+      /* ═══════════════════════════════════════
    SCREENS WRAPPER & 3D PERSPECTIVE
 ═══════════════════════════════════════ */
-.screens-viewport{
-  position:fixed;inset:0;
-  perspective:1000px;
-}
-.screen{
-  position:fixed;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;
-  padding:24px;
-  opacity:0;pointer-events:none;
-  transform:translateY(16px) scale(0.98);
-  transition:opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-             transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
-  z-index:10;
-}
-.screen.active{
-  opacity:1;pointer-events:all;
-  transform:translateY(0) scale(1);
-}
+      .screens-viewport {
+        position: fixed;
+        inset: 0;
+        perspective: 1000px;
+      }
+      .screen {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 24px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(16px) scale(0.98);
+        transition:
+          opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+          transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+        z-index: 10;
+      }
+      .screen.active {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateY(0) scale(1);
+      }
 
-/* 3D Tilt Card Base */
-.tilt-card{
-  transition:transform 0.15s ease-out;
-  transform-style:preserve-3d;
-  will-change:transform;
-}
+      /* 3D Tilt Card Base */
+      .tilt-card {
+        transition: transform 0.15s ease-out;
+        transform-style: preserve-3d;
+        will-change: transform;
+      }
 
-/* ══════════ S1 — GATE / QUESTION SCREEN ══════════ */
-#s1{text-align:center;}
+      /* ══════════ S1 — GATE / QUESTION SCREEN ══════════ */
+      #s1 {
+        text-align: center;
+      }
 
-.gate-badge{
-  font-size:2.2rem;letter-spacing:14px;
-  animation:heartbeat 1.6s ease-in-out infinite;
-  display:inline-block;margin-bottom:12px;
-  filter:drop-shadow(0 4px 10px rgba(214,74,112,0.25));
-}
-@keyframes heartbeat{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.15);}
-}
+      .gate-badge {
+        font-size: 2.2rem;
+        letter-spacing: 14px;
+        animation: heartbeat 1.6s ease-in-out infinite;
+        display: inline-block;
+        margin-bottom: 12px;
+        filter: drop-shadow(0 4px 10px rgba(214, 74, 112, 0.25));
+      }
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.15);
+        }
+      }
 
-.title-script{
-  font-family:'Great Vibes',cursive;
-  font-size:clamp(3.2rem, 11vw, 5.8rem);
-  line-height:1.15;
-  color:var(--rose-deep);
-  text-shadow:0 4px 18px rgba(168,46,82,0.18), 0 0 35px rgba(248,143,169,0.3);
-  margin-bottom:6px;
-}
+      .title-script {
+        font-family: "Great Vibes", cursive;
+        font-size: clamp(3.2rem, 11vw, 5.8rem);
+        line-height: 1.15;
+        color: var(--rose-deep);
+        text-shadow:
+          0 4px 18px rgba(168, 46, 82, 0.18),
+          0 0 35px rgba(248, 143, 169, 0.3);
+        margin-bottom: 6px;
+      }
 
-.names-text{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.2rem, 3.8vw, 1.7rem);
-  font-weight:600;font-style:italic;
-  color:var(--gold);
-  letter-spacing:2px;
-  margin-bottom:12px;
-}
+      .names-text {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.2rem, 3.8vw, 1.7rem);
+        font-weight: 600;
+        font-style: italic;
+        color: var(--gold);
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+      }
 
-.quote-text{
-  font-size:clamp(0.85rem, 2.4vw, 1rem);
-  color:var(--text-muted);
-  font-style:italic;letter-spacing:1px;
-  margin-bottom:34px;
-}
+      .quote-text {
+        font-size: clamp(0.85rem, 2.4vw, 1rem);
+        color: var(--text-muted);
+        font-style: italic;
+        letter-spacing: 1px;
+        margin-bottom: 34px;
+      }
 
-/* ══════════ RUNAWAY BUTTON CONTAINER ══════════ */
-.btn-choice-container{
-  position:relative;
-  display:flex;gap:20px;
-  justify-content:center;align-items:center;
-  min-height:75px;width:100%;max-width:480px;
-  margin-top:6px;
-}
+      /* ══════════ RUNAWAY BUTTON CONTAINER ══════════ */
+      .btn-choice-container {
+        position: relative;
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        min-height: 75px;
+        width: 100%;
+        max-width: 480px;
+        margin-top: 6px;
+      }
 
-.btn-choice{
-  font-family:'Montserrat',sans-serif;
-  font-size:0.85rem;font-weight:600;
-  letter-spacing:1.5px;text-transform:uppercase;
-  padding:14px 34px;border-radius:50px;
-  cursor:pointer;
-  transition:transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
-             box-shadow 0.22s ease,
-             background 0.22s ease;
-  user-select:none;outline:none;
-}
+      .btn-choice {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding: 14px 34px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition:
+          transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+          box-shadow 0.22s ease,
+          background 0.22s ease;
+        user-select: none;
+        outline: none;
+      }
 
-/* YES BUTTON */
-.btn-yes{
-  background:linear-gradient(135deg, #e55c82 0%, #c43860 100%);
-  color:#fff;border:none;
-  box-shadow:0 10px 28px rgba(196,56,96,0.35);
-  position:relative;overflow:hidden;
-}
-.btn-yes::after{
-  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
-  background:linear-gradient(60deg, transparent, rgba(255,255,255,0.35), transparent);
-  transform:rotate(30deg);
-  animation:btnShimmer 3.5s infinite;
-}
-@keyframes btnShimmer{
-  0%{transform:translateX(-100%) rotate(30deg);}
-  30%,100%{transform:translateX(100%) rotate(30deg);}
-}
-.btn-yes:hover{
-  transform:scale(1.06) translateY(-2px);
-  box-shadow:0 14px 34px rgba(196,56,96,0.45);
-}
+      /* YES BUTTON */
+      .btn-yes {
+        background: linear-gradient(135deg, #e55c82 0%, #c43860 100%);
+        color: #fff;
+        border: none;
+        box-shadow: 0 10px 28px rgba(196, 56, 96, 0.35);
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-yes::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          60deg,
+          transparent,
+          rgba(255, 255, 255, 0.35),
+          transparent
+        );
+        transform: rotate(30deg);
+        animation: btnShimmer 3.5s infinite;
+      }
+      @keyframes btnShimmer {
+        0% {
+          transform: translateX(-100%) rotate(30deg);
+        }
+        30%,
+        100% {
+          transform: translateX(100%) rotate(30deg);
+        }
+      }
+      .btn-yes:hover {
+        transform: scale(1.06) translateY(-2px);
+        box-shadow: 0 14px 34px rgba(196, 56, 96, 0.45);
+      }
 
-/* RUNAWAY NO BUTTON */
-.btn-no{
-  background:rgba(255, 255, 255, 0.9);
-  color:var(--rose-deep);
-  border:1.5px solid var(--rose-soft);
-  box-shadow:0 8px 22px rgba(214,74,112,0.12);
-  white-space:nowrap;
-  z-index:999;
-}
+      /* RUNAWAY NO BUTTON */
+      .btn-no {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--rose-deep);
+        border: 1.5px solid var(--rose-soft);
+        box-shadow: 0 8px 22px rgba(214, 74, 112, 0.12);
+        white-space: nowrap;
+        z-index: 999;
+      }
 
-/* ══════════ S2 — OUR STORY / RINGS ══════════ */
-#s2{text-align:center;}
+      /* ══════════ S2 — OUR STORY / RINGS ══════════ */
+      #s2 {
+        text-align: center;
+      }
 
-.ring-box{
-  position:relative;width:170px;height:170px;margin:0 auto 28px;
-}
-.ring-spin{
-  width:100%;height:100%;border-radius:50%;
-  border:2.5px solid var(--gold);
-  position:absolute;inset:0;
-  animation:spinClockwise 12s linear infinite;
-  box-shadow:0 0 25px rgba(179,130,52,0.22);
-}
-.ring-spin::before{
-  content:'💎';position:absolute;top:-12px;left:50%;
-  transform:translateX(-50%);font-size:16px;
-}
-.ring-inner{
-  width:130px;height:130px;border-radius:50%;
-  border:1.5px dashed var(--rose-soft);
-  position:absolute;top:20px;left:20px;
-  animation:spinCounter 9s linear infinite;
-}
-.ring-icon{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  font-size:46px;line-height:1;
-  animation:heartbeat 1.6s ease-in-out infinite;
-  filter:drop-shadow(0 6px 14px rgba(214,74,112,0.35));
-}
-@keyframes spinClockwise{to{transform:rotate(360deg);}}
-@keyframes spinCounter{to{transform:rotate(-360deg);}}
+      .ring-box {
+        position: relative;
+        width: 170px;
+        height: 170px;
+        margin: 0 auto 28px;
+      }
+      .ring-spin {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 2.5px solid var(--gold);
+        position: absolute;
+        inset: 0;
+        animation: spinClockwise 12s linear infinite;
+        box-shadow: 0 0 25px rgba(179, 130, 52, 0.22);
+      }
+      .ring-spin::before {
+        content: "💎";
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 16px;
+      }
+      .ring-inner {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        border: 1.5px dashed var(--rose-soft);
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        animation: spinCounter 9s linear infinite;
+      }
+      .ring-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 46px;
+        line-height: 1;
+        animation: heartbeat 1.6s ease-in-out infinite;
+        filter: drop-shadow(0 6px 14px rgba(214, 74, 112, 0.35));
+      }
+      @keyframes spinClockwise {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinCounter {
+        to {
+          transform: rotate(-360deg);
+        }
+      }
 
-.glass-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,0.7);
-  border:1px solid rgba(255,255,255,0.9);
-  padding:8px 24px;border-radius:40px;
-  font-size:0.7rem;letter-spacing:4px;
-  color:var(--rose-deep);text-transform:uppercase;
-  margin-bottom:12px;box-shadow:var(--shadow-soft);
-}
+      .glass-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        padding: 8px 24px;
+        border-radius: 40px;
+        font-size: 0.7rem;
+        letter-spacing: 4px;
+        color: var(--rose-deep);
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        box-shadow: var(--shadow-soft);
+      }
 
-/* ══════════ S3 — PHOTO ══════════ */
-#s3{text-align:center;}
+      /* ══════════ S3 — PHOTO ══════════ */
+      #s3 {
+        text-align: center;
+      }
 
-.photo-wrapper{
-  position:relative;display:inline-block;
-  margin-bottom:20px;cursor:pointer;
-}
-.photo-frame{
-  width:min(230px, 60vw);height:min(230px, 60vw);
-  border-radius:50%;
-  border:4px solid #fff;
-  background:rgba(255,255,255,0.6);
-  box-shadow:0 12px 35px rgba(214,74,112,0.22), 0 0 0 6px rgba(248,143,169,0.2);
-  overflow:hidden;position:relative;
-}
-.photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
-.photo-ph{
-  width:100%;height:100%;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;color:var(--text-muted);background:linear-gradient(135deg, #fff7fa, #ffe8ef);
-}
-.photo-ph-icon{font-size:2.8rem;filter:drop-shadow(0 4px 8px rgba(214,74,112,0.2));}
-.photo-ph-txt{font-size:0.7rem;letter-spacing:2px;font-weight:600;text-transform:uppercase;}
-.photo-ph-hint{font-size:0.6rem;opacity:0.75;}
+      .photo-wrapper {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 20px;
+        cursor: pointer;
+      }
+      .photo-frame {
+        width: min(230px, 60vw);
+        height: min(230px, 60vw);
+        border-radius: 50%;
+        border: 4px solid #fff;
+        background: rgba(255, 255, 255, 0.6);
+        box-shadow:
+          0 12px 35px rgba(214, 74, 112, 0.22),
+          0 0 0 6px rgba(248, 143, 169, 0.2);
+        overflow: hidden;
+        position: relative;
+      }
+      .photo-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .photo-ph {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: var(--text-muted);
+        background: linear-gradient(135deg, #fff7fa, #ffe8ef);
+      }
+      .photo-ph-icon {
+        font-size: 2.8rem;
+        filter: drop-shadow(0 4px 8px rgba(214, 74, 112, 0.2));
+      }
+      .photo-ph-txt {
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .photo-ph-hint {
+        font-size: 0.6rem;
+        opacity: 0.75;
+      }
 
-.upload-pill{
-  display:inline-flex;align-items:center;gap:6px;
-  background:#fff;border:1px solid var(--rose-soft);
-  color:var(--rose-primary);font-size:0.7rem;
-  letter-spacing:1px;padding:6px 18px;border-radius:30px;
-  cursor:pointer;box-shadow:0 4px 14px rgba(214,74,112,0.1);
-  transition:all .2s ease;margin-bottom:14px;
-}
-.upload-pill:hover{background:var(--rose-light);transform:translateY(-1px);}
+      .upload-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #fff;
+        border: 1px solid var(--rose-soft);
+        color: var(--rose-primary);
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+        padding: 6px 18px;
+        border-radius: 30px;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(214, 74, 112, 0.1);
+        transition: all 0.2s ease;
+        margin-bottom: 14px;
+      }
+      .upload-pill:hover {
+        background: var(--rose-light);
+        transform: translateY(-1px);
+      }
 
-/* ══════════ S4 — TIME COUNTER ══════════ */
-#s4{text-align:center;}
+      /* ══════════ S4 — TIME COUNTER ══════════ */
+      #s4 {
+        text-align: center;
+      }
 
-.counter-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:12px;width:min(440px, 92vw);
-  margin:24px auto;
-}
-.counter-box{
-  background:var(--card-bg);
-  border:1.5px solid var(--card-border);
-  border-radius:18px;padding:16px 6px;
-  box-shadow:var(--shadow-soft);
-  backdrop-filter:blur(10px);
-}
-.counter-value{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.8rem, 6vw, 2.6rem);
-  font-weight:600;color:var(--rose-deep);
-  line-height:1;display:block;
-}
-.counter-lbl{
-  font-size:0.55rem;letter-spacing:2px;color:var(--text-muted);
-  text-transform:uppercase;margin-top:6px;display:block;font-weight:600;
-}
+      .counter-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        width: min(440px, 92vw);
+        margin: 24px auto;
+      }
+      .counter-box {
+        background: var(--card-bg);
+        border: 1.5px solid var(--card-border);
+        border-radius: 18px;
+        padding: 16px 6px;
+        box-shadow: var(--shadow-soft);
+        backdrop-filter: blur(10px);
+      }
+      .counter-value {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.8rem, 6vw, 2.6rem);
+        font-weight: 600;
+        color: var(--rose-deep);
+        line-height: 1;
+        display: block;
+      }
+      .counter-lbl {
+        font-size: 0.55rem;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        margin-top: 6px;
+        display: block;
+        font-weight: 600;
+      }
 
-/* ══════════ S5 — LOVE LETTER & REASON JAR ══════════ */
-#s5{text-align:center;}
+      /* ══════════ S5 — LOVE LETTER & REASON JAR ══════════ */
+      #s5 {
+        text-align: center;
+      }
 
-.letter-card{
-  max-width:480px;width:100%;
-  background:var(--card-bg);
-  border:1.5px solid var(--card-border);
-  border-radius:26px;
-  padding:clamp(24px, 5vw, 38px) clamp(20px, 4vw, 34px);
-  box-shadow:var(--shadow-soft);
-  backdrop-filter:blur(14px);
-  position:relative;
-}
-.letter-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.3rem, 3.8vw, 1.8rem);
-  font-style:italic;color:var(--rose-deep);
-  margin-bottom:14px;
-}
-.letter-msg{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(0.92rem, 2.4vw, 1.1rem);
-  color:var(--text-dark);
-  line-height:1.8;font-weight:400;
-}
-.letter-msg em{color:var(--rose-primary);font-style:italic;}
-.letter-sig{
-  margin-top:16px;
-  font-family:'Great Vibes',cursive;
-  font-size:2rem;color:var(--rose-deep);
-}
-.letter-date{
-  font-size:0.6rem;letter-spacing:3px;color:var(--text-muted);
-  text-transform:uppercase;margin-top:4px;
-}
+      .letter-card {
+        max-width: 480px;
+        width: 100%;
+        background: var(--card-bg);
+        border: 1.5px solid var(--card-border);
+        border-radius: 26px;
+        padding: clamp(24px, 5vw, 38px) clamp(20px, 4vw, 34px);
+        box-shadow: var(--shadow-soft);
+        backdrop-filter: blur(14px);
+        position: relative;
+      }
+      .letter-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.3rem, 3.8vw, 1.8rem);
+        font-style: italic;
+        color: var(--rose-deep);
+        margin-bottom: 14px;
+      }
+      .letter-msg {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(0.92rem, 2.4vw, 1.1rem);
+        color: var(--text-dark);
+        line-height: 1.8;
+        font-weight: 400;
+      }
+      .letter-msg em {
+        color: var(--rose-primary);
+        font-style: italic;
+      }
+      .letter-sig {
+        margin-top: 16px;
+        font-family: "Great Vibes", cursive;
+        font-size: 2rem;
+        color: var(--rose-deep);
+      }
+      .letter-date {
+        font-size: 0.6rem;
+        letter-spacing: 3px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        margin-top: 4px;
+      }
 
-/* Love Reason Generator Pill */
-.reason-pill{
-  margin-top:16px;
-  display:inline-flex;align-items:center;gap:8px;
-  background:linear-gradient(135deg, #fff0f5, #ffe4ec);
-  border:1.5px solid var(--rose-soft);
-  padding:10px 22px;border-radius:40px;
-  font-size:0.75rem;font-weight:600;
-  color:var(--rose-deep);cursor:pointer;
-  box-shadow:0 4px 15px rgba(214,74,112,0.12);
-  transition:all .25s ease;
-}
-.reason-pill:hover{
-  transform:scale(1.04);background:#fff;
-  box-shadow:0 8px 22px rgba(214,74,112,0.22);
-}
+      /* Love Reason Generator Pill */
+      .reason-pill {
+        margin-top: 16px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+        border: 1.5px solid var(--rose-soft);
+        padding: 10px 22px;
+        border-radius: 40px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--rose-deep);
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(214, 74, 112, 0.12);
+        transition: all 0.25s ease;
+      }
+      .reason-pill:hover {
+        transform: scale(1.04);
+        background: #fff;
+        box-shadow: 0 8px 22px rgba(214, 74, 112, 0.22);
+      }
 
-/* ══════════ S6 — INTERACTIVE SCRATCH CARD ══════════ */
-#s6{text-align:center;}
+      /* ══════════ S6 — INTERACTIVE SCRATCH CARD ══════════ */
+      #s6 {
+        text-align: center;
+      }
 
-.scratch-container{
-  position:relative;
-  width:min(340px, 88vw);height:210px;
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow:var(--shadow-soft), 0 0 0 4px rgba(255,255,255,0.8);
-  margin:18px auto;
-}
-.scratch-secret{
-  position:absolute;inset:0;
-  background:linear-gradient(135deg, #fff7fa, #ffdbe6);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:20px;text-align:center;
-  color:var(--rose-deep);
-}
-.scratch-secret h4{
-  font-family:'Great Vibes',cursive;
-  font-size:1.8rem;color:var(--rose-primary);margin-bottom:6px;
-}
-.scratch-secret p{
-  font-family:'Playfair Display',serif;font-style:italic;
-  font-size:0.95rem;line-height:1.6;color:var(--text-dark);
-}
-.scratch-canvas{
-  position:absolute;inset:0;
-  cursor:crosshair;touch-action:none;
-}
-.scratch-hint{
-  font-size:0.75rem;letter-spacing:2px;color:var(--text-muted);
-  text-transform:uppercase;margin-top:6px;
-}
+      .scratch-container {
+        position: relative;
+        width: min(340px, 88vw);
+        height: 210px;
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow:
+          var(--shadow-soft),
+          0 0 0 4px rgba(255, 255, 255, 0.8);
+        margin: 18px auto;
+      }
+      .scratch-secret {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #fff7fa, #ffdbe6);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        text-align: center;
+        color: var(--rose-deep);
+      }
+      .scratch-secret h4 {
+        font-family: "Great Vibes", cursive;
+        font-size: 1.8rem;
+        color: var(--rose-primary);
+        margin-bottom: 6px;
+      }
+      .scratch-secret p {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-dark);
+      }
+      .scratch-canvas {
+        position: absolute;
+        inset: 0;
+        cursor: crosshair;
+        touch-action: none;
+      }
+      .scratch-hint {
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        margin-top: 6px;
+      }
 
-/* ══════════ S7 — CELEBRATION FINALE ══════════ */
-#s7{text-align:center;}
+      /* ══════════ S7 — CELEBRATION FINALE ══════════ */
+      #s7 {
+        text-align: center;
+      }
 
-.finale-btn-row{
-  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
-  margin-top:20px;
-}
-.btn-action{
-  font-family:'Montserrat',sans-serif;
-  font-size:0.75rem;font-weight:600;letter-spacing:2px;
-  text-transform:uppercase;padding:12px 28px;border-radius:40px;
-  cursor:pointer;transition:all .25s ease;
-}
-.btn-action.primary{
-  background:linear-gradient(135deg, #e55c82, #c43860);
-  color:#fff;border:none;
-  box-shadow:0 8px 24px rgba(196,56,96,0.3);
-}
-.btn-action.primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(196,56,96,0.45);}
-.btn-action.secondary{
-  background:rgba(255,255,255,0.9);
-  color:var(--rose-deep);border:1.5px solid var(--rose-soft);
-}
-.btn-action.secondary:hover{background:#fff;transform:translateY(-2px);}
+      .finale-btn-row {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+      .btn-action {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 12px 28px;
+        border-radius: 40px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+      }
+      .btn-action.primary {
+        background: linear-gradient(135deg, #e55c82, #c43860);
+        color: #fff;
+        border: none;
+        box-shadow: 0 8px 24px rgba(196, 56, 96, 0.3);
+      }
+      .btn-action.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(196, 56, 96, 0.45);
+      }
+      .btn-action.secondary {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--rose-deep);
+        border: 1.5px solid var(--rose-soft);
+      }
+      .btn-action.secondary:hover {
+        background: #fff;
+        transform: translateY(-2px);
+      }
 
-/* ══════════ ROMANTIC SWEETALERT2 STYLING ══════════ */
-.swal2-popup.romantic-swal-popup{
-  background:linear-gradient(135deg, #fff5f8 0%, #fde6ee 100%) !important;
-  border:2px solid rgba(255, 255, 255, 0.95) !important;
-  border-radius:28px !important;
-  box-shadow:0 24px 60px rgba(214, 74, 112, 0.32) !important;
-  padding:24px 18px 28px !important;
-  font-family:'Montserrat',sans-serif !important;
-}
-.swal2-timer-progress-bar.romantic-swal-timer{
-  background:linear-gradient(90deg, #dfb36b 0%, #e55c82 50%, #a82e52 100%) !important;
-  height:5px !important;
-  border-radius:6px !important;
-}
-.swal2-backdrop-show{
-  backdrop-filter:blur(6px) !important;
-  background:rgba(74, 21, 37, 0.28) !important;
-}
-</style>
-</head>
-<body>
+      /* ══════════ ROMANTIC SWEETALERT2 STYLING ══════════ */
+      .swal2-popup.romantic-swal-popup {
+        background: linear-gradient(
+          135deg,
+          #fff5f8 0%,
+          #fde6ee 100%
+        ) !important;
+        border: 2px solid rgba(255, 255, 255, 0.95) !important;
+        border-radius: 28px !important;
+        box-shadow: 0 24px 60px rgba(214, 74, 112, 0.32) !important;
+        padding: 24px 18px 28px !important;
+        font-family: "Montserrat", sans-serif !important;
+      }
+      .swal2-timer-progress-bar.romantic-swal-timer {
+        background: linear-gradient(
+          90deg,
+          #dfb36b 0%,
+          #e55c82 50%,
+          #a82e52 100%
+        ) !important;
+        height: 5px !important;
+        border-radius: 6px !important;
+      }
+      .swal2-backdrop-show {
+        backdrop-filter: blur(6px) !important;
+        background: rgba(74, 21, 37, 0.28) !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Interactive Particle, Sparkle & Firework Canvases -->
+    <canvas id="particle-canvas"></canvas>
+    <canvas id="sparkle-canvas"></canvas>
+    <canvas id="firework-canvas"></canvas>
 
-<!-- Interactive Particle, Sparkle & Firework Canvases -->
-<canvas id="particle-canvas"></canvas>
-<canvas id="sparkle-canvas"></canvas>
-<canvas id="firework-canvas"></canvas>
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="brand-tag">Sowmik &amp; Mohua</div>
+      <div class="top-actions">
+        <button class="icon-btn" id="sound-btn" title="Romantic Chimes">
+          ✨
+        </button>
+        <button class="icon-btn" id="music-btn" title="Toggle Music">♪</button>
+      </div>
+    </div>
 
-<!-- Top Bar -->
-<div class="top-bar">
-  <div class="brand-tag">Sowmik &amp; Mohua</div>
-  <div class="top-actions">
-    <button class="icon-btn" id="sound-btn" title="Romantic Chimes">✨</button>
-    <button class="icon-btn" id="music-btn" title="Toggle Music">♪</button>
-  </div>
-</div>
+    <!-- Audio fallback element -->
+    <audio id="bg-music" loop>
+      <source src="anniversary.mp3" type="audio/mpeg" />
+    </audio>
+    <input
+      type="file"
+      id="photo-upload"
+      accept="image/*"
+      style="display: none"
+    />
 
-<!-- Audio fallback element -->
-<audio id="bg-music" loop>
-  <source src="anniversary.mp3" type="audio/mpeg"/>
-</audio>
-<input type="file" id="photo-upload" accept="image/*" style="display:none;"/>
+    <!-- Navigation arrows -->
+    <div class="nav-arrows">
+      <div class="nav-arr hide" id="arr-left" onclick="prevScreen()">❮</div>
+      <div class="nav-arr" id="arr-right" onclick="nextScreen()">❯</div>
+    </div>
 
-<!-- Navigation arrows -->
-<div class="nav-arrows">
-  <div class="nav-arr hide" id="arr-left" onclick="prevScreen()">❮</div>
-  <div class="nav-arr" id="arr-right" onclick="nextScreen()">❯</div>
-</div>
+    <!-- Progress dots -->
+    <div class="dots" id="dots-container"></div>
 
-<!-- Progress dots -->
-<div class="dots" id="dots-container"></div>
-
-<!-- ═════════════════════════════════════════════
+    <!-- ═════════════════════════════════════════════
      SCREENS VIEWPORT
 ══════════════════════════════════════════════ -->
-<div class="screens-viewport">
+    <div class="screens-viewport">
+      <!-- S1: INVITATION GATE (WITH VIRAL REACTIVE RUNAWAY BUTTON) -->
+      <div class="screen active" id="s1">
+        <div class="gate-badge">🌹 ❤️ 🌹</div>
+        <h1 class="title-script">Happy Anniversary</h1>
+        <div class="names-text">Sowmik &amp; Mohua</div>
+        <p class="quote-text">"Do you wanna see what I made for you?"</p>
 
-  <!-- S1: INVITATION GATE (WITH VIRAL REACTIVE RUNAWAY BUTTON) -->
-  <div class="screen active" id="s1">
-    <div class="gate-badge">🌹 ❤️ 🌹</div>
-    <h1 class="title-script">Happy Anniversary</h1>
-    <div class="names-text">Sowmik &amp; Mohua</div>
-    <p class="quote-text">"Do you wanna see what I made for you?"</p>
+        <div class="btn-choice-container" id="choice-container">
+          <button
+            class="btn-choice btn-yes"
+            id="btn-yes"
+            onclick="nextScreen()"
+          >
+            Wanna See 💕
+          </button>
+          <button class="btn-choice btn-no" id="btn-no">No, i don't 🙈</button>
+        </div>
+      </div>
 
-    <div class="btn-choice-container" id="choice-container">
-      <button class="btn-choice btn-yes" id="btn-yes" onclick="nextScreen()">
-        Wanna See 💕
-      </button>
-      <button class="btn-choice btn-no" id="btn-no">
-        No, i don't 🙈
-      </button>
-    </div>
-  </div>
+      <!-- S2: OUR STORY / GOLDEN RINGS -->
+      <div class="screen" id="s2">
+        <div class="glass-badge">◆ One Year of Love ◆</div>
+        <div class="ring-box tilt-card">
+          <div class="ring-spin"></div>
+          <div class="ring-inner"></div>
+          <div class="ring-icon">💍</div>
+        </div>
+        <h2 class="title-script" style="font-size: clamp(2.6rem, 8vw, 4.2rem)">
+          Our Story
+        </h2>
+        <p class="quote-text" style="max-width: 380px; margin-bottom: 0">
+          From the moment our eyes met, every second has turned into a cherished
+          memory.
+        </p>
+      </div>
 
-  <!-- S2: OUR STORY / GOLDEN RINGS -->
-  <div class="screen" id="s2">
-    <div class="glass-badge">◆ One Year of Love ◆</div>
-    <div class="ring-box tilt-card">
-      <div class="ring-spin"></div>
-      <div class="ring-inner"></div>
-      <div class="ring-icon">💍</div>
-    </div>
-    <h2 class="title-script" style="font-size:clamp(2.6rem, 8vw, 4.2rem);">Our Story</h2>
-    <p class="quote-text" style="max-width:380px;margin-bottom:0;">
-      From the moment our eyes met, every second has turned into a cherished memory.
-    </p>
-  </div>
+      <!-- S3: MEMORY PHOTO -->
+      <div class="screen" id="s3">
+        <div class="glass-badge">◆ Beautiful Memory ◆</div>
+        <div class="photo-wrapper tilt-card" onclick="triggerPhotoUpload()">
+          <div class="photo-frame" id="photo-frame">
+            <div class="photo-ph">
+              <span class="photo-ph-icon">📸</span>
+              <span class="photo-ph-txt">Our Picture</span>
+              <span class="photo-ph-hint">Tap to upload your photo</span>
+            </div>
+          </div>
+        </div>
+        <div class="upload-pill" onclick="triggerPhotoUpload()">
+          <span>📷</span> Change Photo
+        </div>
+        <p class="quote-text" style="max-width: 360px">
+          Every picture tells a story, but ours will always be my
+          <em>absolute favourite</em>.
+        </p>
+      </div>
 
-  <!-- S3: MEMORY PHOTO -->
-  <div class="screen" id="s3">
-    <div class="glass-badge">◆ Beautiful Memory ◆</div>
-    <div class="photo-wrapper tilt-card" onclick="triggerPhotoUpload()">
-      <div class="photo-frame" id="photo-frame">
-        <div class="photo-ph">
-          <span class="photo-ph-icon">📸</span>
-          <span class="photo-ph-txt">Our Picture</span>
-          <span class="photo-ph-hint">Tap to upload your photo</span>
+      <!-- S4: TIME COUNTER -->
+      <div class="screen" id="s4">
+        <div class="glass-badge">◆ Every Second With You ◆</div>
+        <h2 class="title-script" style="font-size: clamp(2.4rem, 7vw, 3.8rem)">
+          Together In Love
+        </h2>
+
+        <div class="counter-grid tilt-card">
+          <div class="counter-box">
+            <span class="counter-value" id="cnt-days">0</span>
+            <span class="counter-lbl">Days</span>
+          </div>
+          <div class="counter-box">
+            <span class="counter-value" id="cnt-hours">00</span>
+            <span class="counter-lbl">Hours</span>
+          </div>
+          <div class="counter-box">
+            <span class="counter-value" id="cnt-mins">00</span>
+            <span class="counter-lbl">Minutes</span>
+          </div>
+          <div class="counter-box">
+            <span class="counter-value" id="cnt-secs">00</span>
+            <span class="counter-lbl">Seconds</span>
+          </div>
+        </div>
+        <p class="quote-text">Since November 14, 2025 · Counting forever</p>
+      </div>
+
+      <!-- S5: LOVE LETTER & REASON JAR -->
+      <div class="screen" id="s5">
+        <div class="letter-card tilt-card">
+          <div style="font-size: 2rem; margin-bottom: 6px">💌</div>
+          <h3 class="letter-title">My Dearest Mohua,</h3>
+          <p class="letter-msg">
+            A whole year has passed, and my heart still finds something
+            <em>new to love about you</em> every single day.<br /><br />
+            You are the warmth on my coldest days, the smile I look forward to,
+            and the peace I always come home to.<br /><br />
+            Thank you for choosing me and making every second unforgettable.
+          </p>
+          <div class="letter-sig">— Yours always, Sowmik ❤</div>
+          <div class="letter-date">November 14, 2026 · 1st Anniversary</div>
+
+          <div class="reason-pill" onclick="popLoveReason(event)">
+            <span>💌</span> Tap for a reason why I love you!
+          </div>
+        </div>
+      </div>
+
+      <!-- S6: INTERACTIVE SECRET WISH SCRATCH CARD -->
+      <div class="screen" id="s6">
+        <div class="glass-badge">◆ A Secret For You ◆</div>
+        <h2
+          class="title-script"
+          style="font-size: clamp(2.4rem, 7vw, 3.8rem); margin-bottom: 2px"
+        >
+          Scratch &amp; Reveal
+        </h2>
+        <p class="scratch-hint">
+          Scratch with your finger or mouse to unlock my wish
+        </p>
+
+        <div class="scratch-container tilt-card" id="scratch-box">
+          <div class="scratch-secret">
+            <h4>My Secret Wish ✨</h4>
+            <p>
+              "My only wish is to hold your hand through every single lifetime.
+              Happy 1st Anniversary, my soulmate!"
+            </p>
+            <span
+              style="
+                font-family: &quot;Great Vibes&quot;, cursive;
+                font-size: 1.6rem;
+                margin-top: 6px;
+                color: var(--rose-deep);
+              "
+              >— Sowmik 💕</span
+            >
+          </div>
+          <canvas class="scratch-canvas" id="scratch-canvas"></canvas>
+        </div>
+      </div>
+
+      <!-- S7: CELEBRATION FINALE -->
+      <div class="screen" id="s7">
+        <div class="gate-badge" style="font-size: 2.5rem">🥂 💖 🥂</div>
+        <h2 class="title-script" style="font-size: clamp(3rem, 10vw, 5.5rem)">
+          Happy Anniversary!
+        </h2>
+        <div class="names-text">Sowmik &amp; Mohua</div>
+        <p class="quote-text" style="margin-bottom: 18px">
+          "Here is to 365 days of love, and a lifetime more to go!"
+        </p>
+        <div class="finale-btn-row">
+          <button class="btn-action primary" onclick="goToScreen(0)">
+            ↺ Replay Story
+          </button>
+          <button class="btn-action secondary" onclick="shareAnniversary()">
+            ↗ Share Love
+          </button>
         </div>
       </div>
     </div>
-    <div class="upload-pill" onclick="triggerPhotoUpload()">
-      <span>📷</span> Change Photo
-    </div>
-    <p class="quote-text" style="max-width:360px;">
-      Every picture tells a story, but ours will always be my <em>absolute favourite</em>.
-    </p>
-  </div>
 
-  <!-- S4: TIME COUNTER -->
-  <div class="screen" id="s4">
-    <div class="glass-badge">◆ Every Second With You ◆</div>
-    <h2 class="title-script" style="font-size:clamp(2.4rem, 7vw, 3.8rem);">Together In Love</h2>
-    
-    <div class="counter-grid tilt-card">
-      <div class="counter-box">
-        <span class="counter-value" id="cnt-days">0</span>
-        <span class="counter-lbl">Days</span>
-      </div>
-      <div class="counter-box">
-        <span class="counter-value" id="cnt-hours">00</span>
-        <span class="counter-lbl">Hours</span>
-      </div>
-      <div class="counter-box">
-        <span class="counter-value" id="cnt-mins">00</span>
-        <span class="counter-lbl">Minutes</span>
-      </div>
-      <div class="counter-box">
-        <span class="counter-value" id="cnt-secs">00</span>
-        <span class="counter-lbl">Seconds</span>
-      </div>
-    </div>
-    <p class="quote-text">Since November 10, 2025 · Counting forever</p>
-  </div>
-
-  <!-- S5: LOVE LETTER & REASON JAR -->
-  <div class="screen" id="s5">
-    <div class="letter-card tilt-card">
-      <div style="font-size:2rem;margin-bottom:6px;">💌</div>
-      <h3 class="letter-title">My Dearest Mohua,</h3>
-      <p class="letter-msg">
-        A whole year has passed, and my heart still finds something <em>new to love about you</em> every single day.<br><br>
-        You are the warmth on my coldest days, the smile I look forward to, and the peace I always come home to.<br><br>
-        Thank you for choosing me and making every second unforgettable.
-      </p>
-      <div class="letter-sig">— Yours always, Sowmik ❤</div>
-      <div class="letter-date">November 10, 2026 · 1st Anniversary</div>
-
-      <div class="reason-pill" onclick="popLoveReason(event)">
-        <span>💌</span> Tap for a reason why I love you!
-      </div>
-    </div>
-  </div>
-
-  <!-- S6: INTERACTIVE SECRET WISH SCRATCH CARD -->
-  <div class="screen" id="s6">
-    <div class="glass-badge">◆ A Secret For You ◆</div>
-    <h2 class="title-script" style="font-size:clamp(2.4rem, 7vw, 3.8rem);margin-bottom:2px;">Scratch &amp; Reveal</h2>
-    <p class="scratch-hint">Scratch with your finger or mouse to unlock my wish</p>
-    
-    <div class="scratch-container tilt-card" id="scratch-box">
-      <div class="scratch-secret">
-        <h4>My Secret Wish ✨</h4>
-        <p>"My only wish is to hold your hand through every single lifetime. Happy 1st Anniversary, my soulmate!"</p>
-        <span style="font-family:'Great Vibes',cursive;font-size:1.6rem;margin-top:6px;color:var(--rose-deep);">— Sowmik 💕</span>
-      </div>
-      <canvas class="scratch-canvas" id="scratch-canvas"></canvas>
-    </div>
-  </div>
-
-  <!-- S7: CELEBRATION FINALE -->
-  <div class="screen" id="s7">
-    <div class="gate-badge" style="font-size:2.5rem;">🥂 💖 🥂</div>
-    <h2 class="title-script" style="font-size:clamp(3rem, 10vw, 5.5rem);">Happy Anniversary!</h2>
-    <div class="names-text">Sowmik &amp; Mohua</div>
-    <p class="quote-text" style="margin-bottom:18px;">
-      "Here is to 365 days of love, and a lifetime more to go!"
-    </p>
-    <div class="finale-btn-row">
-      <button class="btn-action primary" onclick="goToScreen(0)">↺ Replay Story</button>
-      <button class="btn-action secondary" onclick="shareAnniversary()">↗ Share Love</button>
-    </div>
-  </div>
-
-</div>
-
-<!-- ═════════════════════════════════════════════
+    <!-- ═════════════════════════════════════════════
      INTERACTIVE JAVASCRIPT
 ══════════════════════════════════════════════ -->
-<script>
-/* ──────────────────────────────────────────────
+    <script>
+      /* ──────────────────────────────────────────────
    1. BUILT-IN WEB AUDIO SYNTHESIZER (ZERO EXTERNAL MP3 NEEDED)
 ────────────────────────────────────────────── */
-let audioCtx = null;
-function getAudioContext() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-  return audioCtx;
-}
+      let audioCtx = null;
+      function getAudioContext() {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === "suspended") {
+          audioCtx.resume();
+        }
+        return audioCtx;
+      }
 
-// Romantic Chime (Harmonic Bell Synth)
-function playRomanticChime() {
-  try {
-    const ctx = getAudioContext();
-    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
-    notes.forEach((freq, i) => {
-      setTimeout(() => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        gain.gain.setValueAtTime(0.08, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.2);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 1.2);
-      }, i * 110);
-    });
-  } catch (e) {}
-}
+      // Romantic Chime (Harmonic Bell Synth)
+      function playRomanticChime() {
+        try {
+          const ctx = getAudioContext();
+          const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+          notes.forEach((freq, i) => {
+            setTimeout(() => {
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.type = "sine";
+              osc.frequency.setValueAtTime(freq, ctx.currentTime);
+              gain.gain.setValueAtTime(0.08, ctx.currentTime);
+              gain.gain.exponentialRampToValueAtTime(
+                0.0001,
+                ctx.currentTime + 1.2,
+              );
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start();
+              osc.stop(ctx.currentTime + 1.2);
+            }, i * 110);
+          });
+        } catch (e) {}
+      }
 
-// Playful "Whoosh / Boing" sound when No button dodges
-function playWhooshSound() {
-  try {
-    const ctx = getAudioContext();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(260 + Math.random() * 80, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(650 + Math.random() * 200, ctx.currentTime + 0.22);
-    gain.gain.setValueAtTime(0.08, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.25);
-  } catch (e) {}
-}
+      // Playful "Whoosh / Boing" sound when No button dodges
+      function playWhooshSound() {
+        try {
+          const ctx = getAudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(
+            260 + Math.random() * 80,
+            ctx.currentTime,
+          );
+          osc.frequency.exponentialRampToValueAtTime(
+            650 + Math.random() * 200,
+            ctx.currentTime + 0.22,
+          );
+          gain.gain.setValueAtTime(0.08, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.25);
+        } catch (e) {}
+      }
 
-// Ambient Romantic Harmony Progression Generator
-let ambientInterval = null;
-let isAmbientPlaying = false;
-function toggleAmbientMusic() {
-  if (isAmbientPlaying) {
-    clearInterval(ambientInterval);
-    isAmbientPlaying = false;
-    document.getElementById('music-btn').classList.add('muted');
-    return;
-  }
-  try {
-    const ctx = getAudioContext();
-    isAmbientPlaying = true;
-    document.getElementById('music-btn').classList.remove('muted');
+      // Ambient Romantic Harmony Progression Generator
+      let ambientInterval = null;
+      let isAmbientPlaying = false;
+      function toggleAmbientMusic() {
+        if (isAmbientPlaying) {
+          clearInterval(ambientInterval);
+          isAmbientPlaying = false;
+          document.getElementById("music-btn").classList.add("muted");
+          return;
+        }
+        try {
+          const ctx = getAudioContext();
+          isAmbientPlaying = true;
+          document.getElementById("music-btn").classList.remove("muted");
 
-    const chords = [
-      [261.63, 329.63, 392.00, 493.88], // Cmaj7
-      [220.00, 261.63, 329.63, 392.00], // Am7
-      [174.61, 220.00, 261.63, 329.63], // Fmaj7
-      [196.00, 246.94, 293.66, 392.00]  // G6
-    ];
-    let chordIndex = 0;
+          const chords = [
+            [261.63, 329.63, 392.0, 493.88], // Cmaj7
+            [220.0, 261.63, 329.63, 392.0], // Am7
+            [174.61, 220.0, 261.63, 329.63], // Fmaj7
+            [196.0, 246.94, 293.66, 392.0], // G6
+          ];
+          let chordIndex = 0;
 
-    function playChord() {
-      if (!isAmbientPlaying) return;
-      const chord = chords[chordIndex];
-      chordIndex = (chordIndex + 1) % chords.length;
-      chord.forEach(freq => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.022, ctx.currentTime + 1.2);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 3.8);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 4.0);
+          function playChord() {
+            if (!isAmbientPlaying) return;
+            const chord = chords[chordIndex];
+            chordIndex = (chordIndex + 1) % chords.length;
+            chord.forEach((freq) => {
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.type = "sine";
+              osc.frequency.setValueAtTime(freq, ctx.currentTime);
+              gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+              gain.gain.linearRampToValueAtTime(0.022, ctx.currentTime + 1.2);
+              gain.gain.exponentialRampToValueAtTime(
+                0.0001,
+                ctx.currentTime + 3.8,
+              );
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start();
+              osc.stop(ctx.currentTime + 4.0);
+            });
+          }
+
+          playChord();
+          ambientInterval = setInterval(playChord, 3800);
+        } catch (e) {}
+      }
+
+      document.getElementById("sound-btn").addEventListener("click", () => {
+        playRomanticChime();
       });
-    }
 
-    playChord();
-    ambientInterval = setInterval(playChord, 3800);
-  } catch(e) {}
-}
-
-document.getElementById('sound-btn').addEventListener('click', () => {
-  playRomanticChime();
-});
-
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    2. SCREEN MANAGEMENT & SMOOTH TRANSITIONS
 ────────────────────────────────────────────── */
-const screens = ['s1', 's2', 's3', 's4', 's5', 's6', 's7'];
-const totalScreens = screens.length;
-let currentScreen = 0;
-let isAnimating = false;
+      const screens = ["s1", "s2", "s3", "s4", "s5", "s6", "s7"];
+      const totalScreens = screens.length;
+      let currentScreen = 0;
+      let isAnimating = false;
 
-// Generate dots
-const dotsContainer = document.getElementById('dots-container');
-screens.forEach((_, i) => {
-  const dot = document.createElement('div');
-  dot.className = 'dot' + (i === 0 ? ' on' : '');
-  dot.id = 'dot-' + i;
-  dot.addEventListener('click', () => goToScreen(i));
-  dotsContainer.appendChild(dot);
-});
+      // Generate dots
+      const dotsContainer = document.getElementById("dots-container");
+      screens.forEach((_, i) => {
+        const dot = document.createElement("div");
+        dot.className = "dot" + (i === 0 ? " on" : "");
+        dot.id = "dot-" + i;
+        dot.addEventListener("click", () => goToScreen(i));
+        dotsContainer.appendChild(dot);
+      });
 
-function updateNavControls() {
-  document.getElementById('arr-left').classList.toggle('hide', currentScreen === 0);
-  document.getElementById('arr-right').classList.toggle('hide', currentScreen === totalScreens - 1);
-}
-updateNavControls();
+      function updateNavControls() {
+        document
+          .getElementById("arr-left")
+          .classList.toggle("hide", currentScreen === 0);
+        document
+          .getElementById("arr-right")
+          .classList.toggle("hide", currentScreen === totalScreens - 1);
+      }
+      updateNavControls();
 
-function goToScreen(targetIndex) {
-  if (isAnimating || targetIndex === currentScreen || targetIndex < 0 || targetIndex >= totalScreens) return;
-  isAnimating = true;
+      function goToScreen(targetIndex) {
+        if (
+          isAnimating ||
+          targetIndex === currentScreen ||
+          targetIndex < 0 ||
+          targetIndex >= totalScreens
+        )
+          return;
+        isAnimating = true;
 
-  playRomanticChime();
+        playRomanticChime();
 
-  const currentEl = document.getElementById(screens[currentScreen]);
-  const targetEl = document.getElementById(screens[targetIndex]);
-  const currentDot = document.getElementById('dot-' + currentScreen);
-  const targetDot = document.getElementById('dot-' + targetIndex);
+        const currentEl = document.getElementById(screens[currentScreen]);
+        const targetEl = document.getElementById(screens[targetIndex]);
+        const currentDot = document.getElementById("dot-" + currentScreen);
+        const targetDot = document.getElementById("dot-" + targetIndex);
 
-  currentEl.classList.remove('active');
-  if (currentDot) currentDot.classList.remove('on');
+        currentEl.classList.remove("active");
+        if (currentDot) currentDot.classList.remove("on");
 
-  currentScreen = targetIndex;
+        currentScreen = targetIndex;
 
-  targetEl.classList.add('active');
-  if (targetDot) targetDot.classList.add('on');
+        targetEl.classList.add("active");
+        if (targetDot) targetDot.classList.add("on");
 
-  updateNavControls();
+        updateNavControls();
 
-  if (currentScreen === 0) {
-    resetNoButtonPosition();
-  }
-  if (currentScreen === 5) {
-    initScratchCard();
-  }
-  if (currentScreen === totalScreens - 1) {
-    triggerCelebration();
-  }
+        if (currentScreen === 0) {
+          resetNoButtonPosition();
+        }
+        if (currentScreen === 5) {
+          initScratchCard();
+        }
+        if (currentScreen === totalScreens - 1) {
+          triggerCelebration();
+        }
 
-  setTimeout(() => { isAnimating = false; }, 450);
-}
+        setTimeout(() => {
+          isAnimating = false;
+        }, 450);
+      }
 
-function nextScreen() { goToScreen(currentScreen + 1); }
-function prevScreen() { goToScreen(currentScreen - 1); }
+      function nextScreen() {
+        goToScreen(currentScreen + 1);
+      }
+      function prevScreen() {
+        goToScreen(currentScreen - 1);
+      }
 
-// Keyboard navigation
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ') nextScreen();
-  if (e.key === 'ArrowLeft') prevScreen();
-});
+      // Keyboard navigation
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " ") nextScreen();
+        if (e.key === "ArrowLeft") prevScreen();
+      });
 
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    GESTURE SLIDE: MOUSE DRAG, PHONE TOUCH SWIPE & MOUSE WHEEL
 ────────────────────────────────────────────── */
-let gestureStartX = 0;
-let gestureStartY = 0;
-let isMouseDragging = false;
-let mouseMovedSignificant = false;
+      let gestureStartX = 0;
+      let gestureStartY = 0;
+      let isMouseDragging = false;
+      let mouseMovedSignificant = false;
 
-function handleGestureSwipe(deltaX, deltaY) {
-  if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > Math.abs(deltaY) * 0.7) {
-    if (deltaX < 0) nextScreen();
-    else prevScreen();
-  }
-}
+      function handleGestureSwipe(deltaX, deltaY) {
+        if (
+          Math.abs(deltaX) > 35 &&
+          Math.abs(deltaX) > Math.abs(deltaY) * 0.7
+        ) {
+          if (deltaX < 0) nextScreen();
+          else prevScreen();
+        }
+      }
 
-// 1. Phone Touch Swipe
-document.addEventListener('touchstart', e => {
-  if (e.target.closest('#scratch-canvas, .btn-no, .btn-yes, input, button')) return;
-  gestureStartX = e.touches[0].clientX;
-  gestureStartY = e.touches[0].clientY;
-}, { passive: true });
+      // 1. Phone Touch Swipe
+      document.addEventListener(
+        "touchstart",
+        (e) => {
+          if (
+            e.target.closest(
+              "#scratch-canvas, .btn-no, .btn-yes, input, button",
+            )
+          )
+            return;
+          gestureStartX = e.touches[0].clientX;
+          gestureStartY = e.touches[0].clientY;
+        },
+        { passive: true },
+      );
 
-document.addEventListener('touchend', e => {
-  if (e.target.closest('#scratch-canvas, .btn-no, .btn-yes, input, button')) return;
-  const deltaX = e.changedTouches[0].clientX - gestureStartX;
-  const deltaY = e.changedTouches[0].clientY - gestureStartY;
-  handleGestureSwipe(deltaX, deltaY);
-}, { passive: true });
+      document.addEventListener(
+        "touchend",
+        (e) => {
+          if (
+            e.target.closest(
+              "#scratch-canvas, .btn-no, .btn-yes, input, button",
+            )
+          )
+            return;
+          const deltaX = e.changedTouches[0].clientX - gestureStartX;
+          const deltaY = e.changedTouches[0].clientY - gestureStartY;
+          handleGestureSwipe(deltaX, deltaY);
+        },
+        { passive: true },
+      );
 
-// 2. Mouse Drag Slide (Desktop & Laptop)
-document.addEventListener('mousedown', e => {
-  if (e.target.closest('#scratch-canvas, .btn-no, .btn-yes, input, button, .nav-arr, .icon-btn, .reason-pill, .upload-pill')) return;
-  isMouseDragging = true;
-  mouseMovedSignificant = false;
-  gestureStartX = e.clientX;
-  gestureStartY = e.clientY;
-});
+      // 2. Mouse Drag Slide (Desktop & Laptop)
+      document.addEventListener("mousedown", (e) => {
+        if (
+          e.target.closest(
+            "#scratch-canvas, .btn-no, .btn-yes, input, button, .nav-arr, .icon-btn, .reason-pill, .upload-pill",
+          )
+        )
+          return;
+        isMouseDragging = true;
+        mouseMovedSignificant = false;
+        gestureStartX = e.clientX;
+        gestureStartY = e.clientY;
+      });
 
-document.addEventListener('mousemove', e => {
-  if (!isMouseDragging) return;
-  const dist = Math.hypot(e.clientX - gestureStartX, e.clientY - gestureStartY);
-  if (dist > 12) mouseMovedSignificant = true;
-});
+      document.addEventListener("mousemove", (e) => {
+        if (!isMouseDragging) return;
+        const dist = Math.hypot(
+          e.clientX - gestureStartX,
+          e.clientY - gestureStartY,
+        );
+        if (dist > 12) mouseMovedSignificant = true;
+      });
 
-document.addEventListener('mouseup', e => {
-  if (!isMouseDragging) return;
-  isMouseDragging = false;
-  if (!mouseMovedSignificant) return;
-  const deltaX = e.clientX - gestureStartX;
-  const deltaY = e.clientY - gestureStartY;
-  handleGestureSwipe(deltaX, deltaY);
-});
+      document.addEventListener("mouseup", (e) => {
+        if (!isMouseDragging) return;
+        isMouseDragging = false;
+        if (!mouseMovedSignificant) return;
+        const deltaX = e.clientX - gestureStartX;
+        const deltaY = e.clientY - gestureStartY;
+        handleGestureSwipe(deltaX, deltaY);
+      });
 
-// 3. Mouse Wheel / Trackpad Scroll Slide (Debounced)
-let wheelCooldown = false;
-document.addEventListener('wheel', e => {
-  if (wheelCooldown) return;
-  if (Math.abs(e.deltaY) > 25 || Math.abs(e.deltaX) > 25) {
-    wheelCooldown = true;
-    if (e.deltaY > 0 || e.deltaX > 0) {
-      nextScreen();
-    } else {
-      prevScreen();
-    }
-    setTimeout(() => { wheelCooldown = false; }, 550);
-  }
-}, { passive: true });
+      // 3. Mouse Wheel / Trackpad Scroll Slide (Debounced)
+      let wheelCooldown = false;
+      document.addEventListener(
+        "wheel",
+        (e) => {
+          if (wheelCooldown) return;
+          if (Math.abs(e.deltaY) > 25 || Math.abs(e.deltaX) > 25) {
+            wheelCooldown = true;
+            if (e.deltaY > 0 || e.deltaX > 0) {
+              nextScreen();
+            } else {
+              prevScreen();
+            }
+            setTimeout(() => {
+              wheelCooldown = false;
+            }, 550);
+          }
+        },
+        { passive: true },
+      );
 
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    3. VIRAL REACTIVE RUNAWAY "NO, I DON'T" BUTTON
 ────────────────────────────────────────────── */
-const noBtn = document.getElementById('btn-no');
-const yesBtn = document.getElementById('btn-yes');
-let dodgeCount = 0;
+      const noBtn = document.getElementById("btn-no");
+      const yesBtn = document.getElementById("btn-yes");
+      let dodgeCount = 0;
 
-const funnyQuotes = [
-  "No, i don't 🙈",
-  "Hey, wait! 🏃‍♀️",
-  "Can't touch this! 😜",
-  "You can't say No to Sowmik! 💕",
-  "Click 'Wanna See' please! 🥺",
-  "Still trying? No chance! 😂",
-  "Love is the only choice! 💍",
-  "Forever Sowmik's! 🥰"
-];
+      const funnyQuotes = [
+        "No, i don't 🙈",
+        "Hey, wait! 🏃‍♀️",
+        "Can't touch this! 😜",
+        "You can't say No to Sowmik! 💕",
+        "Click 'Wanna See' please! 🥺",
+        "Still trying? No chance! 😂",
+        "Love is the only choice! 💍",
+        "Forever Sowmik's! 🥰",
+      ];
 
-function resetNoButtonPosition() {
-  dodgeCount = 0;
-  noBtn.textContent = funnyQuotes[0];
-  noBtn.style.position = '';
-  noBtn.style.left = '';
-  noBtn.style.top = '';
-  noBtn.style.transform = '';
-}
+      function resetNoButtonPosition() {
+        dodgeCount = 0;
+        noBtn.textContent = funnyQuotes[0];
+        noBtn.style.position = "";
+        noBtn.style.left = "";
+        noBtn.style.top = "";
+        noBtn.style.transform = "";
+      }
 
-function moveNoButton() {
-  dodgeCount++;
-  noBtn.textContent = funnyQuotes[dodgeCount % funnyQuotes.length];
-  playWhooshSound();
+      function moveNoButton() {
+        dodgeCount++;
+        noBtn.textContent = funnyQuotes[dodgeCount % funnyQuotes.length];
+        playWhooshSound();
 
-  noBtn.style.position = 'fixed';
+        noBtn.style.position = "fixed";
 
-  const btnWidth = noBtn.offsetWidth || 140;
-  const btnHeight = noBtn.offsetHeight || 48;
-  const margin = 20;
+        const btnWidth = noBtn.offsetWidth || 140;
+        const btnHeight = noBtn.offsetHeight || 48;
+        const margin = 20;
 
-  const maxW = window.innerWidth - btnWidth - margin;
-  const maxH = window.innerHeight - btnHeight - margin;
+        const maxW = window.innerWidth - btnWidth - margin;
+        const maxH = window.innerHeight - btnHeight - margin;
 
-  const yesRect = yesBtn.getBoundingClientRect();
-  let randomX, randomY, attempts = 0;
+        const yesRect = yesBtn.getBoundingClientRect();
+        let randomX,
+          randomY,
+          attempts = 0;
 
-  do {
-    randomX = margin + Math.random() * (maxW - margin);
-    randomY = margin + Math.random() * (maxH - margin);
-    attempts++;
-  } while (
-    attempts < 15 &&
-    Math.abs(randomX - yesRect.left) < 130 &&
-    Math.abs(randomY - yesRect.top) < 70
-  );
+        do {
+          randomX = margin + Math.random() * (maxW - margin);
+          randomY = margin + Math.random() * (maxH - margin);
+          attempts++;
+        } while (
+          attempts < 15 &&
+          Math.abs(randomX - yesRect.left) < 130 &&
+          Math.abs(randomY - yesRect.top) < 70
+        );
 
-  const randomRotate = (Math.random() - 0.5) * 24;
-  noBtn.style.left = `${randomX}px`;
-  noBtn.style.top = `${randomY}px`;
-  noBtn.style.transform = `rotate(${randomRotate}deg) scale(0.96)`;
-}
+        const randomRotate = (Math.random() - 0.5) * 24;
+        noBtn.style.left = `${randomX}px`;
+        noBtn.style.top = `${randomY}px`;
+        noBtn.style.transform = `rotate(${randomRotate}deg) scale(0.96)`;
+      }
 
-// Proximity evasion
-document.addEventListener('mousemove', e => {
-  if (currentScreen !== 0) return;
-  const rect = noBtn.getBoundingClientRect();
-  const btnCenterX = rect.left + rect.width / 2;
-  const btnCenterY = rect.top + rect.height / 2;
-  const distance = Math.hypot(e.clientX - btnCenterX, e.clientY - btnCenterY);
+      // Proximity evasion
+      document.addEventListener("mousemove", (e) => {
+        if (currentScreen !== 0) return;
+        const rect = noBtn.getBoundingClientRect();
+        const btnCenterX = rect.left + rect.width / 2;
+        const btnCenterY = rect.top + rect.height / 2;
+        const distance = Math.hypot(
+          e.clientX - btnCenterX,
+          e.clientY - btnCenterY,
+        );
 
-  if (distance < 95) {
-    moveNoButton();
-  }
-});
+        if (distance < 95) {
+          moveNoButton();
+        }
+      });
 
-noBtn.addEventListener('mouseenter', moveNoButton);
-noBtn.addEventListener('mouseover', moveNoButton);
-noBtn.addEventListener('touchstart', e => {
-  e.preventDefault();
-  e.stopPropagation();
-  moveNoButton();
-}, { passive: false });
+      noBtn.addEventListener("mouseenter", moveNoButton);
+      noBtn.addEventListener("mouseover", moveNoButton);
+      noBtn.addEventListener(
+        "touchstart",
+        (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          moveNoButton();
+        },
+        { passive: false },
+      );
 
-noBtn.addEventListener('click', e => {
-  e.preventDefault();
-  e.stopPropagation();
-  moveNoButton();
-  return false;
-});
+      noBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        moveNoButton();
+        return false;
+      });
 
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    4. INTERACTIVE SCRATCH CARD LOGIC
 ────────────────────────────────────────────── */
-let scratchInitialized = false;
-function initScratchCard() {
-  if (scratchInitialized) return;
-  scratchInitialized = true;
+      let scratchInitialized = false;
+      function initScratchCard() {
+        if (scratchInitialized) return;
+        scratchInitialized = true;
 
-  const canvas = document.getElementById('scratch-canvas');
-  const container = document.getElementById('scratch-box');
-  const ctx = canvas.getContext('2d');
+        const canvas = document.getElementById("scratch-canvas");
+        const container = document.getElementById("scratch-box");
+        const ctx = canvas.getContext("2d");
 
-  canvas.width = container.offsetWidth;
-  canvas.height = container.offsetHeight;
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
 
-  const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-  grad.addColorStop(0, '#f2bac9');
-  grad.addColorStop(0.5, '#e58ea5');
-  grad.addColorStop(1, '#dfb36b');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const grad = ctx.createLinearGradient(
+          0,
+          0,
+          canvas.width,
+          canvas.height,
+        );
+        grad.addColorStop(0, "#f2bac9");
+        grad.addColorStop(0.5, "#e58ea5");
+        grad.addColorStop(1, "#dfb36b");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.fillStyle = '#fff';
-  ctx.font = '600 13px Montserrat';
-  ctx.textAlign = 'center';
-  ctx.fillText('✨ SCRATCH HERE ✨', canvas.width / 2, canvas.height / 2 + 5);
+        ctx.fillStyle = "#fff";
+        ctx.font = "600 13px Montserrat";
+        ctx.textAlign = "center";
+        ctx.fillText(
+          "✨ SCRATCH HERE ✨",
+          canvas.width / 2,
+          canvas.height / 2 + 5,
+        );
 
-  let isDrawing = false;
-  let isRevealed = false;
+        let isDrawing = false;
+        let isRevealed = false;
 
-  function scratch(x, y) {
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.beginPath();
-    ctx.arc(x, y, 22, 0, Math.PI * 2);
-    ctx.fill();
+        function scratch(x, y) {
+          ctx.globalCompositeOperation = "destination-out";
+          ctx.beginPath();
+          ctx.arc(x, y, 22, 0, Math.PI * 2);
+          ctx.fill();
 
-    if (!isRevealed && Math.random() < 0.25) {
-      checkScratchCompletion();
-    }
-  }
+          if (!isRevealed && Math.random() < 0.25) {
+            checkScratchCompletion();
+          }
+        }
 
-  function checkScratchCompletion() {
-    try {
-      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      let transparentCount = 0;
-      for (let i = 3; i < imgData.data.length; i += 16) {
-        if (imgData.data[i] === 0) transparentCount++;
+        function checkScratchCompletion() {
+          try {
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            let transparentCount = 0;
+            for (let i = 3; i < imgData.data.length; i += 16) {
+              if (imgData.data[i] === 0) transparentCount++;
+            }
+            const totalSampled = imgData.data.length / 16;
+            if (transparentCount / totalSampled > 0.45) {
+              isRevealed = true;
+              canvas.style.transition = "opacity 0.6s ease";
+              canvas.style.opacity = "0";
+              setTimeout(() => {
+                canvas.style.display = "none";
+              }, 600);
+              playRomanticChime();
+              triggerCelebration();
+            }
+          } catch (e) {}
+        }
+
+        function getPos(e) {
+          const rect = canvas.getBoundingClientRect();
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+          return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        canvas.addEventListener("mousedown", (e) => {
+          isDrawing = true;
+          const p = getPos(e);
+          scratch(p.x, p.y);
+        });
+        window.addEventListener("mouseup", () => {
+          isDrawing = false;
+        });
+        canvas.addEventListener("mousemove", (e) => {
+          if (isDrawing) {
+            const p = getPos(e);
+            scratch(p.x, p.y);
+          }
+        });
+
+        canvas.addEventListener(
+          "touchstart",
+          (e) => {
+            isDrawing = true;
+            const p = getPos(e);
+            scratch(p.x, p.y);
+          },
+          { passive: true },
+        );
+        window.addEventListener("touchend", () => {
+          isDrawing = false;
+        });
+        canvas.addEventListener(
+          "touchmove",
+          (e) => {
+            if (isDrawing) {
+              const p = getPos(e);
+              scratch(p.x, p.y);
+            }
+          },
+          { passive: true },
+        );
       }
-      const totalSampled = imgData.data.length / 16;
-      if (transparentCount / totalSampled > 0.45) {
-        isRevealed = true;
-        canvas.style.transition = 'opacity 0.6s ease';
-        canvas.style.opacity = '0';
-        setTimeout(() => { canvas.style.display = 'none'; }, 600);
-        playRomanticChime();
-        triggerCelebration();
-      }
-    } catch (e) {}
-  }
 
-  function getPos(e) {
-    const rect = canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    return { x: clientX - rect.left, y: clientY - rect.top };
-  }
-
-  canvas.addEventListener('mousedown', e => { isDrawing = true; const p = getPos(e); scratch(p.x, p.y); });
-  window.addEventListener('mouseup', () => { isDrawing = false; });
-  canvas.addEventListener('mousemove', e => { if (isDrawing) { const p = getPos(e); scratch(p.x, p.y); } });
-
-  canvas.addEventListener('touchstart', e => { isDrawing = true; const p = getPos(e); scratch(p.x, p.y); }, { passive: true });
-  window.addEventListener('touchend', () => { isDrawing = false; });
-  canvas.addEventListener('touchmove', e => { if (isDrawing) { const p = getPos(e); scratch(p.x, p.y); } }, { passive: true });
-}
-
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    5. LOVE REASONS GENERATOR (SWEETALERT2 WITH DRAINING TIMER)
 ────────────────────────────────────────────── */
-const loveReasons = [
-  "Your smile always turns my hardest days into warmth.",
-  "The way your eyes light up when you're truly excited.",
-  "How safe and peaceful my heart feels beside you.",
-  "The quiet laughter we share that only we understand.",
-  "The kindness and patience you show every day.",
-  "How you make our home feel like heaven.",
-  "Simply because you are Mohua, my soulmate forever."
-];
-let reasonIdx = 0;
+      const loveReasons = [
+        "Your smile always turns my hardest days into warmth.",
+        "The way your eyes light up when you're truly excited.",
+        "How safe and peaceful my heart feels beside you.",
+        "The quiet laughter we share that only we understand.",
+        "The kindness and patience you show every day.",
+        "How you make our home feel like heaven.",
+        "Simply because you are Mohua, my soulmate forever.",
+      ];
+      let reasonIdx = 0;
 
-function popLoveReason(e) {
-  if (e) e.stopPropagation();
-  playRomanticChime();
+      function popLoveReason(e) {
+        if (e) e.stopPropagation();
+        playRomanticChime();
 
-  const text = loveReasons[reasonIdx % loveReasons.length];
-  reasonIdx++;
+        const text = loveReasons[reasonIdx % loveReasons.length];
+        reasonIdx++;
 
-  if (window.Swal) {
-    Swal.fire({
-      title: '<span style="font-family:\'Great Vibes\', cursive; font-size: 2.4rem; color: #a82e52; display:block; margin-bottom: 2px;">Why I Love You 💕</span>',
-      html: `<div style="font-family:'Playfair Display', serif; font-style: italic; font-size: 1.18rem; color: #4a1525; line-height: 1.7; padding: 8px 12px;">"${text}"</div>`,
-      showConfirmButton: false,
-      timer: 3800,
-      timerProgressBar: true,
-      customClass: {
-        popup: 'romantic-swal-popup',
-        timerProgressBar: 'romantic-swal-timer'
+        if (window.Swal) {
+          Swal.fire({
+            title:
+              "<span style=\"font-family:'Great Vibes', cursive; font-size: 2.4rem; color: #a82e52; display:block; margin-bottom: 2px;\">Why I Love You 💕</span>",
+            html: `<div style="font-family:'Playfair Display', serif; font-style: italic; font-size: 1.18rem; color: #4a1525; line-height: 1.7; padding: 8px 12px;">"${text}"</div>`,
+            showConfirmButton: false,
+            timer: 3800,
+            timerProgressBar: true,
+            customClass: {
+              popup: "romantic-swal-popup",
+              timerProgressBar: "romantic-swal-timer",
+            },
+          });
+        }
       }
-    });
-  }
-}
 
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    6. 3D GYROSCOPE & MOUSE TILT PARALLAX EFFECT
 ────────────────────────────────────────────── */
-document.addEventListener('mousemove', e => {
-  const cards = document.querySelectorAll('.screen.active .tilt-card');
-  if (!cards.length) return;
+      document.addEventListener("mousemove", (e) => {
+        const cards = document.querySelectorAll(".screen.active .tilt-card");
+        if (!cards.length) return;
 
-  const cx = window.innerWidth / 2;
-  const cy = window.innerHeight / 2;
-  const rotX = ((e.clientY - cy) / cy) * -9;
-  const rotY = ((e.clientX - cx) / cx) * 9;
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        const rotX = ((e.clientY - cy) / cy) * -9;
+        const rotY = ((e.clientX - cx) / cx) * 9;
 
-  cards.forEach(card => {
-    card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-  });
-});
+        cards.forEach((card) => {
+          card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        });
+      });
 
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    7. FAIRY DUST / SPARKLE CURSOR TRAIL
 ────────────────────────────────────────────── */
-const sCanvas = document.getElementById('sparkle-canvas');
-const sCtx = sCanvas.getContext('2d');
-let sW, sH;
-function resizeSparkle() {
-  sW = sCanvas.width = window.innerWidth;
-  sH = sCanvas.height = window.innerHeight;
-}
-resizeSparkle();
-window.addEventListener('resize', resizeSparkle);
+      const sCanvas = document.getElementById("sparkle-canvas");
+      const sCtx = sCanvas.getContext("2d");
+      let sW, sH;
+      function resizeSparkle() {
+        sW = sCanvas.width = window.innerWidth;
+        sH = sCanvas.height = window.innerHeight;
+      }
+      resizeSparkle();
+      window.addEventListener("resize", resizeSparkle);
 
-const sparkles = [];
-function addSparkle(x, y) {
-  const colors = ['#dfb36b', '#f88fa9', '#fff', '#e55c82'];
-  for (let i = 0; i < 2; i++) {
-    sparkles.push({
-      x: x + (Math.random() - 0.5) * 16,
-      y: y + (Math.random() - 0.5) * 16,
-      size: 2 + Math.random() * 4,
-      vx: (Math.random() - 0.5) * 1.5,
-      vy: (Math.random() - 0.5) * 1.5 - 0.8,
-      alpha: 1,
-      color: colors[Math.floor(Math.random() * colors.length)]
-    });
-  }
-}
-window.addEventListener('mousemove', e => addSparkle(e.clientX, e.clientY));
-window.addEventListener('touchmove', e => {
-  if (e.touches && e.touches[0]) addSparkle(e.touches[0].clientX, e.touches[0].clientY);
-}, { passive: true });
+      const sparkles = [];
+      function addSparkle(x, y) {
+        const colors = ["#dfb36b", "#f88fa9", "#fff", "#e55c82"];
+        for (let i = 0; i < 2; i++) {
+          sparkles.push({
+            x: x + (Math.random() - 0.5) * 16,
+            y: y + (Math.random() - 0.5) * 16,
+            size: 2 + Math.random() * 4,
+            vx: (Math.random() - 0.5) * 1.5,
+            vy: (Math.random() - 0.5) * 1.5 - 0.8,
+            alpha: 1,
+            color: colors[Math.floor(Math.random() * colors.length)],
+          });
+        }
+      }
+      window.addEventListener("mousemove", (e) =>
+        addSparkle(e.clientX, e.clientY),
+      );
+      window.addEventListener(
+        "touchmove",
+        (e) => {
+          if (e.touches && e.touches[0])
+            addSparkle(e.touches[0].clientX, e.touches[0].clientY);
+        },
+        { passive: true },
+      );
 
-function renderSparkles() {
-  sCtx.clearRect(0, 0, sW, sH);
-  for (let i = sparkles.length - 1; i >= 0; i--) {
-    const s = sparkles[i];
-    s.x += s.vx;
-    s.y += s.vy;
-    s.alpha -= 0.024;
-    if (s.alpha <= 0) {
-      sparkles.splice(i, 1);
-      continue;
-    }
-    sCtx.save();
-    sCtx.globalAlpha = s.alpha;
-    sCtx.fillStyle = s.color;
-    sCtx.beginPath();
-    sCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-    sCtx.fill();
-    sCtx.restore();
-  }
-  requestAnimationFrame(renderSparkles);
-}
-renderSparkles();
+      function renderSparkles() {
+        sCtx.clearRect(0, 0, sW, sH);
+        for (let i = sparkles.length - 1; i >= 0; i--) {
+          const s = sparkles[i];
+          s.x += s.vx;
+          s.y += s.vy;
+          s.alpha -= 0.024;
+          if (s.alpha <= 0) {
+            sparkles.splice(i, 1);
+            continue;
+          }
+          sCtx.save();
+          sCtx.globalAlpha = s.alpha;
+          sCtx.fillStyle = s.color;
+          sCtx.beginPath();
+          sCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+          sCtx.fill();
+          sCtx.restore();
+        }
+        requestAnimationFrame(renderSparkles);
+      }
+      renderSparkles();
 
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    8. PHOTO UPLOAD (WITH LOCALSTORAGE PERSISTENCE)
 ────────────────────────────────────────────── */
-function triggerPhotoUpload() {
-  document.getElementById('photo-upload').click();
-}
+      function triggerPhotoUpload() {
+        document.getElementById("photo-upload").click();
+      }
 
-function loadSavedPhoto() {
-  try {
-    const saved = localStorage.getItem('sowmik_mohua_anniversary_photo');
-    if (saved) {
-      const frame = document.getElementById('photo-frame');
-      frame.innerHTML = `<img src="${saved}" alt="Sowmik & Mohua"/>`;
-    }
-  } catch (e) {}
-}
-loadSavedPhoto();
+      function loadSavedPhoto() {
+        try {
+          const saved = localStorage.getItem("sowmik_mohua_anniversary_photo");
+          if (saved) {
+            const frame = document.getElementById("photo-frame");
+            frame.innerHTML = `<img src="${saved}" alt="Sowmik & Mohua"/>`;
+          }
+        } catch (e) {}
+      }
+      loadSavedPhoto();
 
-document.getElementById('photo-upload').addEventListener('change', function() {
-  const file = this.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const dataUrl = e.target.result;
-    const frame = document.getElementById('photo-frame');
-    frame.innerHTML = `<img src="${dataUrl}" alt="Sowmik & Mohua"/>`;
-    try {
-      localStorage.setItem('sowmik_mohua_anniversary_photo', dataUrl);
-    } catch (err) {}
-    playRomanticChime();
-  };
-  reader.readAsDataURL(file);
-});
+      document
+        .getElementById("photo-upload")
+        .addEventListener("change", function () {
+          const file = this.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const dataUrl = e.target.result;
+            const frame = document.getElementById("photo-frame");
+            frame.innerHTML = `<img src="${dataUrl}" alt="Sowmik & Mohua"/>`;
+            try {
+              localStorage.setItem("sowmik_mohua_anniversary_photo", dataUrl);
+            } catch (err) {}
+            playRomanticChime();
+          };
+          reader.readAsDataURL(file);
+        });
 
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    9. LIVE ANNIVERSARY COUNTER
 ────────────────────────────────────────────── */
-const ANNIVERSARY_DATE = new Date('2025-11-10T00:00:00');
-function updateCounter() {
-  const diff = Date.now() - ANNIVERSARY_DATE.getTime();
-  const totalSec = Math.floor(Math.max(0, diff) / 1000);
-  const s = totalSec % 60;
-  const m = Math.floor(totalSec / 60) % 60;
-  const h = Math.floor(totalSec / 3600) % 24;
-  const d = Math.floor(totalSec / 86400);
+      const ANNIVERSARY_DATE = new Date("2025-11-10T00:00:00");
+      function updateCounter() {
+        const diff = Date.now() - ANNIVERSARY_DATE.getTime();
+        const totalSec = Math.floor(Math.max(0, diff) / 1000);
+        const s = totalSec % 60;
+        const m = Math.floor(totalSec / 60) % 60;
+        const h = Math.floor(totalSec / 3600) % 24;
+        const d = Math.floor(totalSec / 86400);
 
-  document.getElementById('cnt-days').textContent = d;
-  document.getElementById('cnt-hours').textContent = h.toString().padStart(2, '0');
-  document.getElementById('cnt-mins').textContent = m.toString().padStart(2, '0');
-  document.getElementById('cnt-secs').textContent = s.toString().padStart(2, '0');
-}
-updateCounter();
-setInterval(updateCounter, 1000);
+        document.getElementById("cnt-days").textContent = d;
+        document.getElementById("cnt-hours").textContent = h
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("cnt-mins").textContent = m
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("cnt-secs").textContent = s
+          .toString()
+          .padStart(2, "0");
+      }
+      updateCounter();
+      setInterval(updateCounter, 1000);
 
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    10. MUSIC TOGGLE (BUILT-IN SYNTH + MP3 FALLBACK)
 ────────────────────────────────────────────── */
-const bgMusic = document.getElementById('bg-music');
-const musicBtn = document.getElementById('music-btn');
+      const bgMusic = document.getElementById("bg-music");
+      const musicBtn = document.getElementById("music-btn");
 
-musicBtn.addEventListener('click', e => {
-  e.stopPropagation();
-  toggleAmbientMusic();
-  if (isAmbientPlaying) {
-    bgMusic.play().catch(() => {});
-  } else {
-    bgMusic.pause();
-  }
-});
+      musicBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleAmbientMusic();
+        if (isAmbientPlaying) {
+          bgMusic.play().catch(() => {});
+        } else {
+          bgMusic.pause();
+        }
+      });
 
-document.addEventListener('click', () => {
-  if (!isAmbientPlaying) {
-    toggleAmbientMusic();
-  }
-}, { once: true });
+      document.addEventListener(
+        "click",
+        () => {
+          if (!isAmbientPlaying) {
+            toggleAmbientMusic();
+          }
+        },
+        { once: true },
+      );
 
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    11. SOFT FLOATING PETALS & HEARTS
 ────────────────────────────────────────────── */
-const petalSymbols = ['🌸', '🌺', '🌹', '💮', '✿', '❀'];
-for (let i = 0; i < 20; i++) {
-  const p = document.createElement('div');
-  p.className = 'petal';
-  p.textContent = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
-  p.style.left = Math.random() * 100 + 'vw';
-  p.style.fontSize = (0.7 + Math.random() * 0.7) + 'rem';
-  p.style.animationDuration = (8 + Math.random() * 8) + 's';
-  p.style.animationDelay = (Math.random() * 10) + 's';
-  document.body.appendChild(p);
-}
+      const petalSymbols = ["🌸", "🌺", "🌹", "💮", "✿", "❀"];
+      for (let i = 0; i < 20; i++) {
+        const p = document.createElement("div");
+        p.className = "petal";
+        p.textContent =
+          petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.fontSize = 0.7 + Math.random() * 0.7 + "rem";
+        p.style.animationDuration = 8 + Math.random() * 8 + "s";
+        p.style.animationDelay = Math.random() * 10 + "s";
+        document.body.appendChild(p);
+      }
 
-// Heart particle canvas
-const pCanvas = document.getElementById('particle-canvas');
-const pCtx = pCanvas.getContext('2d');
-let pW, pH;
+      // Heart particle canvas
+      const pCanvas = document.getElementById("particle-canvas");
+      const pCtx = pCanvas.getContext("2d");
+      let pW, pH;
 
-function resizeCanvas() {
-  pW = pCanvas.width = window.innerWidth;
-  pH = pCanvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+      function resizeCanvas() {
+        pW = pCanvas.width = window.innerWidth;
+        pH = pCanvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
 
-const heartPalette = ['#e55c82', '#f88fa9', '#dfb36b', '#f5b5c5', '#d64a70'];
-class HeartParticle {
-  constructor() { this.reset(true); }
-  reset(init) {
-    this.x = Math.random() * pW;
-    this.y = init ? Math.random() * pH : pH + 20;
-    this.size = 5 + Math.random() * 7;
-    this.vy = -(0.3 + Math.random() * 0.7);
-    this.vx = (Math.random() - 0.5) * 0.4;
-    this.opacity = 0.2 + Math.random() * 0.4;
-    this.color = heartPalette[Math.floor(Math.random() * heartPalette.length)];
-    this.angle = Math.random() * Math.PI * 2;
-    this.angleSpeed = 0.015 + Math.random() * 0.02;
-  }
-  update() {
-    this.angle += this.angleSpeed;
-    this.x += Math.sin(this.angle) * 0.5 + this.vx;
-    this.y += this.vy;
-    if (this.y < -30) this.reset(false);
-  }
-  draw() {
-    pCtx.save();
-    pCtx.globalAlpha = this.opacity;
-    pCtx.font = `${this.size * 2.2}px serif`;
-    pCtx.fillStyle = this.color;
-    pCtx.textAlign = 'center';
-    pCtx.fillText('♥', this.x, this.y);
-    pCtx.restore();
-  }
-}
+      const heartPalette = [
+        "#e55c82",
+        "#f88fa9",
+        "#dfb36b",
+        "#f5b5c5",
+        "#d64a70",
+      ];
+      class HeartParticle {
+        constructor() {
+          this.reset(true);
+        }
+        reset(init) {
+          this.x = Math.random() * pW;
+          this.y = init ? Math.random() * pH : pH + 20;
+          this.size = 5 + Math.random() * 7;
+          this.vy = -(0.3 + Math.random() * 0.7);
+          this.vx = (Math.random() - 0.5) * 0.4;
+          this.opacity = 0.2 + Math.random() * 0.4;
+          this.color =
+            heartPalette[Math.floor(Math.random() * heartPalette.length)];
+          this.angle = Math.random() * Math.PI * 2;
+          this.angleSpeed = 0.015 + Math.random() * 0.02;
+        }
+        update() {
+          this.angle += this.angleSpeed;
+          this.x += Math.sin(this.angle) * 0.5 + this.vx;
+          this.y += this.vy;
+          if (this.y < -30) this.reset(false);
+        }
+        draw() {
+          pCtx.save();
+          pCtx.globalAlpha = this.opacity;
+          pCtx.font = `${this.size * 2.2}px serif`;
+          pCtx.fillStyle = this.color;
+          pCtx.textAlign = "center";
+          pCtx.fillText("♥", this.x, this.y);
+          pCtx.restore();
+        }
+      }
 
-const particles = [];
-for (let i = 0; i < 35; i++) particles.push(new HeartParticle());
+      const particles = [];
+      for (let i = 0; i < 35; i++) particles.push(new HeartParticle());
 
-function renderParticles() {
-  pCtx.clearRect(0, 0, pW, pH);
-  particles.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(renderParticles);
-}
-renderParticles();
+      function renderParticles() {
+        pCtx.clearRect(0, 0, pW, pH);
+        particles.forEach((p) => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(renderParticles);
+      }
+      renderParticles();
 
-/* ──────────────────────────────────────────────
+      /* ──────────────────────────────────────────────
    12. CELEBRATION FIREWORKS / CONFETTI
 ────────────────────────────────────────────── */
-const fCanvas = document.getElementById('firework-canvas');
-const fCtx = fCanvas.getContext('2d');
-let fireworks = [];
-let fireworkActive = false;
+      const fCanvas = document.getElementById("firework-canvas");
+      const fCtx = fCanvas.getContext("2d");
+      let fireworks = [];
+      let fireworkActive = false;
 
-class ConfettiPiece {
-  constructor() {
-    this.x = Math.random() * pW;
-    this.y = Math.random() * (pH * 0.45);
-    this.particles = [];
-    const count = 45;
-    const baseHue = Math.random() * 360;
-    for (let i = 0; i < count; i++) {
-      const angle = (2 * Math.PI / count) * i;
-      const speed = 1.2 + Math.random() * 4.5;
-      this.particles.push({
-        x: this.x, y: this.y,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
-        alpha: 1,
-        color: `hsl(${baseHue + (i % 3) * 20}, 85%, 65%)`
-      });
-    }
-  }
-  update() {
-    this.particles.forEach(p => {
-      p.x += p.vx; p.y += p.vy;
-      p.vy += 0.05; p.vx *= 0.98;
-      p.alpha -= 0.014;
-    });
-    this.particles = this.particles.filter(p => p.alpha > 0);
-  }
-  draw() {
-    this.particles.forEach(p => {
-      fCtx.save();
-      fCtx.globalAlpha = p.alpha;
-      fCtx.fillStyle = p.color;
-      fCtx.beginPath();
-      fCtx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
-      fCtx.fill();
-      fCtx.restore();
-    });
-  }
-  get isDone() { return this.particles.length === 0; }
-}
+      class ConfettiPiece {
+        constructor() {
+          this.x = Math.random() * pW;
+          this.y = Math.random() * (pH * 0.45);
+          this.particles = [];
+          const count = 45;
+          const baseHue = Math.random() * 360;
+          for (let i = 0; i < count; i++) {
+            const angle = ((2 * Math.PI) / count) * i;
+            const speed = 1.2 + Math.random() * 4.5;
+            this.particles.push({
+              x: this.x,
+              y: this.y,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed,
+              alpha: 1,
+              color: `hsl(${baseHue + (i % 3) * 20}, 85%, 65%)`,
+            });
+          }
+        }
+        update() {
+          this.particles.forEach((p) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.05;
+            p.vx *= 0.98;
+            p.alpha -= 0.014;
+          });
+          this.particles = this.particles.filter((p) => p.alpha > 0);
+        }
+        draw() {
+          this.particles.forEach((p) => {
+            fCtx.save();
+            fCtx.globalAlpha = p.alpha;
+            fCtx.fillStyle = p.color;
+            fCtx.beginPath();
+            fCtx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+            fCtx.fill();
+            fCtx.restore();
+          });
+        }
+        get isDone() {
+          return this.particles.length === 0;
+        }
+      }
 
-function triggerCelebration() {
-  fCanvas.width = pW;
-  fCanvas.height = pH;
-  fCanvas.style.display = 'block';
-  fireworkActive = true;
-  fireworks = [];
+      function triggerCelebration() {
+        fCanvas.width = pW;
+        fCanvas.height = pH;
+        fCanvas.style.display = "block";
+        fireworkActive = true;
+        fireworks = [];
 
-  let waves = 0;
-  const interval = setInterval(() => {
-    fireworks.push(new ConfettiPiece());
-    waves++;
-    if (waves >= 8) clearInterval(interval);
-  }, 350);
+        let waves = 0;
+        const interval = setInterval(() => {
+          fireworks.push(new ConfettiPiece());
+          waves++;
+          if (waves >= 8) clearInterval(interval);
+        }, 350);
 
-  function loopCelebration() {
-    fCtx.clearRect(0, 0, pW, pH);
-    fireworks.forEach(f => { f.update(); f.draw(); });
-    fireworks = fireworks.filter(f => !f.isDone);
-    if (fireworkActive) requestAnimationFrame(loopCelebration);
-    else { fCtx.clearRect(0, 0, pW, pH); fCanvas.style.display = 'none'; }
-  }
-  loopCelebration();
-  setTimeout(() => { fireworkActive = false; }, 5500);
-}
+        function loopCelebration() {
+          fCtx.clearRect(0, 0, pW, pH);
+          fireworks.forEach((f) => {
+            f.update();
+            f.draw();
+          });
+          fireworks = fireworks.filter((f) => !f.isDone);
+          if (fireworkActive) requestAnimationFrame(loopCelebration);
+          else {
+            fCtx.clearRect(0, 0, pW, pH);
+            fCanvas.style.display = "none";
+          }
+        }
+        loopCelebration();
+        setTimeout(() => {
+          fireworkActive = false;
+        }, 5500);
+      }
 
-function shareAnniversary() {
-  if (navigator.share) {
-    navigator.share({
-      title: 'Happy 1st Anniversary — Sowmik & Mohua 💕',
-      text: 'Celebrating one year of eternal love! Sowmik & Mohua 💍',
-      url: window.location.href
-    }).catch(() => {});
-  } else {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      alert('Link copied to clipboard! Share with love 💕');
-    }).catch(() => {});
-  }
-}
-</script>
-</body>
+      function shareAnniversary() {
+        if (navigator.share) {
+          navigator
+            .share({
+              title: "Happy 1st Anniversary — Sowmik & Mohua 💕",
+              text: "Celebrating one year of eternal love! Sowmik & Mohua 💍",
+              url: window.location.href,
+            })
+            .catch(() => {});
+        } else {
+          navigator.clipboard
+            .writeText(window.location.href)
+            .then(() => {
+              alert("Link copied to clipboard! Share with love 💕");
+            })
+            .catch(() => {});
+        }
+      }
+    </script>
+  </body>
 </html>

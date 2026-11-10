@@ -480,16 +480,41 @@
         animation: spinCounter 9s linear infinite;
         transition: all 0.5s ease;
       }
-      .ring-icon {
+      .ring-orbit-item {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 46px;
+        margin-top: -24px;
+        margin-left: -24px;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 44px;
         line-height: 1;
-        animation: heartbeat 1.6s ease-in-out infinite;
-        filter: drop-shadow(0 6px 14px rgba(214, 74, 112, 0.35));
-        transition: all 0.4s ease;
+        z-index: 12;
+        pointer-events: none;
+        transform: rotate(0deg) translateY(-84px) rotate(0deg);
+        animation: ringOrbit 8s linear infinite;
+        transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2), opacity 0.4s ease, filter 0.4s ease;
+        filter: drop-shadow(0 4px 12px rgba(214, 74, 112, 0.4));
+      }
+      @keyframes ringOrbit {
+        0%   { transform: rotate(0deg) translateY(-84px) rotate(0deg); }
+        100% { transform: rotate(360deg) translateY(-84px) rotate(-360deg); }
+      }
+
+      /* When tapped/holding or proposed: ring stops orbiting and glides smoothly into the EXACT DEAD CENTER! */
+      .ring-box.holding .ring-orbit-item,
+      .ring-box.proposed .ring-orbit-item {
+        animation: none !important;
+        transform: rotate(0deg) translateY(0px) rotate(0deg) scale(1.3) !important;
+        filter: drop-shadow(0 0 22px rgba(223, 179, 107, 0.95)), drop-shadow(0 0 40px rgba(214, 74, 112, 0.7));
+      }
+      .ring-box.proposed .ring-orbit-item {
+        opacity: 0;
+        transition-delay: 0.3s;
       }
 
       /* Engagement Reveal Inside the Ring Circle */
@@ -520,10 +545,6 @@
       }
       .ring-box.proposed .ring-inner {
         opacity: 0.3;
-      }
-      .ring-box.proposed .ring-icon {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0);
       }
 
       @keyframes ringGlowPulse {
@@ -570,23 +591,38 @@
       }
 
       .ring-tap-hint {
-        font-size: 0.72rem;
+        font-size: 0.75rem;
         font-weight: 600;
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--rose-deep);
-        padding: 7px 20px;
+        padding: 8px 22px;
         border-radius: 30px;
-        background: rgba(255, 255, 255, 0.78);
-        border: 1px solid var(--rose-soft);
+        background: rgba(255, 255, 255, 0.85);
+        border: 1.5px solid var(--rose-soft);
         box-shadow: 0 4px 14px rgba(214, 74, 112, 0.1);
         margin-bottom: 20px;
         transition: all 0.3s ease;
         animation: hintBlink 2s infinite alternate;
       }
       @keyframes hintBlink {
-        0% { opacity: 0.8; transform: translateY(0); }
-        100% { opacity: 1; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(214, 74, 112, 0.2); }
+        0% { opacity: 0.85; transform: translateY(0); }
+        100% { opacity: 1; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(214, 74, 112, 0.22); }
+      }
+
+      @keyframes shakeEl {
+        0%, 100% { transform: translateX(0); }
+        20%, 60% { transform: translateX(-7px); }
+        40%, 80% { transform: translateX(7px); }
+      }
+      .shake-hint {
+        animation: shakeEl 0.5s ease !important;
+        border-color: var(--rose-primary) !important;
+        color: var(--rose-primary) !important;
+        box-shadow: 0 0 20px rgba(214, 74, 112, 0.4) !important;
+      }
+      .shake-ring {
+        animation: shakeEl 0.5s ease !important;
       }
       @keyframes spinClockwise {
         to {
@@ -1005,7 +1041,7 @@
             </svg>
             <div class="ring-spin"></div>
             <div class="ring-inner"></div>
-            <div class="ring-icon">💍</div>
+            <div class="ring-orbit-item" id="ring-orbit-item">💍</div>
 
             <!-- Engagement Reveal Layer Inside Ring -->
             <div class="engagement-layer" id="engagement-layer">
@@ -1018,7 +1054,7 @@
             </div>
           </div>
           <div class="ring-tap-hint" id="ring-hint">
-            <span>✨</span> Tap &amp; Hold to Wear the Ring <span>💍</span>
+            <span>✨</span> Tap with your ring finger <span>💍</span>
           </div>
         </div>
         <h2 class="title-script" style="font-size: clamp(2.6rem, 8vw, 4.2rem)">
@@ -1309,6 +1345,21 @@
 
       // Gate Lock State: Screen 0 can ONLY be advanced by clicking "Wanna See"
       let hasUnlockedGate = false;
+      // Screen 1 (Ring) can ONLY be advanced after tapping with ring finger
+      let hasWornRing = false;
+
+      function shakeRingPrompt() {
+        const hint = document.getElementById("ring-hint");
+        const ringBox = document.getElementById("ring-box");
+        if (hint) {
+          hint.classList.add("shake-hint");
+          setTimeout(() => hint.classList.remove("shake-hint"), 600);
+        }
+        if (ringBox) {
+          ringBox.classList.add("shake-ring");
+          setTimeout(() => ringBox.classList.remove("shake-ring"), 600);
+        }
+      }
 
       function unlockGateAndProceed() {
         hasUnlockedGate = true;
@@ -1324,6 +1375,10 @@
         dot.id = "dot-" + i;
         dot.addEventListener("click", () => {
           if (currentScreen === 0 && !hasUnlockedGate) return;
+          if (currentScreen === 1 && i > 1 && !hasWornRing) {
+            shakeRingPrompt();
+            return;
+          }
           goToScreen(i);
         });
         dotsContainer.appendChild(dot);
@@ -1334,18 +1389,25 @@
         document
           .getElementById("arr-left")
           .classList.toggle("hide", currentScreen === 0);
-        // STRICT: On screen 0, Right arrow MUST BE HIDDEN so no one can skip the question!
+        // Right arrow: Hidden on screen 0, hidden on screen 1 until ring is worn, and hidden on final screen
+        const hideRight = (currentScreen === 0) || (currentScreen === 1 && !hasWornRing) || (currentScreen === totalScreens - 1);
         document
           .getElementById("arr-right")
-          .classList.toggle("hide", currentScreen === 0 || currentScreen === totalScreens - 1);
+          .classList.toggle("hide", hideRight);
         // Hide dots on screen 0
         dotsContainer.style.display = currentScreen === 0 ? "none" : "flex";
       }
       updateNavControls();
 
       function goToScreen(targetIndex) {
-        // STRICT LOCK: Unless "Wanna See" was clicked, NEVER leave screen 0!
+        // STRICT LOCK 1: Unless "Wanna See" was clicked, NEVER leave screen 0!
         if (currentScreen === 0 && targetIndex > 0 && !hasUnlockedGate) {
+          return;
+        }
+
+        // STRICT LOCK 2: Unless Ring is worn, NEVER leave screen 1!
+        if (currentScreen === 1 && targetIndex > 1 && !hasWornRing) {
+          shakeRingPrompt();
           return;
         }
 
@@ -1376,6 +1438,7 @@
         // If returned to screen 0, re-lock the gate
         if (currentScreen === 0) {
           hasUnlockedGate = false;
+          hasWornRing = false;
           resetNoButtonPosition();
         }
 
@@ -1395,15 +1458,23 @@
 
       function nextScreen() {
         if (currentScreen === 0 && !hasUnlockedGate) return;
+        if (currentScreen === 1 && !hasWornRing) {
+          shakeRingPrompt();
+          return;
+        }
         goToScreen(currentScreen + 1);
       }
       function prevScreen() {
         goToScreen(currentScreen - 1);
       }
 
-      // Keyboard navigation (Blocked on Screen 0)
+      // Keyboard navigation (Blocked on Screen 0 and Screen 1)
       document.addEventListener("keydown", (e) => {
         if (currentScreen === 0 && !hasUnlockedGate) return;
+        if (currentScreen === 1 && (e.key === "ArrowRight" || e.key === " ") && !hasWornRing) {
+          shakeRingPrompt();
+          return;
+        }
         if (e.key === "ArrowRight" || e.key === " ") nextScreen();
         if (e.key === "ArrowLeft") prevScreen();
       });
@@ -1417,8 +1488,13 @@
       let mouseMovedSignificant = false;
 
       function handleGestureSwipe(deltaX, deltaY) {
-        // Block swiping on Screen 0!
+        // Block swiping forward on Screen 0!
         if (currentScreen === 0 && !hasUnlockedGate) return;
+        // Block swiping forward on Screen 1 until ring is worn!
+        if (currentScreen === 1 && deltaX < 0 && !hasWornRing) {
+          shakeRingPrompt();
+          return;
+        }
         if (
           Math.abs(deltaX) > 35 &&
           Math.abs(deltaX) > Math.abs(deltaY) * 0.7
@@ -1539,9 +1615,16 @@
           ringChargeBar.style.strokeDashoffset = "0";
         }
 
+        // UNLOCK SCREEN 2: Ring has been successfully worn!
+        hasWornRing = true;
+        updateNavControls();
+
         playEngagementChime();
 
-        if (ringBox) ringBox.classList.add("proposed");
+        if (ringBox) {
+          ringBox.classList.add("holding");
+          ringBox.classList.add("proposed");
+        }
         if (ringHint) {
           ringHint.innerHTML = "<span>💖</span> She Said Yes! Forever &amp; Always <span>💍</span>";
           ringHint.style.borderColor = "var(--rose-primary)";
@@ -1564,10 +1647,13 @@
           goToScreen(2);
           setTimeout(() => {
             isProposing = false;
-            if (ringBox) ringBox.classList.remove("proposed");
+            if (ringBox) {
+              ringBox.classList.remove("proposed");
+              ringBox.classList.remove("holding");
+            }
             if (ringChargeBar) ringChargeBar.style.strokeDashoffset = "528";
             if (ringHint) {
-              ringHint.innerHTML = "<span>✨</span> Tap &amp; Hold to Wear the Ring <span>💍</span>";
+              ringHint.innerHTML = "<span>✨</span> Tap with your ring finger <span>💍</span>";
               ringHint.style.borderColor = "";
               ringHint.style.color = "";
               ringHint.style.background = "";
@@ -1579,6 +1665,7 @@
       function startRingHold(e) {
         if (currentScreen !== 1 || isProposing) return;
         ringHoldStart = performance.now();
+        if (ringBox) ringBox.classList.add("holding");
 
         function updateCharge() {
           const elapsed = performance.now() - ringHoldStart;
@@ -1601,6 +1688,7 @@
           cancelAnimationFrame(ringHoldTimer);
           ringHoldTimer = null;
         }
+        if (ringBox) ringBox.classList.remove("holding");
         const elapsed = performance.now() - ringHoldStart;
         if (ringChargeBar) {
           ringChargeBar.style.strokeDashoffset = "528";

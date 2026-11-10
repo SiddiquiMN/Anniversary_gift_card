@@ -1123,6 +1123,7 @@
 
       function unlockGateAndProceed() {
         hasUnlockedGate = true;
+        playMusic();
         goToScreen(1);
       }
 
@@ -1718,26 +1719,52 @@
       setInterval(updateCounter, 1000);
 
       /* ──────────────────────────────────────────────
-   10. MUSIC TOGGLE (BUILT-IN SYNTH + MP3 FALLBACK)
+   10. ROMANTIC BACKGROUND MUSIC (FULL SONG)
 ────────────────────────────────────────────── */
       const bgMusic = document.getElementById("bg-music");
       const musicBtn = document.getElementById("music-btn");
+      let isMusicPlaying = false;
+
+      function playMusic() {
+        if (!bgMusic) return;
+        bgMusic.volume = 0.7;
+        bgMusic.play().then(() => {
+          isMusicPlaying = true;
+          musicBtn.classList.remove("muted");
+          musicBtn.innerHTML = "♫";
+        }).catch(() => {
+          if (!isAmbientPlaying) toggleAmbientMusic();
+        });
+      }
+
+      function pauseMusic() {
+        if (!bgMusic) return;
+        bgMusic.pause();
+        isMusicPlaying = false;
+        musicBtn.classList.add("muted");
+        musicBtn.innerHTML = "♪";
+        if (isAmbientPlaying) toggleAmbientMusic();
+      }
+
+      function toggleMusic() {
+        if (isMusicPlaying || isAmbientPlaying) {
+          pauseMusic();
+        } else {
+          playMusic();
+        }
+      }
 
       musicBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        toggleAmbientMusic();
-        if (isAmbientPlaying) {
-          bgMusic.play().catch(() => {});
-        } else {
-          bgMusic.pause();
-        }
+        toggleMusic();
       });
 
+      // Start music automatically on first user interaction
       document.addEventListener(
         "click",
         () => {
-          if (!isAmbientPlaying) {
-            toggleAmbientMusic();
+          if (!isMusicPlaying && !isAmbientPlaying) {
+            playMusic();
           }
         },
         { once: true },

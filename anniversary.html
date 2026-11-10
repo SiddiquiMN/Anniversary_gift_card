@@ -838,7 +838,7 @@
           <button
             class="btn-choice btn-yes"
             id="btn-yes"
-            onclick="nextScreen()"
+            onclick="unlockGateAndProceed()"
           >
             Wanna See 💕
           </button>
@@ -868,7 +868,8 @@
         <div class="glass-badge">◆ Beautiful Memory ◆</div>
         <div class="photo-wrapper tilt-card" onclick="triggerPhotoUpload()">
           <div class="photo-frame" id="photo-frame">
-            <div class="photo-ph">
+            <img src="photo.jpg" alt="Sowmik & Mohua" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';" />
+            <div class="photo-ph" style="display: none;">
               <span class="photo-ph-icon">📸</span>
               <span class="photo-ph-txt">Our Picture</span>
               <span class="photo-ph-hint">Tap to upload your photo</span>
@@ -1117,27 +1118,47 @@
       let currentScreen = 0;
       let isAnimating = false;
 
+      // Gate Lock State: Screen 0 can ONLY be advanced by clicking "Wanna See"
+      let hasUnlockedGate = false;
+
+      function unlockGateAndProceed() {
+        hasUnlockedGate = true;
+        goToScreen(1);
+      }
+
       // Generate dots
       const dotsContainer = document.getElementById("dots-container");
       screens.forEach((_, i) => {
         const dot = document.createElement("div");
         dot.className = "dot" + (i === 0 ? " on" : "");
         dot.id = "dot-" + i;
-        dot.addEventListener("click", () => goToScreen(i));
+        dot.addEventListener("click", () => {
+          if (currentScreen === 0 && !hasUnlockedGate) return;
+          goToScreen(i);
+        });
         dotsContainer.appendChild(dot);
       });
 
       function updateNavControls() {
+        // Left arrow hidden on screen 0
         document
           .getElementById("arr-left")
           .classList.toggle("hide", currentScreen === 0);
+        // STRICT: On screen 0, Right arrow MUST BE HIDDEN so no one can skip the question!
         document
           .getElementById("arr-right")
-          .classList.toggle("hide", currentScreen === totalScreens - 1);
+          .classList.toggle("hide", currentScreen === 0 || currentScreen === totalScreens - 1);
+        // Hide dots on screen 0
+        dotsContainer.style.display = currentScreen === 0 ? "none" : "flex";
       }
       updateNavControls();
 
       function goToScreen(targetIndex) {
+        // STRICT LOCK: Unless "Wanna See" was clicked, NEVER leave screen 0!
+        if (currentScreen === 0 && targetIndex > 0 && !hasUnlockedGate) {
+          return;
+        }
+
         if (
           isAnimating ||
           targetIndex === currentScreen ||
@@ -1162,11 +1183,14 @@
         targetEl.classList.add("active");
         if (targetDot) targetDot.classList.add("on");
 
-        updateNavControls();
-
+        // If returned to screen 0, re-lock the gate
         if (currentScreen === 0) {
+          hasUnlockedGate = false;
           resetNoButtonPosition();
         }
+
+        updateNavControls();
+
         if (currentScreen === 5) {
           initScratchCard();
         }
@@ -1180,14 +1204,16 @@
       }
 
       function nextScreen() {
+        if (currentScreen === 0 && !hasUnlockedGate) return;
         goToScreen(currentScreen + 1);
       }
       function prevScreen() {
         goToScreen(currentScreen - 1);
       }
 
-      // Keyboard navigation
+      // Keyboard navigation (Blocked on Screen 0)
       document.addEventListener("keydown", (e) => {
+        if (currentScreen === 0 && !hasUnlockedGate) return;
         if (e.key === "ArrowRight" || e.key === " ") nextScreen();
         if (e.key === "ArrowLeft") prevScreen();
       });
@@ -1201,6 +1227,8 @@
       let mouseMovedSignificant = false;
 
       function handleGestureSwipe(deltaX, deltaY) {
+        // Block swiping on Screen 0!
+        if (currentScreen === 0 && !hasUnlockedGate) return;
         if (
           Math.abs(deltaX) > 35 &&
           Math.abs(deltaX) > Math.abs(deltaY) * 0.7
@@ -1274,11 +1302,12 @@
         handleGestureSwipe(deltaX, deltaY);
       });
 
-      // 3. Mouse Wheel / Trackpad Scroll Slide (Debounced)
+      // 3. Mouse Wheel / Trackpad Scroll Slide (Debounced, Blocked on Screen 0)
       let wheelCooldown = false;
       document.addEventListener(
         "wheel",
         (e) => {
+          if (currentScreen === 0 && !hasUnlockedGate) return;
           if (wheelCooldown) return;
           if (Math.abs(e.deltaY) > 25 || Math.abs(e.deltaX) > 25) {
             wheelCooldown = true;

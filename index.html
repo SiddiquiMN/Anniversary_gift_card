@@ -438,12 +438,116 @@
 
       /* RUNAWAY NO BUTTON */
       .btn-no {
-        background: rgba(255, 255, 255, 0.9);
+        position: relative;
+        background: linear-gradient(
+          120deg,
+          #fff5f8 0%,
+          #ffd0e2 28%,
+          #ffefc4 54%,
+          #ffd0e2 80%,
+          #fff5f8 100%
+        );
+        background-size: 260% 260%;
         color: var(--rose-deep);
-        border: 1.5px solid var(--rose-soft);
-        box-shadow: 0 8px 22px rgba(214, 74, 112, 0.12);
+        border: 1.5px solid var(--rose-primary);
+        box-shadow:
+          0 8px 26px rgba(214, 74, 112, 0.28),
+          0 0 18px rgba(223, 179, 107, 0.25);
         white-space: nowrap;
         z-index: 999;
+      }
+      .btn-no:not(.dodged) {
+        animation:
+          noBaitBounce 1.85s ease-in-out infinite,
+          noShimmerBg 2.8s ease infinite;
+      }
+      .btn-no:not(.dodged)::before {
+        content: "😜 Try clicking me! 👇";
+        position: absolute;
+        top: -32px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #e55c82 0%, #c43860 55%, #dfb36b 100%);
+        color: #fff;
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+        padding: 4px 11px;
+        border-radius: 20px;
+        white-space: nowrap;
+        box-shadow: 0 5px 14px rgba(196, 56, 96, 0.35);
+        pointer-events: none;
+        animation: noTagBob 1.1s ease-in-out infinite alternate;
+      }
+      .btn-no:not(.dodged)::after {
+        content: "";
+        position: absolute;
+        inset: -6px;
+        border-radius: 50px;
+        border: 2px solid rgba(223, 179, 107, 0.7);
+        box-shadow: 0 0 12px rgba(214, 74, 112, 0.35);
+        pointer-events: none;
+        animation: noHaloPulse 1.5s ease-out infinite;
+      }
+      .btn-no.dodged {
+        animation: none;
+        background: rgba(255, 255, 255, 0.92);
+        border-color: var(--rose-soft);
+      }
+      .btn-no.dodged::before,
+      .btn-no.dodged::after {
+        display: none;
+      }
+      @keyframes noShimmerBg {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      @keyframes noBaitBounce {
+        0%,
+        100% {
+          transform: translateY(0) scale(1) rotate(0deg);
+          box-shadow: 0 8px 24px rgba(214, 74, 112, 0.22);
+        }
+        20% {
+          transform: translateY(-5px) scale(1.06) rotate(-2.5deg);
+          box-shadow: 0 14px 30px rgba(214, 74, 112, 0.36);
+        }
+        35% {
+          transform: translateY(0) scale(1.03) rotate(2.5deg);
+        }
+        50% {
+          transform: translateY(-3px) scale(1.05) rotate(-1.5deg);
+          box-shadow: 0 12px 28px rgba(223, 179, 107, 0.38);
+        }
+        65% {
+          transform: translateY(0) scale(1) rotate(0deg);
+        }
+      }
+      @keyframes noTagBob {
+        0% {
+          transform: translateX(-50%) translateY(0) scale(0.98);
+        }
+        100% {
+          transform: translateX(-50%) translateY(-4px) scale(1.04);
+        }
+      }
+      @keyframes noHaloPulse {
+        0% {
+          transform: scale(0.96);
+          opacity: 0.85;
+        }
+        100% {
+          transform: scale(1.18, 1.38);
+          opacity: 0;
+        }
       }
       .btn-no.smooth-dodge {
         transition:
@@ -642,37 +746,63 @@
 
       .propose-visual {
         position: relative;
-        font-size: clamp(1.75rem, 4.8vw, 2.05rem);
-        line-height: 1;
-        margin-top: 4px;
+        width: clamp(70px, 18vw, 80px);
+        height: clamp(56px, 15vw, 64px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2px;
         margin-bottom: 0;
       }
-      .propose-hand {
-        display: inline-block;
-        filter: drop-shadow(0 4px 10px rgba(214, 74, 112, 0.25));
+      .propose-hand-svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        filter: drop-shadow(0 4px 10px rgba(214, 74, 112, 0.22));
       }
-      .propose-ring {
-        position: absolute;
-        top: -9px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: clamp(1.35rem, 3.8vw, 1.6rem);
-        animation: slipOnRing 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      .finger-ring-back,
+      .finger-ring-front {
+        opacity: 0;
+        transform: translateY(-28px) scale(1.16);
+        transform-origin: 44px 37px;
       }
-      @keyframes slipOnRing {
+      .ring-box.proposed .finger-ring-back,
+      .ring-box.proposed .finger-ring-front {
+        animation: slipRingOntoFinger 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+      }
+      .finger-ring-gleam {
+        opacity: 0;
+        transform-origin: 44px 31px;
+      }
+      .ring-box.proposed .finger-ring-gleam {
+        animation: diamondGleam 1.4s ease-in-out 1.05s infinite alternate;
+      }
+      @keyframes slipRingOntoFinger {
         0% {
-          transform: translate(-50%, -24px) scale(0.5);
+          transform: translateY(-28px) scale(1.16);
           opacity: 0;
         }
-        50% {
-          transform: translate(-50%, -4px) scale(1.2);
+        25% {
+          transform: translateY(-20px) scale(1.1);
           opacity: 1;
-          filter: drop-shadow(0 0 16px gold);
+        }
+        78% {
+          transform: translateY(2px) scale(0.98);
+          opacity: 1;
         }
         100% {
-          transform: translate(-50%, 6px) scale(1);
+          transform: translateY(0px) scale(1);
           opacity: 1;
-          filter: drop-shadow(0 0 24px rgba(214, 74, 112, 0.9));
+        }
+      }
+      @keyframes diamondGleam {
+        0% {
+          opacity: 0.35;
+          transform: scale(0.8) rotate(0deg);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1.25) rotate(18deg);
         }
       }
 
@@ -1227,8 +1357,104 @@
             <!-- Engagement Reveal Layer Inside Ring -->
             <div class="engagement-layer" id="engagement-layer">
               <div class="propose-visual">
-                <span class="propose-hand">🤲</span>
-                <span class="propose-ring">💍</span>
+                <svg class="propose-hand-svg" viewBox="0 0 110 88" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="handSkinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#ffe7da" />
+                      <stop offset="100%" stop-color="#f7c8b2" />
+                    </linearGradient>
+                    <linearGradient id="svgGoldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#b38234" />
+                      <stop offset="50%" stop-color="#f6da8b" />
+                      <stop offset="100%" stop-color="#b38234" />
+                    </linearGradient>
+                    <linearGradient id="svgDiamondGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#ffffff" />
+                      <stop offset="55%" stop-color="#dff6ff" />
+                      <stop offset="100%" stop-color="#ffd6e5" />
+                    </linearGradient>
+                  </defs>
+
+                  <!-- Back half of ring (behind the ring finger) -->
+                  <g class="finger-ring-back">
+                    <path
+                      d="M 37 37.5 Q 44 33.8 51 37.5"
+                      fill="none"
+                      stroke="#9e6d22"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                    />
+                  </g>
+
+                  <!-- Slender Hand & Fingers (Back of left hand, ring finger highlighted) -->
+                  <g stroke="#d69b82" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+                    <!-- Pinky -->
+                    <path
+                      d="M 27 56 L 25.5 34.5 C 25.3 30 32.5 29.8 33 34.3 L 35.5 52"
+                      fill="url(#handSkinGrad)"
+                    />
+                    <!-- Middle Finger -->
+                    <path
+                      d="M 51.5 50 L 52.5 14.5 C 52.7 9.5 60.5 9.5 60.5 14.5 L 60.5 50"
+                      fill="url(#handSkinGrad)"
+                    />
+                    <!-- Index Finger -->
+                    <path
+                      d="M 63 52 L 65.5 19.5 C 65.8 14.8 73.2 15.2 72.8 20 L 71 54"
+                      fill="url(#handSkinGrad)"
+                    />
+                    <!-- Ring Finger (4th finger where the ring slips on) -->
+                    <path
+                      d="M 38.5 53 L 39.2 18.5 C 39.4 13.5 48.6 13.5 48.8 18.5 L 49.5 53"
+                      fill="url(#handSkinGrad)"
+                    />
+                    <!-- Palm & Thumb -->
+                    <path
+                      d="M 27 54 C 25.5 63 29 73 34 78 L 35 86 L 68 86 L 70 76 C 77 71 84 62 89.5 52.5 C 91.5 48.8 86.2 45.2 83 48.6 L 72.5 59.5 C 72 54 71.5 51 70 49.5 C 62 47.5 38 48 27 54 Z"
+                      fill="url(#handSkinGrad)"
+                    />
+                    <!-- Delicate Fingernails -->
+                    <ellipse cx="29.3" cy="34.2" rx="2.1" ry="2.8" fill="#ffd9e3" stroke="none" />
+                    <ellipse cx="44" cy="18.2" rx="2.7" ry="3.4" fill="#ffd9e3" stroke="none" />
+                    <ellipse cx="56.5" cy="14.2" rx="2.4" ry="3.1" fill="#ffd9e3" stroke="none" />
+                    <ellipse cx="69.1" cy="19.5" rx="2.3" ry="2.9" fill="#ffd9e3" stroke="none" />
+                  </g>
+
+                  <!-- Front half of ring + diamond (slips over the ring finger) -->
+                  <g class="finger-ring-front">
+                    <path
+                      d="M 37 37.5 Q 44 41.6 51 37.5"
+                      fill="none"
+                      stroke="url(#svgGoldGrad)"
+                      stroke-width="3.6"
+                      stroke-linecap="round"
+                    />
+                    <!-- Diamond setting -->
+                    <circle cx="44" cy="34.2" r="2.2" fill="#dfb36b" />
+                    <polygon
+                      points="44,25.8 49.2,30.6 44,35.4 38.8,30.6"
+                      fill="url(#svgDiamondGrad)"
+                      stroke="#b38234"
+                      stroke-width="0.9"
+                    />
+                    <polyline
+                      points="40.5,30.6 44,28.4 47.5,30.6"
+                      fill="none"
+                      stroke="#ffffff"
+                      stroke-width="0.9"
+                    />
+                  </g>
+
+                  <!-- Diamond sparkle gleam -->
+                  <g class="finger-ring-gleam">
+                    <path
+                      d="M 44 20 L 45.2 23.6 L 48.8 24.8 L 45.2 26 L 44 29.6 L 42.8 26 L 39.2 24.8 L 42.8 23.6 Z"
+                      fill="#fff7cc"
+                      stroke="#dfb36b"
+                      stroke-width="0.5"
+                    />
+                  </g>
+                </svg>
               </div>
               <div class="engagement-sparkles">✨ 💖 ✨</div>
               <div class="engagement-text">She Said Yes! 💍</div>
@@ -2075,7 +2301,7 @@
         noBtnTarget = null;
         lastQuoteChangeTime = 0;
         lastDesktopMoveTime = 0;
-        noBtn.classList.remove("smooth-dodge");
+        noBtn.classList.remove("smooth-dodge", "dodged");
         noBtn.textContent = funnyQuotes[0];
         noBtn.style.position = "";
         noBtn.style.margin = "";
@@ -2092,6 +2318,7 @@
 
       function moveNoButton(pointerX, pointerY, smoothMode = false) {
         const now = performance.now();
+        noBtn.classList.add("dodged");
 
         if (noBtn.style.position !== "fixed") {
           const startRect = noBtn.getBoundingClientRect();

@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title id="page-title">Happy 1st Anniversary 💍</title>
+
+    <!-- SweetAlert2 for Romantic Animated Draining Alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Pull to Refresh Indicator (Mobile Landing Page) -->
+    <div class="ptr-indicator" id="ptr-indicator" aria-hidden="true">
+      <div class="ptr-spinner" id="ptr-spinner"></div>
+    </div>
+
+    <!-- Interactive Particle, Sparkle & Firework Canvases -->
+    <canvas id="particle-canvas"></canvas>
+    <canvas id="sparkle-canvas"></canvas>
+    <canvas id="firework-canvas"></canvas>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="brand-tag" id="brand-tag">Alex &amp; Mia</div>
+      <div class="top-actions">
+        <button class="icon-btn" id="sound-btn" title="Romantic Chimes">
+          ✨
+        </button>
+        <button class="icon-btn" id="music-btn" title="Toggle Music">♪</button>
+      </div>
+    </div>
+
+    <!-- Background Music & Optional Photo Upload Input -->
+    <audio id="bg-music" loop></audio>
+    <input
+      type="file"
+      id="photo-upload"
+      accept="image/*"
+      style="display: none"
+    />
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows">
+      <div class="nav-arr hide" id="arr-left" onclick="prevScreen()">❮</div>
+      <div class="nav-arr" id="arr-right" onclick="nextScreen()">❯</div>
+    </div>
+
+    <!-- Progress Dots -->
+    <div class="dots" id="dots-container"></div>
+
+    <!-- ═════════════════════════════════════════════
+         SCREENS VIEWPORT
+    ══════════════════════════════════════════════ -->
+    <div class="screens-viewport">
+      <!-- S1: INVITATION GATE (WITH TEMPTING RUNAWAY NO BUTTON) -->
+      <div class="screen active" id="s1">
+        <div class="gate-badge" id="gate-badge">🌹 ❤️ 🌹</div>
+        <h1 class="title-script" id="gate-title">Happy Anniversary</h1>
+        <div class="names-text" id="gate-names">Alex &amp; Mia</div>
+        <p class="quote-text" id="gate-question">
+          "Do you wanna see what I made for you?"
+        </p>
+
+        <div class="btn-choice-container" id="choice-container">
+          <button
+            class="btn-choice btn-yes"
+            id="btn-yes"
+            onclick="unlockGateAndProceed()"
+          >
+            Wanna See 💕
+          </button>
+          <button
+            class="btn-choice btn-no"
+            id="btn-no"
+            data-bait="😜 Try clicking me! 👇"
+          >
+            No, i don't 🙈
+          </button>
+        </div>
+      </div>
+
+      <!-- S2: OUR STORY / GOLDEN RINGS & RING-FINGER ENGAGEMENT ANIMATION -->
+      <div class="screen" id="s2">
+        <div class="glass-badge" id="story-badge">◆ One Year of Love ◆</div>
+        <div class="ring-interactive-wrap" id="ring-interactive-wrap">
+          <div class="ring-box tilt-card" id="ring-box">
+            <svg class="ring-charge-svg" viewBox="0 0 182 182">
+              <defs>
+                <linearGradient
+                  id="ringChargeGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stop-color="#dfb36b" />
+                  <stop offset="50%" stop-color="#e55c82" />
+                  <stop offset="100%" stop-color="#a82e52" />
+                </linearGradient>
+              </defs>
+              <circle class="ring-charge-bg" cx="91" cy="91" r="84"></circle>
+              <circle
+                class="ring-charge-bar"
+                id="ring-charge-bar"
+                cx="91"
+                cy="91"
+                r="84"
+              ></circle>
+            </svg>
+            <div class="ring-spin"></div>
+            <div class="ring-inner"></div>
+            <div class="ring-orbit-item" id="ring-orbit-item">💍</div>
+
+            <!-- Engagement Reveal Layer Inside Ring -->
+            <div class="engagement-layer" id="engagement-layer">
+              <div class="propose-visual">
+                <svg
+                  class="propose-hand-svg"
+                  viewBox="0 0 110 88"
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <linearGradient
+                      id="handSkinGrad"
+                      x1="0%"
+                      y1="0%"
+                      x2="0%"
+                      y2="100%"
+                    >
+                      <stop offset="0%" stop-color="#ffe7da" />
+                      <stop offset="100%" stop-color="#f7c8b2" />
+                    </linearGradient>
+                    <linearGradient
+                      id="svgGoldGrad"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="0%"
+                    >
+                      <stop offset="0%" stop-color="#b38234" />
+                      <stop offset="50%" stop-color="#f6da8b" />
+                      <stop offset="100%" stop-color="#b38234" />
+                    </linearGradient>
+                    <linearGradient
+                      id="svgDiamondGrad"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop offset="0%" stop-color="#ffffff" />
+                      <stop offset="55%" stop-color="#dff6ff" />
+                      <stop offset="100%" stop-color="#ffd6e5" />
+                    </linearGradient>
+                  </defs>
+
+                  <!-- Back half of ring (behind the ring finger) -->
+                  <g class="finger-ring-back">
+                    <path
+                      d="M 37 37.5 Q 44 33.8 51 37.5"
+                      fill="none"
+                      stroke="#9e6d22"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                    />
+                  </g>
+
+                  <!-- Slender Hand & Fingers -->
+                  <g
+                    stroke="#d69b82"
+                    stroke-width="1.4"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                  >
+                    <path
+                      d="M 27 56 L 25.5 34.5 C 25.3 30 32.5 29.8 33 34.3 L 35.5 52"
+                      fill="url(#handSkinGrad)"
+                    />
+                    <path
+                      d="M 51.5 50 L 52.5 14.5 C 52.7 9.5 60.5 9.5 60.5 14.5 L 60.5 50"
+                      fill="url(#handSkinGrad)"
+                    />
+                    <path
+                      d="M 63 52 L 65.5 19.5 C 65.8 14.8 73.2 15.2 72.8 20 L 71 54"
+                      fill="url(#handSkinGrad)"
+                    />
+                    <path
+                      d="M 38.5 53 L 39.2 18.5 C 39.4 13.5 48.6 13.5 48.8 18.5 L 49.5 53"
+                      fill="url(#handSkinGrad)"
+                    />
+                    <path
+                      d="M 27 54 C 25.5 63 29 73 34 78 L 35 86 L 68 86 L 70 76 C 77 71 84 62 89.5 52.5 C 91.5 48.8 86.2 45.2 83 48.6 L 72.5 59.5 C 72 54 71.5 51 70 49.5 C 62 47.5 38 48 27 54 Z"
+                      fill="url(#handSkinGrad)"
+                    />
+                    <ellipse
+                      cx="29.3"
+                      cy="34.2"
+                      rx="2.1"
+                      ry="2.8"
+                      fill="#ffd9e3"
+                      stroke="none"
+                    />
+                    <ellipse
+                      cx="44"
+                      cy="18.2"
+                      rx="2.7"
+                      ry="3.4"
+                      fill="#ffd9e3"
+                      stroke="none"
+                    />
+                    <ellipse
+                      cx="56.5"
+                      cy="14.2"
+                      rx="2.4"
+                      ry="3.1"
+                      fill="#ffd9e3"
+                      stroke="none"
+                    />
+                    <ellipse
+                      cx="69.1"
+                      cy="19.5"
+                      rx="2.3"
+                      ry="2.9"
+                      fill="#ffd9e3"
+                      stroke="none"
+                    />
+                  </g>
+
+                  <!-- Front half of ring + diamond -->
+                  <g class="finger-ring-front">
+                    <path
+                      d="M 37 37.5 Q 44 41.6 51 37.5"
+                      fill="none"
+                      stroke="url(#svgGoldGrad)"
+                      stroke-width="3.6"
+                      stroke-linecap="round"
+                    />
+                    <circle cx="44" cy="34.2" r="2.2" fill="#dfb36b" />
+                    <polygon
+                      points="44,25.8 49.2,30.6 44,35.4 38.8,30.6"
+                      fill="url(#svgDiamondGrad)"
+                      stroke="#b38234"
+                      stroke-width="0.9"
+                    />
+                    <polyline
+                      points="40.5,30.6 44,28.4 47.5,30.6"
+                      fill="none"
+                      stroke="#ffffff"
+                      stroke-width="0.9"
+                    />
+                  </g>
+
+                  <!-- Diamond sparkle gleam -->
+                  <g class="finger-ring-gleam">
+                    <path
+                      d="M 44 20 L 45.2 23.6 L 48.8 24.8 L 45.2 26 L 44 29.6 L 42.8 26 L 39.2 24.8 L 42.8 23.6 Z"
+                      fill="#fff7cc"
+                      stroke="#dfb36b"
+                      stroke-width="0.5"
+                    />
+                  </g>
+                </svg>
+              </div>
+              <div class="engagement-sparkles">✨ 💖 ✨</div>
+              <div class="engagement-text" id="ring-text">She Said Yes! 💍</div>
+            </div>
+          </div>
+          <div class="ring-tap-hint" id="ring-hint">
+            <span>✨</span> Press &amp; hold with your ring finger <span>💍</span>
+          </div>
+        </div>
+        <h2
+          class="title-script"
+          id="story-title"
+          style="font-size: clamp(2.6rem, 8vw, 4.2rem)"
+        >
+          Our Story
+        </h2>
+        <p
+          class="quote-text"
+          id="story-quote"
+          style="max-width: 380px; margin-bottom: 0"
+        >
+          From the moment our eyes met, every second has turned into a cherished
+          memory.
+        </p>
+        <button
+          type="button"
+          class="explore-pill"
+          id="explore-pill"
+          onclick="goToScreen(2)"
+        >
+          Swipe to Explore <span>✨</span>
+        </button>
+      </div>
+
+      <!-- S3: MEMORY PHOTO -->
+      <div class="screen" id="s3">
+        <div class="glass-badge" id="photo-badge">◆ Beautiful Memory ◆</div>
+        <div class="photo-wrapper tilt-card" id="photo-wrapper">
+          <div class="photo-frame" id="photo-frame">
+            <img
+              id="couple-photo"
+              src="assets/photo.jpg"
+              alt="Couple Photo"
+              onerror="
+                this.style.display = 'none';
+                if (this.nextElementSibling)
+                  this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div class="photo-ph" style="display: none">
+              <span class="photo-ph-icon">📸</span>
+              <span class="photo-ph-txt" id="photo-ph-title">Our Picture</span>
+              <span class="photo-ph-hint" id="photo-ph-hint"
+                >Add your photo in assets/photo.jpg</span
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="upload-pill"
+          id="upload-pill"
+          onclick="triggerPhotoUpload()"
+        >
+          <span>📷</span> <span id="change-photo-label">Change Photo</span>
+        </div>
+        <p class="quote-text" id="photo-quote" style="max-width: 360px">
+          Every picture tells a story, but ours will always be my
+          <em>absolute favourite</em>.
+        </p>
+      </div>
+
+      <!-- S4: TIME COUNTER -->
+      <div class="screen" id="s4">
+        <div class="glass-badge" id="counter-badge">
+          ◆ Every Second With You ◆
+        </div>
+        <h2
+          class="title-script"
+          id="counter-title"
+          style="font-size: clamp(2.4rem, 7vw, 3.8rem)"
+        >
+          Together In Love
+        </h2>
+
+        <div class="counter-grid tilt-card">
+          <div class="counter-box">
+            <span class="counter-value" id="cnt-days">0</span>
+            <span class="counter-lbl" id="lbl-days">Days</span>
+          </div>
+          <div class="counter-box">
+            <span class="counter-value" id="cnt-hours">00</span>
+            <span class="counter-lbl" id="lbl-hours">Hours</span>
+          </div>
+          <div class="counter-box">
+            <span class="counter-value" id="cnt-mins">00</span>
+            <span class="counter-lbl" id="lbl-mins">Minutes</span>
+          </div>
+          <div class="counter-box">
+            <span class="counter-value" id="cnt-secs">00</span>
+            <span class="counter-lbl" id="lbl-secs">Seconds</span>
+          </div>
+        </div>
+        <p class="quote-text" id="counter-since">
+          Since November 14, 2025 · Counting forever
+        </p>
+      </div>
+
+      <!-- S5: LOVE LETTER & REASON JAR -->
+      <div class="screen" id="s5">
+        <div class="letter-card tilt-card">
+          <div id="letter-icon" style="font-size: 2rem; margin-bottom: 6px">
+            💌
+          </div>
+          <h3 class="letter-title" id="letter-greeting">My Dearest Mia,</h3>
+          <p class="letter-msg" id="letter-body"></p>
+          <div class="letter-sig" id="letter-sig">— Yours always, Alex ❤</div>
+          <div class="letter-date" id="letter-date">
+            November 14, 2026 · 1st Anniversary
+          </div>
+
+          <div
+            class="reason-pill"
+            id="reason-pill"
+            onclick="popLoveReason(event)"
+          >
+            <span>💌</span> Tap for a reason why I love you!
+          </div>
+        </div>
+      </div>
+
+      <!-- S6: INTERACTIVE SECRET WISH SCRATCH CARD -->
+      <div class="screen" id="s6">
+        <div class="glass-badge" id="scratch-badge">◆ A Secret For You ◆</div>
+        <h2
+          class="title-script"
+          id="scratch-title"
+          style="font-size: clamp(2.4rem, 7vw, 3.8rem); margin-bottom: 2px"
+        >
+          Scratch &amp; Reveal
+        </h2>
+        <p class="scratch-hint" id="scratch-hint">
+          Scratch with your finger or mouse to unlock my wish
+        </p>
+
+        <div class="scratch-container tilt-card" id="scratch-box">
+          <div class="scratch-secret">
+            <h4 id="scratch-secret-heading">My Secret Wish ✨</h4>
+            <p id="scratch-secret-message"></p>
+            <span
+              id="scratch-secret-signature"
+              style="
+                font-family: &quot;Great Vibes&quot;, cursive;
+                font-size: 1.6rem;
+                margin-top: 6px;
+                color: var(--rose-deep);
+              "
+              >— Alex 💕</span
+            >
+          </div>
+          <canvas class="scratch-canvas" id="scratch-canvas"></canvas>
+        </div>
+      </div>
+
+      <!-- S7: CELEBRATION FINALE -->
+      <div class="screen" id="s7">
+        <div class="gate-badge" id="finale-badge" style="font-size: 2.5rem">
+          🥂 💖 🥂
+        </div>
+        <h2
+          class="title-script"
+          id="finale-title"
+          style="font-size: clamp(3rem, 10vw, 5.5rem)"
+        >
+          Happy Anniversary!
+        </h2>
+        <div class="names-text" id="finale-names">Alex &amp; Mia</div>
+        <p class="quote-text" id="finale-quote" style="margin-bottom: 18px">
+          "Here is to 365 days of love, and a lifetime more to go!"
+        </p>
+        <div class="finale-btn-row">
+          <button
+            class="btn-action primary"
+            id="replay-btn"
+            onclick="goToScreen(0)"
+          >
+            ↺ Replay Story
+          </button>
+          <button
+            class="btn-action secondary"
+            id="share-btn"
+            onclick="shareAnniversary()"
+          >
+            ↗ Share Love
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

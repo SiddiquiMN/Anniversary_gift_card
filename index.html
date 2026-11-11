@@ -1098,25 +1098,49 @@
 
       /* Love Reason Generator Pill */
       .reason-pill {
-        margin-top: 16px;
+        margin-top: 20px;
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        background: linear-gradient(135deg, #fff0f5, #ffe4ec);
-        border: 1.5px solid var(--rose-soft);
-        padding: 10px 22px;
-        border-radius: 40px;
-        font-size: 0.75rem;
+        justify-content: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #e55c82 0%, #c43860 100%);
+        border: 2px solid rgba(255, 255, 255, 0.88);
+        padding: 14px 28px;
+        border-radius: 50px;
+        font-size: clamp(0.84rem, 2.5vw, 0.95rem);
         font-weight: 600;
-        color: var(--rose-deep);
+        letter-spacing: 0.4px;
+        color: #fff;
         cursor: pointer;
-        box-shadow: 0 4px 15px rgba(214, 74, 112, 0.12);
+        box-shadow:
+          0 10px 26px rgba(196, 56, 96, 0.34),
+          0 0 0 4px rgba(248, 143, 169, 0.22);
         transition: all 0.25s ease;
+        animation: reasonPulse 2.1s ease-in-out infinite;
       }
       .reason-pill:hover {
-        transform: scale(1.04);
-        background: #fff;
-        box-shadow: 0 8px 22px rgba(214, 74, 112, 0.22);
+        transform: translateY(-2px) scale(1.04);
+        box-shadow:
+          0 14px 32px rgba(196, 56, 96, 0.44),
+          0 0 0 6px rgba(248, 143, 169, 0.3);
+      }
+      .reason-pill.ready-next {
+        background: linear-gradient(135deg, #d64a70 0%, #b38234 100%);
+        box-shadow:
+          0 10px 28px rgba(179, 130, 52, 0.38),
+          0 0 0 4px rgba(223, 179, 107, 0.28);
+      }
+      .reason-pill.shake-btn {
+        animation: shakeEl 0.5s ease !important;
+      }
+      @keyframes reasonPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.03);
+        }
       }
 
       /* ══════════ S6 — INTERACTIVE SCRATCH CARD ══════════ */
@@ -1776,8 +1800,11 @@
 
       // Gate Lock State: Screen 0 can ONLY be advanced by clicking "Wanna See"
       let hasUnlockedGate = false;
-      // Screen 1 (Ring) can ONLY be advanced after tapping with ring finger
+      // Screen 1 (Ring) can ONLY be advanced after press-and-hold animation completes
       let hasWornRing = false;
+      // Screen 4 (Love Letter & Reasons) forward navigation locked until all reasons are read
+      let reasonIdx = 0;
+      let canMoveNextFromReasons = false;
 
       function shakeRingPrompt() {
         const hint = document.getElementById("ring-hint");
@@ -1789,6 +1816,14 @@
         if (ringBox) {
           ringBox.classList.add("shake-ring");
           setTimeout(() => ringBox.classList.remove("shake-ring"), 600);
+        }
+      }
+
+      function shakeReasonPrompt() {
+        const reasonPill = document.getElementById("reason-pill");
+        if (reasonPill) {
+          reasonPill.classList.add("shake-btn");
+          setTimeout(() => reasonPill.classList.remove("shake-btn"), 600);
         }
       }
 
@@ -1810,6 +1845,10 @@
             shakeRingPrompt();
             return;
           }
+          if (currentScreen === 4 && i > 4 && !canMoveNextFromReasons) {
+            shakeReasonPrompt();
+            return;
+          }
           goToScreen(i);
         });
         dotsContainer.appendChild(dot);
@@ -1817,14 +1856,17 @@
 
       function updateNavControls() {
         const isScreen1Locked = currentScreen === 1 && !hasWornRing;
+        const isScreen4ForwardLocked =
+          currentScreen === 4 && !canMoveNextFromReasons;
         // Left arrow hidden on screen 0 and on locked screen 1
         document
           .getElementById("arr-left")
           .classList.toggle("hide", currentScreen === 0 || isScreen1Locked);
-        // Right arrow: Hidden on screen 0, hidden on screen 1 until ring is worn, and hidden on final screen
+        // Right arrow: Hidden on screen 0, locked screen 1, screen 4 until all reasons read, and final screen
         const hideRight =
           currentScreen === 0 ||
           isScreen1Locked ||
+          isScreen4ForwardLocked ||
           currentScreen === totalScreens - 1;
         document
           .getElementById("arr-right")
@@ -1844,6 +1886,12 @@
         // STRICT LOCK 2: Unless Ring hold animation completed, NEVER leave screen 1!
         if (currentScreen === 1 && targetIndex !== 1 && !hasWornRing) {
           shakeRingPrompt();
+          return;
+        }
+
+        // STRICT LOCK 3: On Screen 4 (Letter & Reasons), NEVER advance forward until all reasons are viewed!
+        if (currentScreen === 4 && targetIndex > 4 && !canMoveNextFromReasons) {
+          shakeReasonPrompt();
           return;
         }
 
@@ -1879,6 +1927,7 @@
           canMoveNextFromReasons = false;
           const reasonPill = document.getElementById("reason-pill");
           if (reasonPill) {
+            reasonPill.classList.remove("ready-next");
             reasonPill.innerHTML =
               "<span>💌</span> Tap for a reason why I love you!";
           }
@@ -1906,6 +1955,10 @@
           shakeRingPrompt();
           return;
         }
+        if (currentScreen === 4 && !canMoveNextFromReasons) {
+          shakeReasonPrompt();
+          return;
+        }
         goToScreen(currentScreen + 1);
       }
       function prevScreen() {
@@ -1916,7 +1969,7 @@
         goToScreen(currentScreen - 1);
       }
 
-      // Keyboard navigation (Blocked on Screen 0 and Screen 1 while locked)
+      // Keyboard navigation (Blocked on Screen 0, locked Screen 1, and forward on locked Screen 4)
       document.addEventListener("keydown", (e) => {
         if (currentScreen === 0 && !hasUnlockedGate) return;
         if (currentScreen === 1 && !hasWornRing) {
@@ -1927,6 +1980,14 @@
           ) {
             shakeRingPrompt();
           }
+          return;
+        }
+        if (
+          currentScreen === 4 &&
+          (e.key === "ArrowRight" || e.key === " ") &&
+          !canMoveNextFromReasons
+        ) {
+          shakeReasonPrompt();
           return;
         }
         if (e.key === "ArrowRight" || e.key === " ") nextScreen();
@@ -1951,6 +2012,16 @@
             Math.abs(deltaX) > Math.abs(deltaY) * 0.7
           ) {
             shakeRingPrompt();
+          }
+          return;
+        }
+        // Block swiping forward on Screen 4 until all reasons are viewed!
+        if (currentScreen === 4 && deltaX < 0 && !canMoveNextFromReasons) {
+          if (
+            Math.abs(deltaX) > 35 &&
+            Math.abs(deltaX) > Math.abs(deltaY) * 0.7
+          ) {
+            shakeReasonPrompt();
           }
           return;
         }
@@ -2102,7 +2173,7 @@
         handleGestureSwipe(deltaX, deltaY);
       });
 
-      // 3. Mouse Wheel / Trackpad Scroll Slide (Debounced, Blocked on Screen 0 and locked Screen 1)
+      // 3. Mouse Wheel / Trackpad Scroll Slide (Debounced, Blocked on Screen 0, locked Screen 1, and forward on locked Screen 4)
       let wheelCooldown = false;
       document.addEventListener(
         "wheel",
@@ -2111,9 +2182,16 @@
           if (wheelCooldown) return;
           if (Math.abs(e.deltaY) > 25 || Math.abs(e.deltaX) > 25) {
             wheelCooldown = true;
+            const goingForward = e.deltaY > 0 || e.deltaX > 0;
             if (currentScreen === 1 && !hasWornRing) {
               shakeRingPrompt();
-            } else if (e.deltaY > 0 || e.deltaX > 0) {
+            } else if (
+              currentScreen === 4 &&
+              goingForward &&
+              !canMoveNextFromReasons
+            ) {
+              shakeReasonPrompt();
+            } else if (goingForward) {
               nextScreen();
             } else {
               prevScreen();
@@ -2595,8 +2673,6 @@
         "How you make our home feel like heaven.",
         "Simply because you are Mohua, my soulmate forever.",
       ];
-      let reasonIdx = 0;
-      let canMoveNextFromReasons = false;
 
       function popLoveReason(e) {
         if (e) e.stopPropagation();
@@ -2629,7 +2705,9 @@
             if (!reasonPill) return;
             if (isAllViewed) {
               canMoveNextFromReasons = true;
+              reasonPill.classList.add("ready-next");
               reasonPill.innerHTML = "<span>👉</span> Now you can move next ✨";
+              updateNavControls();
             } else {
               reasonPill.innerHTML = "<span>💌</span> Tap Again ✨";
             }

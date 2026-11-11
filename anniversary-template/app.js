@@ -287,6 +287,8 @@ let isAnimating = false;
 
 let hasUnlockedGate = false;
 let hasWornRing = false;
+let reasonIdx = 0;
+let canMoveNextFromReasons = false;
 
 function shakeRingPrompt() {
   const hint = document.getElementById("ring-hint");
@@ -298,6 +300,16 @@ function shakeRingPrompt() {
   if (ringBox) {
     ringBox.classList.add("shake-ring");
     setTimeout(() => ringBox.classList.remove("shake-ring"), 600);
+  }
+}
+
+function shakeReasonPrompt() {
+  const pill = document.getElementById("reason-pill");
+  if (pill) {
+    pill.classList.remove("shake-btn");
+    void pill.offsetWidth;
+    pill.classList.add("shake-btn");
+    setTimeout(() => pill.classList.remove("shake-btn"), 550);
   }
 }
 
@@ -318,6 +330,10 @@ screens.forEach((_, i) => {
       shakeRingPrompt();
       return;
     }
+    if (currentScreen === 4 && i > 4 && !canMoveNextFromReasons) {
+      shakeReasonPrompt();
+      return;
+    }
     goToScreen(i);
   });
   dotsContainer.appendChild(dot);
@@ -325,12 +341,14 @@ screens.forEach((_, i) => {
 
 function updateNavControls() {
   const isScreen1Locked = currentScreen === 1 && !hasWornRing;
+  const isScreen4ForwardLocked = currentScreen === 4 && !canMoveNextFromReasons;
   document
     .getElementById("arr-left")
     .classList.toggle("hide", currentScreen === 0 || isScreen1Locked);
   const hideRight =
     currentScreen === 0 ||
     isScreen1Locked ||
+    isScreen4ForwardLocked ||
     currentScreen === totalScreens - 1;
   document.getElementById("arr-right").classList.toggle("hide", hideRight);
   dotsContainer.style.display =
@@ -344,6 +362,10 @@ function goToScreen(targetIndex) {
   }
   if (currentScreen === 1 && targetIndex !== 1 && !hasWornRing) {
     shakeRingPrompt();
+    return;
+  }
+  if (currentScreen === 4 && targetIndex > 4 && !canMoveNextFromReasons) {
+    shakeReasonPrompt();
     return;
   }
 
@@ -378,6 +400,7 @@ function goToScreen(targetIndex) {
     canMoveNextFromReasons = false;
     const reasonPill = document.getElementById("reason-pill");
     if (reasonPill) {
+      reasonPill.classList.remove("ready-next");
       const btnTxt =
         LETTER.reasonButtonText || "Tap for a reason why I love you!";
       reasonPill.innerHTML = `<span>💌</span> ${btnTxt}`;
@@ -406,6 +429,10 @@ function nextScreen() {
     shakeRingPrompt();
     return;
   }
+  if (currentScreen === 4 && !canMoveNextFromReasons) {
+    shakeReasonPrompt();
+    return;
+  }
   goToScreen(currentScreen + 1);
 }
 
@@ -424,6 +451,12 @@ document.addEventListener("keydown", (e) => {
       shakeRingPrompt();
     }
     return;
+  }
+  if (currentScreen === 4 && !canMoveNextFromReasons) {
+    if (e.key === "ArrowRight" || e.key === " ") {
+      shakeReasonPrompt();
+      return;
+    }
   }
   if (e.key === "ArrowRight" || e.key === " ") nextScreen();
   if (e.key === "ArrowLeft") prevScreen();
@@ -446,8 +479,15 @@ function handleGestureSwipe(deltaX, deltaY) {
     return;
   }
   if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > Math.abs(deltaY) * 0.7) {
-    if (deltaX < 0) nextScreen();
-    else prevScreen();
+    if (deltaX < 0) {
+      if (currentScreen === 4 && !canMoveNextFromReasons) {
+        shakeReasonPrompt();
+        return;
+      }
+      nextScreen();
+    } else {
+      prevScreen();
+    }
   }
 }
 
@@ -594,9 +634,16 @@ document.addEventListener(
     if (wheelCooldown) return;
     if (Math.abs(e.deltaY) > 25 || Math.abs(e.deltaX) > 25) {
       wheelCooldown = true;
+      const goingForward = e.deltaY > 0 || e.deltaX > 0;
       if (currentScreen === 1 && !hasWornRing) {
         shakeRingPrompt();
-      } else if (e.deltaY > 0 || e.deltaX > 0) {
+      } else if (
+        currentScreen === 4 &&
+        goingForward &&
+        !canMoveNextFromReasons
+      ) {
+        shakeReasonPrompt();
+      } else if (goingForward) {
         nextScreen();
       } else {
         prevScreen();
@@ -1072,9 +1119,6 @@ const loveReasons =
         "How safe and peaceful my heart feels beside you.",
         "Simply because you are my soulmate forever.",
       ];
-let reasonIdx = 0;
-let canMoveNextFromReasons = false;
-
 function popLoveReason(e) {
   if (e) e.stopPropagation();
   if (canMoveNextFromReasons) {
@@ -1108,9 +1152,11 @@ function popLoveReason(e) {
       if (!reasonPill) return;
       if (isAllViewed) {
         canMoveNextFromReasons = true;
+        reasonPill.classList.add("ready-next");
         const nextTxt =
           LETTER.reasonNextSlideText || "Now you can move next ✨";
         reasonPill.innerHTML = `<span>👉</span> ${nextTxt}`;
+        updateNavControls();
       } else {
         const againTxt = LETTER.reasonTapAgainText || "Tap Again ✨";
         reasonPill.innerHTML = `<span>💌</span> ${againTxt}`;

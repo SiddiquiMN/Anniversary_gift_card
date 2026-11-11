@@ -46,6 +46,6 @@ anniversary-template/
 - **Slide 2 — Locked Ring Finger Reveal:** Locked until the user presses and holds the ring circle to complete the progress animation, revealing an animated custom SVG hand where a diamond ring slips onto the ring finger, followed by a `"Swipe to Explore"` button.
 - **Slide 3 — Memory Photo Frame:** Fixed couple photo (with optional upload mode in `config.js`).
 - **Slide 4 — Live Love Counter:** Real-time Days, Hours, Minutes, and Seconds since `anniversaryStartISO`.
-- **Slide 5 — Love Letter & Reasons Jar:** Personalized letter card + SweetAlert2 draining progress popups that guide the reader (`Tap Again` → `Now you can move next`) and advance to the next slide after all reasons are viewed.
+- **Slide 5 — Love Letter & Reasons Jar:** Personalized letter card + prominent reasons button & SweetAlert2 draining progress popups; forward navigation stays locked until every reason has been viewed (`Tap Again` → `Now you can move next`), then advances to the next slide.
 - **Slide 6 — Scratch & Reveal Wish:** Interactive canvas scratch card with confetti celebration on reveal.
 - **Slide 7 — Celebration Finale:** Fireworks animation, replay story, and Web Share / copy-link button.

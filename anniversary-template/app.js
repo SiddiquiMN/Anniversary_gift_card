@@ -23,6 +23,36 @@ function setText(id, val) {
   if (el && typeof val === "string") el.textContent = val;
 }
 
+function parseAnniversaryStartDate(value) {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    return value;
+  }
+  const str = typeof value === "string" ? value.trim() : "";
+  if (str) {
+    // Parse YYYY-MM-DD (with optional HH:mm[:ss]) in local time so UTC offsets never shift days/hours
+    const m = str.match(
+      /^(\d{4})-(\d{1,2})-(\d{1,2})(?:[T ](\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?$/,
+    );
+    if (m) {
+      return new Date(
+        Number(m[1]),
+        Number(m[2]) - 1,
+        Number(m[3]),
+        Number(m[4] || 0),
+        Number(m[5] || 0),
+        Number(m[6] || 0),
+      );
+    }
+    const parsed = new Date(str);
+    if (!Number.isNaN(parsed.getTime())) return parsed;
+  }
+  return new Date(2025, 10, 14, 0, 0, 0);
+}
+
+const ANNIVERSARY_DATE = parseAnniversaryStartDate(
+  COUPLE.anniversaryStartDate || COUPLE.anniversaryStartISO,
+);
+
 function applyTheme() {
   const root = document.documentElement.style;
   const map = {
@@ -107,7 +137,16 @@ function hydrateTemplateFromConfig() {
   setText("lbl-hours", COUNTER_CFG.hoursLabel);
   setText("lbl-mins", COUNTER_CFG.minutesLabel);
   setText("lbl-secs", COUNTER_CFG.secondsLabel);
-  setText("counter-since", COUPLE.sinceLabel);
+  let sinceText = COUPLE.sinceLabel;
+  if (!sinceText) {
+    const formattedDate = ANNIVERSARY_DATE.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    sinceText = `Since ${formattedDate} · Counting forever`;
+  }
+  setText("counter-since", sinceText);
 
   // S5 — Love Letter & Reason Jar
   setText("letter-icon", LETTER.icon);
@@ -289,6 +328,7 @@ let hasUnlockedGate = false;
 let hasWornRing = false;
 let reasonIdx = 0;
 let canMoveNextFromReasons = false;
+let songHasFinished = false;
 
 function shakeRingPrompt() {
   const hint = document.getElementById("ring-hint");
@@ -315,6 +355,13 @@ function shakeReasonPrompt() {
 
 function unlockGateAndProceed() {
   hasUnlockedGate = true;
+  songHasFinished = false;
+  if (bgMusic) {
+    bgMusic.loop = false;
+    try {
+      bgMusic.currentTime = 0;
+    } catch (_) {}
+  }
   playMusic();
   goToScreen(1);
 }
@@ -398,6 +445,13 @@ function goToScreen(targetIndex) {
     hasWornRing = false;
     reasonIdx = 0;
     canMoveNextFromReasons = false;
+    songHasFinished = false;
+    pauseMusic();
+    if (bgMusic) {
+      try {
+        bgMusic.currentTime = 0;
+      } catch (_) {}
+    }
     const reasonPill = document.getElementById("reason-pill");
     if (reasonPill) {
       reasonPill.classList.remove("ready-next");
@@ -879,7 +933,7 @@ function moveNoButton(pointerX, pointerY, smoothMode = false) {
 
   const btnWidth = noBtn.offsetWidth || 140;
   const btnHeight = noBtn.offsetHeight || 48;
-  const margin = 20;
+  const margin = window.innerWidth <= 600 ? 14 : 20;
   const minTop = 72;
 
   const maxW = Math.max(margin, window.innerWidth - btnWidth - margin);
@@ -1063,9 +1117,17 @@ function initScratchCard() {
 
   function getPos(e) {
     const rect = canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    return { x: clientX - rect.left, y: clientY - rect.top };
+    const touch =
+      (e.touches && e.touches[0]) ||
+      (e.changedTouches && e.changedTouches[0]);
+    const clientX = touch ? touch.clientX : e.clientX;
+    const clientY = touch ? touch.clientY : e.clientY;
+    const scaleX = rect.width ? canvas.width / rect.width : 1;
+    const scaleY = rect.height ? canvas.height / rect.height : 1;
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY,
+    };
   }
 
   canvas.addEventListener("mousedown", (e) => {
@@ -1287,9 +1349,6 @@ document.getElementById("photo-upload").addEventListener("change", function () {
 /* ──────────────────────────────────────────────
    9. LIVE ANNIVERSARY COUNTER
 ────────────────────────────────────────────── */
-const ANNIVERSARY_DATE = new Date(
-  COUPLE.anniversaryStartISO || "2025-11-14T00:00:00",
-);
 function updateCounter() {
   const diff = Date.now() - ANNIVERSARY_DATE.getTime();
   const totalSec = Math.floor(Math.max(0, diff) / 1000);
@@ -1321,26 +1380,42 @@ let isMusicPlaying = false;
 let bgMusicFailed = false;
 
 if (bgMusic) {
+  bgMusic.loop = false;
   bgMusic.addEventListener("error", () => {
     bgMusicFailed = true;
+  });
+  bgMusic.addEventListener("ended", () => {
+    songHasFinished = true;
+    isMusicPlaying = false;
+    if (musicBtn) {
+      musicBtn.classList.add("muted");
+      musicBtn.innerHTML = "♪";
+    }
   });
 }
 
 function playMusic() {
+  if (!hasUnlockedGate || songHasFinished) return;
   if (!bgMusic || !bgMusic.getAttribute("src") || bgMusicFailed) {
     if (!isAmbientPlaying) toggleAmbientMusic();
     return;
   }
+  bgMusic.loop = false;
   bgMusic.volume =
     typeof MEDIA.musicVolume === "number" ? MEDIA.musicVolume : 0.7;
   bgMusic
     .play()
     .then(() => {
+      if (!hasUnlockedGate || songHasFinished) {
+        bgMusic.pause();
+        return;
+      }
       isMusicPlaying = true;
       musicBtn.classList.remove("muted");
       musicBtn.innerHTML = "♫";
     })
     .catch(() => {
+      if (!hasUnlockedGate || songHasFinished) return;
       if (!isAmbientPlaying) toggleAmbientMusic();
     });
 }
@@ -1348,12 +1423,15 @@ function playMusic() {
 function pauseMusic() {
   if (bgMusic) bgMusic.pause();
   isMusicPlaying = false;
-  musicBtn.classList.add("muted");
-  musicBtn.innerHTML = "♪";
+  if (musicBtn) {
+    musicBtn.classList.add("muted");
+    musicBtn.innerHTML = "♪";
+  }
   if (isAmbientPlaying) toggleAmbientMusic();
 }
 
 function toggleMusic() {
+  if (!hasUnlockedGate || songHasFinished) return;
   if (isMusicPlaying || isAmbientPlaying) {
     pauseMusic();
   } else {
@@ -1365,16 +1443,6 @@ musicBtn.addEventListener("click", (e) => {
   e.stopPropagation();
   toggleMusic();
 });
-
-document.addEventListener(
-  "click",
-  () => {
-    if (!isMusicPlaying && !isAmbientPlaying) {
-      playMusic();
-    }
-  },
-  { once: true },
-);
 
 /* ──────────────────────────────────────────────
    11. SOFT FLOATING PETALS & HEARTS

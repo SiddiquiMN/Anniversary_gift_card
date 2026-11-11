@@ -48,6 +48,7 @@
       body {
         width: 100%;
         height: 100%;
+        height: 100dvh;
         overflow: hidden;
         overscroll-behavior-y: contain;
         background: var(--bg-gradient);
@@ -292,8 +293,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        justify-content: safe center;
         flex-direction: column;
-        padding: 24px;
+        padding: 72px 20px 84px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
         opacity: 0;
         pointer-events: none;
         transform: translateY(16px) scale(0.98);
@@ -301,6 +307,9 @@
           opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
           transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
         z-index: 10;
+      }
+      .screen::-webkit-scrollbar {
+        display: none;
       }
       .screen.active {
         opacity: 1;
@@ -663,7 +672,7 @@
         line-height: 1;
         z-index: 12;
         pointer-events: none;
-        transform: rotate(0deg) translateY(-84px) rotate(0deg);
+        transform: rotate(0deg) translateY(var(--ring-orbit-radius, -84px)) rotate(0deg);
         animation: ringOrbit 8s linear infinite;
         transition:
           transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2),
@@ -673,10 +682,10 @@
       }
       @keyframes ringOrbit {
         0% {
-          transform: rotate(0deg) translateY(-84px) rotate(0deg);
+          transform: rotate(0deg) translateY(var(--ring-orbit-radius, -84px)) rotate(0deg);
         }
         100% {
-          transform: rotate(360deg) translateY(-84px) rotate(-360deg);
+          transform: rotate(360deg) translateY(var(--ring-orbit-radius, -84px)) rotate(-360deg);
         }
       }
 
@@ -1279,6 +1288,271 @@
         backdrop-filter: blur(6px) !important;
         background: rgba(74, 21, 37, 0.28) !important;
       }
+
+      /* ══════════ PHONE & COMPACT VIEWPORT RESPONSIVENESS ══════════ */
+      @media (max-width: 600px) {
+        .top-bar {
+          top: 12px;
+          padding: 0 14px;
+        }
+        .brand-tag {
+          font-size: 1.35rem;
+        }
+        .top-actions {
+          gap: 8px;
+        }
+        .icon-btn {
+          width: 38px;
+          height: 38px;
+          font-size: 1rem;
+        }
+        .nav-arrows {
+          bottom: max(18px, env(safe-area-inset-bottom, 0px) + 12px);
+          padding: 0 14px;
+        }
+        .nav-arr {
+          width: 40px;
+          height: 40px;
+          font-size: 0.95rem;
+        }
+        .dots {
+          bottom: max(26px, env(safe-area-inset-bottom, 0px) + 20px);
+          gap: 6px;
+        }
+        .screen {
+          padding: 62px 14px 76px;
+        }
+        .glass-badge {
+          padding: 6px 14px;
+          font-size: 0.62rem;
+          letter-spacing: 2px;
+          margin-bottom: 10px;
+        }
+        .gate-badge {
+          font-size: 1.85rem;
+          letter-spacing: 10px;
+          margin-bottom: 8px;
+        }
+        .title-script {
+          font-size: clamp(2.4rem, 11vw, 3.6rem);
+        }
+        .names-text {
+          font-size: clamp(1.1rem, 4.5vw, 1.45rem);
+          margin-bottom: 8px;
+        }
+        .quote-text {
+          font-size: clamp(0.84rem, 3.3vw, 0.96rem);
+          margin-bottom: 24px;
+          padding: 0 6px;
+        }
+        .btn-choice-container {
+          gap: 12px;
+          row-gap: 40px;
+          flex-wrap: wrap;
+          min-height: 64px;
+        }
+        .btn-choice {
+          font-size: 0.78rem;
+          letter-spacing: 1px;
+          padding: 12px 22px;
+        }
+        .btn-no:not(.dodged)::before {
+          top: -28px;
+          font-size: 0.58rem;
+          padding: 3px 9px;
+        }
+        .btn-no.dodged {
+          max-width: calc(100vw - 32px);
+          white-space: normal;
+          text-align: center;
+        }
+        .ring-box {
+          --ring-orbit-radius: -73px;
+          width: 148px;
+          height: 148px;
+          margin-bottom: 12px;
+        }
+        .ring-charge-svg {
+          inset: -5px;
+          width: 158px;
+          height: 158px;
+        }
+        .ring-inner {
+          width: 112px;
+          height: 112px;
+          top: 18px;
+          left: 18px;
+        }
+        .ring-orbit-item {
+          font-size: 38px;
+        }
+        .engagement-layer {
+          padding: 14px 12px;
+        }
+        .propose-visual {
+          width: 64px;
+          height: 52px;
+        }
+        .engagement-text {
+          font-size: 0.96rem;
+          max-width: 108px;
+        }
+        .ring-tap-hint {
+          font-size: 0.65rem;
+          letter-spacing: 1.2px;
+          padding: 7px 14px;
+          margin-bottom: 12px;
+          max-width: 92vw;
+        }
+        #s2 .title-script {
+          font-size: clamp(2.15rem, 9vw, 3rem) !important;
+        }
+        .explore-pill {
+          margin-top: 12px;
+          padding: 10px 22px;
+          font-size: 0.74rem;
+        }
+        .photo-wrapper {
+          margin-bottom: 14px;
+        }
+        .photo-frame {
+          width: min(200px, 56vw);
+          height: min(200px, 56vw);
+        }
+        #s4 .title-script {
+          font-size: clamp(2.1rem, 8.5vw, 3rem) !important;
+        }
+        .counter-grid {
+          gap: 8px;
+          width: min(360px, 100%);
+          margin: 16px auto;
+        }
+        .counter-box {
+          padding: 12px 4px;
+          border-radius: 14px;
+        }
+        .counter-value {
+          font-size: clamp(1.35rem, 5.4vw, 1.9rem);
+        }
+        .counter-lbl {
+          font-size: 0.5rem;
+          letter-spacing: 0.8px;
+        }
+        .letter-card {
+          padding: 18px 16px;
+          border-radius: 22px;
+        }
+        .letter-title {
+          font-size: clamp(1.15rem, 4.6vw, 1.45rem);
+          margin-bottom: 8px;
+        }
+        .letter-msg {
+          font-size: clamp(0.84rem, 3.2vw, 0.96rem);
+          line-height: 1.55;
+        }
+        .letter-sig {
+          margin-top: 10px;
+          font-size: clamp(1.55rem, 6vw, 1.85rem);
+        }
+        .letter-date {
+          font-size: 0.54rem;
+          letter-spacing: 1.6px;
+        }
+        .reason-pill {
+          margin-top: 14px;
+          padding: 12px 20px;
+          max-width: 100%;
+          font-size: clamp(0.8rem, 3.4vw, 0.9rem);
+          line-height: 1.35;
+        }
+        #s6 .title-script {
+          font-size: clamp(2.1rem, 8.5vw, 3rem) !important;
+        }
+        .scratch-container {
+          width: min(320px, 90vw);
+          height: 185px;
+          margin: 14px auto;
+        }
+        .scratch-secret {
+          padding: 14px;
+        }
+        .scratch-secret h4 {
+          font-size: 1.55rem;
+        }
+        .scratch-secret p {
+          font-size: 0.86rem;
+          line-height: 1.5;
+        }
+        .scratch-hint {
+          font-size: 0.68rem;
+          letter-spacing: 1.2px;
+          padding: 0 8px;
+        }
+        .finale-btn-row {
+          gap: 10px;
+          margin-top: 14px;
+        }
+        .btn-action {
+          font-size: 0.7rem;
+          letter-spacing: 1.4px;
+          padding: 11px 20px;
+        }
+        .swal2-popup.romantic-swal-popup {
+          width: min(92vw, 400px) !important;
+          padding: 20px 14px 26px !important;
+          border-radius: 24px !important;
+        }
+        .swal2-popup.romantic-swal-popup .swal2-timer-progress-bar-container {
+          left: 16px !important;
+          right: 16px !important;
+        }
+      }
+
+      @media (max-height: 670px) {
+        .screen {
+          padding-top: 56px;
+          padding-bottom: 68px;
+        }
+        .ring-box {
+          --ring-orbit-radius: -65px;
+          width: 132px;
+          height: 132px;
+          margin-bottom: 8px;
+        }
+        .ring-charge-svg {
+          inset: -5px;
+          width: 142px;
+          height: 142px;
+        }
+        .ring-inner {
+          width: 98px;
+          height: 98px;
+          top: 17px;
+          left: 17px;
+        }
+        .ring-tap-hint {
+          margin-bottom: 8px;
+          padding: 6px 12px;
+        }
+        .explore-pill {
+          margin-top: 8px;
+          padding: 9px 18px;
+        }
+        .photo-frame {
+          width: min(175px, 46vw);
+          height: min(175px, 46vw);
+        }
+        .letter-card {
+          padding: 14px 14px;
+        }
+        .letter-msg {
+          line-height: 1.45;
+        }
+        .scratch-container {
+          height: 165px;
+          margin: 10px auto;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1299,12 +1573,14 @@
         <button class="icon-btn" id="sound-btn" title="Romantic Chimes">
           ✨
         </button>
-        <button class="icon-btn" id="music-btn" title="Toggle Music">♪</button>
+        <button class="icon-btn muted" id="music-btn" title="Toggle Music">
+          ♪
+        </button>
       </div>
     </div>
 
     <!-- Audio fallback element -->
-    <audio id="bg-music" loop>
+    <audio id="bg-music">
       <source src="anniversary.mp3" type="audio/mpeg" />
     </audio>
     <input
@@ -1805,6 +2081,7 @@
       // Screen 4 (Love Letter & Reasons) forward navigation locked until all reasons are read
       let reasonIdx = 0;
       let canMoveNextFromReasons = false;
+      let songHasFinished = false;
 
       function shakeRingPrompt() {
         const hint = document.getElementById("ring-hint");
@@ -1822,6 +2099,8 @@
       function shakeReasonPrompt() {
         const reasonPill = document.getElementById("reason-pill");
         if (reasonPill) {
+          reasonPill.classList.remove("shake-btn");
+          void reasonPill.offsetWidth;
           reasonPill.classList.add("shake-btn");
           setTimeout(() => reasonPill.classList.remove("shake-btn"), 600);
         }
@@ -1829,6 +2108,13 @@
 
       function unlockGateAndProceed() {
         hasUnlockedGate = true;
+        songHasFinished = false;
+        if (bgMusic) {
+          bgMusic.loop = false;
+          try {
+            bgMusic.currentTime = 0;
+          } catch (_) {}
+        }
         playMusic();
         goToScreen(1);
       }
@@ -1925,6 +2211,13 @@
           hasWornRing = false;
           reasonIdx = 0;
           canMoveNextFromReasons = false;
+          songHasFinished = false;
+          pauseMusic();
+          if (bgMusic) {
+            try {
+              bgMusic.currentTime = 0;
+            } catch (_) {}
+          }
           const reasonPill = document.getElementById("reason-pill");
           if (reasonPill) {
             reasonPill.classList.remove("ready-next");
@@ -2427,7 +2720,7 @@
 
         const btnWidth = noBtn.offsetWidth || 140;
         const btnHeight = noBtn.offsetHeight || 48;
-        const margin = 20;
+        const margin = window.innerWidth <= 600 ? 14 : 20;
         const minTop = 72;
 
         const maxW = Math.max(margin, window.innerWidth - btnWidth - margin);
@@ -2617,9 +2910,17 @@
 
         function getPos(e) {
           const rect = canvas.getBoundingClientRect();
-          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-          return { x: clientX - rect.left, y: clientY - rect.top };
+          const touch =
+            (e.touches && e.touches[0]) ||
+            (e.changedTouches && e.changedTouches[0]);
+          const clientX = touch ? touch.clientX : e.clientX;
+          const clientY = touch ? touch.clientY : e.clientY;
+          const scaleX = rect.width ? canvas.width / rect.width : 1;
+          const scaleY = rect.height ? canvas.height / rect.height : 1;
+          return {
+            x: (clientX - rect.left) * scaleX,
+            y: (clientY - rect.top) * scaleY,
+          };
         }
 
         canvas.addEventListener("mousedown", (e) => {
@@ -2805,7 +3106,7 @@
       /* ──────────────────────────────────────────────
    9. LIVE ANNIVERSARY COUNTER
 ────────────────────────────────────────────── */
-      const ANNIVERSARY_DATE = new Date("2025-11-10T00:00:00");
+      const ANNIVERSARY_DATE = new Date("2025-11-14T00:00:00");
       function updateCounter() {
         const diff = Date.now() - ANNIVERSARY_DATE.getTime();
         const totalSec = Math.floor(Math.max(0, diff) / 1000);
@@ -2835,31 +3136,52 @@
       const musicBtn = document.getElementById("music-btn");
       let isMusicPlaying = false;
 
+      if (bgMusic) {
+        bgMusic.loop = false;
+        bgMusic.addEventListener("ended", () => {
+          songHasFinished = true;
+          isMusicPlaying = false;
+          if (musicBtn) {
+            musicBtn.classList.add("muted");
+            musicBtn.innerHTML = "♪";
+          }
+        });
+      }
+
       function playMusic() {
+        if (!hasUnlockedGate || songHasFinished) return;
         if (!bgMusic) return;
+        bgMusic.loop = false;
         bgMusic.volume = 0.7;
         bgMusic
           .play()
           .then(() => {
+            if (!hasUnlockedGate || songHasFinished) {
+              bgMusic.pause();
+              return;
+            }
             isMusicPlaying = true;
             musicBtn.classList.remove("muted");
             musicBtn.innerHTML = "♫";
           })
           .catch(() => {
+            if (!hasUnlockedGate || songHasFinished) return;
             if (!isAmbientPlaying) toggleAmbientMusic();
           });
       }
 
       function pauseMusic() {
-        if (!bgMusic) return;
-        bgMusic.pause();
+        if (bgMusic) bgMusic.pause();
         isMusicPlaying = false;
-        musicBtn.classList.add("muted");
-        musicBtn.innerHTML = "♪";
+        if (musicBtn) {
+          musicBtn.classList.add("muted");
+          musicBtn.innerHTML = "♪";
+        }
         if (isAmbientPlaying) toggleAmbientMusic();
       }
 
       function toggleMusic() {
+        if (!hasUnlockedGate || songHasFinished) return;
         if (isMusicPlaying || isAmbientPlaying) {
           pauseMusic();
         } else {
@@ -2871,17 +3193,6 @@
         e.stopPropagation();
         toggleMusic();
       });
-
-      // Start music automatically on first user interaction
-      document.addEventListener(
-        "click",
-        () => {
-          if (!isMusicPlaying && !isAmbientPlaying) {
-            playMusic();
-          }
-        },
-        { once: true },
-      );
 
       /* ──────────────────────────────────────────────
    11. SOFT FLOATING PETALS & HEARTS

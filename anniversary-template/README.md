@@ -25,7 +25,7 @@ anniversary-template/
 1. **Customize Texts & Names**
    Open `config.js` in any text editor (VS Code, Notepad, etc.) and edit the values inside `window.CARD_CONFIG`:
    - `meta`: Browser tab title and top-left brand tag.
-   - `couple`: Sender name, partner name, `anniversaryStartISO` (`YYYY-MM-DDTHH:mm:ss`) for the live time counter, and date labels.
+   - `couple`: Sender name, partner name, `anniversaryStartISO` (`"YYYY-MM-DD"` or `"YYYY-MM-DDTHH:mm:ss"`) which drives the live real-time Days / Hours / Mins / Secs counter and auto-formats `"Since <Date> · Counting forever"` (when `sinceLabel` is `""`), plus date labels.
    - `theme`: Hex colors for primary rose, gold, and text.
    - `screens`: Every heading, quote, button label, love letter paragraphs, reasons popup list, scratch-card secret wish, and share text.
 

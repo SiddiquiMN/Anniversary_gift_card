@@ -17,9 +17,12 @@ window.CARD_CONFIG = {
     senderName: "Alex",
     partnerName: "Mia",
     coupleDisplay: "Alex & Mia",
-    // ISO format: "YYYY-MM-DDTHH:mm:ss" (used for the live Days / Hours / Mins / Secs counter)
+    // Start date for the live real-time counter (Days / Hours / Mins / Secs).
+    // Accepts "YYYY-MM-DD" (local midnight) or "YYYY-MM-DDTHH:mm:ss".
     anniversaryStartISO: "2025-11-14T00:00:00",
-    sinceLabel: "Since November 14, 2025 · Counting forever",
+    // Leave empty ("") to auto-display "Since <Date> · Counting forever" from anniversaryStartISO,
+    // or enter any custom caption text.
+    sinceLabel: "",
     letterDateLabel: "November 14, 2026 · 1st Anniversary",
   },
 

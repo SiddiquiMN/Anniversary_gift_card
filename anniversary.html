@@ -49,6 +49,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+        overscroll-behavior-y: contain;
         background: var(--bg-gradient);
         font-family: "Montserrat", sans-serif;
         color: var(--text-dark);
@@ -58,6 +59,53 @@
       }
       body:active {
         cursor: grabbing;
+      }
+
+      /* Pull-to-refresh indicator for mobile landing page */
+      .ptr-indicator {
+        position: fixed;
+        top: -58px;
+        left: 50%;
+        transform: translateX(-50%) translateY(0) scale(0.85);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1.5px solid var(--rose-soft);
+        box-shadow: 0 8px 24px rgba(214, 74, 112, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1200;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 0.2s ease;
+      }
+      .ptr-indicator.pulling {
+        transition: none;
+      }
+      .ptr-indicator.refreshing {
+        opacity: 1 !important;
+        transform: translateX(-50%) translateY(78px) scale(1) !important;
+      }
+      .ptr-spinner {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 2.5px solid rgba(214, 74, 112, 0.2);
+        border-top-color: var(--rose-primary);
+        border-right-color: var(--gold);
+        transition: transform 0.08s linear;
+      }
+      .ptr-indicator.refreshing .ptr-spinner {
+        animation: ptrSpin 0.65s linear infinite;
+      }
+      @keyframes ptrSpin {
+        to {
+          transform: rotate(360deg);
+        }
       }
 
       /* ═══════════════════════════════════════
@@ -532,10 +580,14 @@
         position: absolute;
         inset: 0;
         border-radius: 50%;
+        padding: 18px 16px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        gap: 2px;
+        text-align: center;
+        overflow: hidden;
         opacity: 0;
         pointer-events: none;
         transform: scale(0.5);
@@ -564,9 +616,10 @@
 
       .propose-visual {
         position: relative;
-        font-size: 2.6rem;
+        font-size: clamp(1.75rem, 4.8vw, 2.05rem);
         line-height: 1;
-        margin-bottom: 2px;
+        margin-top: 4px;
+        margin-bottom: 0;
       }
       .propose-hand {
         display: inline-block;
@@ -574,10 +627,10 @@
       }
       .propose-ring {
         position: absolute;
-        top: -12px;
+        top: -9px;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 2.2rem;
+        font-size: clamp(1.35rem, 3.8vw, 1.6rem);
         animation: slipOnRing 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
       }
       @keyframes slipOnRing {
@@ -587,17 +640,20 @@
       }
 
       .engagement-sparkles {
-        font-size: 1rem;
-        letter-spacing: 4px;
+        font-size: clamp(0.7rem, 2.1vw, 0.85rem);
+        letter-spacing: 3px;
+        line-height: 1.1;
         animation: heartbeat 1.2s infinite;
       }
       .engagement-text {
         font-family: 'Great Vibes', cursive;
-        font-size: 1.45rem;
+        font-size: clamp(1rem, 3.4vw, 1.18rem);
+        line-height: 1.15;
         color: var(--rose-deep);
         text-shadow: 0 2px 10px rgba(168, 46, 82, 0.25);
-        margin-top: 2px;
-        white-space: nowrap;
+        margin-top: 1px;
+        max-width: 118px;
+        white-space: normal;
       }
 
       .ring-tap-hint {
@@ -614,6 +670,40 @@
         margin-bottom: 20px;
         transition: all 0.3s ease;
         animation: hintBlink 2s infinite alternate;
+      }
+      .explore-pill {
+        margin-top: 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #e55c82 0%, #c43860 100%);
+        color: #fff;
+        border: none;
+        padding: 11px 26px;
+        border-radius: 40px;
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: 0 10px 26px rgba(196, 56, 96, 0.35);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(10px) scale(0.95);
+        transition:
+          opacity 0.45s ease,
+          transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.25s ease;
+      }
+      .explore-pill.visible {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateY(0) scale(1);
+      }
+      .explore-pill.visible:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 14px 32px rgba(196, 56, 96, 0.45);
       }
       @keyframes hintBlink {
         0% { opacity: 0.85; transform: translateY(0); }
@@ -670,7 +760,7 @@
         position: relative;
         display: inline-block;
         margin-bottom: 20px;
-        cursor: pointer;
+        cursor: default;
       }
       .photo-frame {
         width: min(230px, 60vw);
@@ -985,6 +1075,11 @@
     </style>
   </head>
   <body>
+    <!-- Pull to Refresh Indicator (Mobile Landing Page) -->
+    <div class="ptr-indicator" id="ptr-indicator" aria-hidden="true">
+      <div class="ptr-spinner" id="ptr-spinner"></div>
+    </div>
+
     <!-- Interactive Particle, Sparkle & Firework Canvases -->
     <canvas id="particle-canvas"></canvas>
     <canvas id="sparkle-canvas"></canvas>
@@ -1085,12 +1180,20 @@
           From the moment our eyes met, every second has turned into a cherished
           memory.
         </p>
+        <button
+          type="button"
+          class="explore-pill"
+          id="explore-pill"
+          onclick="goToScreen(2)"
+        >
+          Swipe to Explore <span>✨</span>
+        </button>
       </div>
 
       <!-- S3: MEMORY PHOTO -->
       <div class="screen" id="s3">
         <div class="glass-badge">◆ Beautiful Memory ◆</div>
-        <div class="photo-wrapper tilt-card" onclick="triggerPhotoUpload()">
+        <div class="photo-wrapper tilt-card">
           <div class="photo-frame" id="photo-frame">
             <img src="photo.jpg" alt="Sowmik & Mohua" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';" />
             <div class="photo-ph" style="display: none;">
@@ -1152,7 +1255,7 @@
           <div class="letter-sig">— Yours always, Sowmik ❤</div>
           <div class="letter-date">November 14, 2026 · 1st Anniversary</div>
 
-          <div class="reason-pill" onclick="popLoveReason(event)">
+          <div class="reason-pill" id="reason-pill" onclick="popLoveReason(event)">
             <span>💌</span> Tap for a reason why I love you!
           </div>
         </div>
@@ -1465,6 +1568,14 @@
         if (currentScreen === 0) {
           hasUnlockedGate = false;
           hasWornRing = false;
+          reasonIdx = 0;
+          canMoveNextFromReasons = false;
+          const reasonPill = document.getElementById("reason-pill");
+          if (reasonPill) {
+            reasonPill.innerHTML =
+              "<span>💌</span> Tap for a reason why I love you!";
+          }
+          resetRingState();
           resetNoButtonPosition();
         }
 
@@ -1538,7 +1649,15 @@
         }
       }
 
-      // 1. Phone Touch Swipe
+      // 1. Phone Touch Swipe & Landing Page Pull-to-Refresh
+      const ptrIndicator = document.getElementById("ptr-indicator");
+      const ptrSpinner = document.getElementById("ptr-spinner");
+      let ptrStartX = 0;
+      let ptrStartY = 0;
+      let isPtrTracking = false;
+      let ptrPullOffset = 0;
+      let isPtrRefreshing = false;
+
       document.addEventListener(
         "touchstart",
         (e) => {
@@ -1548,15 +1667,78 @@
             )
           )
             return;
-          gestureStartX = e.touches[0].clientX;
-          gestureStartY = e.touches[0].clientY;
+          const touch = e.touches[0];
+          gestureStartX = touch.clientX;
+          gestureStartY = touch.clientY;
+
+          if (currentScreen === 0 && !isPtrRefreshing) {
+            ptrStartX = touch.clientX;
+            ptrStartY = touch.clientY;
+            ptrPullOffset = 0;
+            isPtrTracking = true;
+          }
         },
         { passive: true },
       );
 
       document.addEventListener(
+        "touchmove",
+        (e) => {
+          if (!isPtrTracking || currentScreen !== 0 || isPtrRefreshing) return;
+          const touch = e.touches[0];
+          const dx = touch.clientX - ptrStartX;
+          const dy = touch.clientY - ptrStartY;
+
+          if (dy > 10 && dy > Math.abs(dx) * 1.15) {
+            ptrPullOffset = Math.min(102, dy * 0.62);
+            if (ptrIndicator && ptrSpinner) {
+              ptrIndicator.classList.add("pulling");
+              const scale = 0.85 + Math.min(0.2, ptrPullOffset / 450);
+              ptrIndicator.style.opacity = Math.min(1, ptrPullOffset / 42);
+              ptrIndicator.style.transform = `translateX(-50%) translateY(${ptrPullOffset}px) scale(${scale})`;
+              ptrSpinner.style.transform = `rotate(${dy * 2.4}deg)`;
+            }
+          } else if (Math.abs(dx) > 25 && dy < 15) {
+            isPtrTracking = false;
+            ptrPullOffset = 0;
+            if (ptrIndicator && ptrSpinner) {
+              ptrIndicator.classList.remove("pulling");
+              ptrIndicator.style.opacity = "";
+              ptrIndicator.style.transform = "";
+              ptrSpinner.style.transform = "";
+            }
+          }
+        },
+        { passive: true },
+      );
+
+      function finishPtrTouch() {
+        if (!isPtrTracking) return;
+        isPtrTracking = false;
+        if (!ptrIndicator || !ptrSpinner) return;
+
+        ptrIndicator.classList.remove("pulling");
+        if (currentScreen === 0 && ptrPullOffset >= 56 && !isPtrRefreshing) {
+          isPtrRefreshing = true;
+          ptrIndicator.style.opacity = "";
+          ptrIndicator.style.transform = "";
+          ptrSpinner.style.transform = "";
+          ptrIndicator.classList.add("refreshing");
+          setTimeout(() => {
+            window.location.reload();
+          }, 550);
+        } else {
+          ptrPullOffset = 0;
+          ptrIndicator.style.opacity = "";
+          ptrIndicator.style.transform = "";
+          ptrSpinner.style.transform = "";
+        }
+      }
+
+      document.addEventListener(
         "touchend",
         (e) => {
+          finishPtrTouch();
           if (
             e.target.closest(
               "#scratch-canvas, .btn-no, .btn-yes, input, button, .ring-interactive-wrap",
@@ -1569,6 +1751,8 @@
         },
         { passive: true },
       );
+
+      document.addEventListener("touchcancel", finishPtrTouch, { passive: true });
 
       // 2. Mouse Drag Slide (Desktop & Laptop)
       document.addEventListener("mousedown", (e) => {
@@ -1633,11 +1817,36 @@
       const ringChargeBar = document.getElementById("ring-charge-bar");
       const ringBox = document.getElementById("ring-box");
       const ringHint = document.getElementById("ring-hint");
+      const explorePill = document.getElementById("explore-pill");
       let ringHoldTimer = null;
       let ringHoldStart = 0;
       let isRingHolding = false;
       let isProposing = false;
       const RING_HOLD_DURATION = 1100; // ms to complete hold
+
+      function resetRingState() {
+        isProposing = false;
+        isRingHolding = false;
+        if (ringHoldTimer) {
+          cancelAnimationFrame(ringHoldTimer);
+          ringHoldTimer = null;
+        }
+        if (ringBox) {
+          ringBox.classList.remove("proposed");
+          ringBox.classList.remove("holding");
+        }
+        if (ringChargeBar) ringChargeBar.style.strokeDashoffset = "528";
+        if (ringHint) {
+          ringHint.innerHTML =
+            "<span>✨</span> Press &amp; hold with your ring finger <span>💍</span>";
+          ringHint.style.borderColor = "";
+          ringHint.style.color = "";
+          ringHint.style.background = "";
+        }
+        if (explorePill) {
+          explorePill.classList.remove("visible");
+        }
+      }
 
       function triggerEngagementProposal() {
         if (isProposing) return;
@@ -1676,26 +1885,16 @@
           }
         }
 
-        // Wait ~1.5s for the proposal animation, then unlock and route to next slide (Screen 3: Photo)!
-        setTimeout(() => {
-          hasWornRing = true;
-          updateNavControls();
-          goToScreen(2);
+        // Unlock Screen 2 and reveal "Swipe to Explore" without auto-advancing
+        hasWornRing = true;
+        updateNavControls();
+        if (explorePill) {
           setTimeout(() => {
-            isProposing = false;
-            if (ringBox) {
-              ringBox.classList.remove("proposed");
-              ringBox.classList.remove("holding");
+            if (currentScreen === 1 && hasWornRing) {
+              explorePill.classList.add("visible");
             }
-            if (ringChargeBar) ringChargeBar.style.strokeDashoffset = "528";
-            if (ringHint) {
-              ringHint.innerHTML = "<span>✨</span> Press &amp; hold with your ring finger <span>💍</span>";
-              ringHint.style.borderColor = "";
-              ringHint.style.color = "";
-              ringHint.style.background = "";
-            }
-          }, 600);
-        }, 1500);
+          }, 350);
+        }
       }
 
       function startRingHold(e) {
@@ -2076,13 +2275,22 @@
         "Simply because you are Mohua, my soulmate forever.",
       ];
       let reasonIdx = 0;
+      let canMoveNextFromReasons = false;
 
       function popLoveReason(e) {
         if (e) e.stopPropagation();
+        if (canMoveNextFromReasons) {
+          nextScreen();
+          return;
+        }
+        if (window.Swal && Swal.isVisible()) return;
         playRomanticChime();
 
-        const text = loveReasons[reasonIdx % loveReasons.length];
+        const currentIndex = reasonIdx % loveReasons.length;
+        const text = loveReasons[currentIndex];
         reasonIdx++;
+        const isAllViewed = reasonIdx >= loveReasons.length;
+        const reasonPill = document.getElementById("reason-pill");
 
         if (window.Swal) {
           Swal.fire({
@@ -2096,6 +2304,15 @@
               popup: "romantic-swal-popup",
               timerProgressBar: "romantic-swal-timer",
             },
+          }).then(() => {
+            if (!reasonPill) return;
+            if (isAllViewed) {
+              canMoveNextFromReasons = true;
+              reasonPill.innerHTML =
+                "<span>👉</span> Now you can move next ✨";
+            } else {
+              reasonPill.innerHTML = "<span>💌</span> Tap Again ✨";
+            }
           });
         }
       }
@@ -2181,40 +2398,11 @@
       renderSparkles();
 
       /* ──────────────────────────────────────────────
-   8. PHOTO UPLOAD (WITH LOCALSTORAGE PERSISTENCE)
+   8. FIXED COUPLE PHOTO (UPLOAD DISABLED)
 ────────────────────────────────────────────── */
       function triggerPhotoUpload() {
-        document.getElementById("photo-upload").click();
+        // Photo change option is disabled so the couple photo stays fixed
       }
-
-      function loadSavedPhoto() {
-        try {
-          const saved = localStorage.getItem("sowmik_mohua_anniversary_photo");
-          if (saved) {
-            const frame = document.getElementById("photo-frame");
-            frame.innerHTML = `<img src="${saved}" alt="Sowmik & Mohua"/>`;
-          }
-        } catch (e) {}
-      }
-      loadSavedPhoto();
-
-      document
-        .getElementById("photo-upload")
-        .addEventListener("change", function () {
-          const file = this.files[0];
-          if (!file) return;
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            const dataUrl = e.target.result;
-            const frame = document.getElementById("photo-frame");
-            frame.innerHTML = `<img src="${dataUrl}" alt="Sowmik & Mohua"/>`;
-            try {
-              localStorage.setItem("sowmik_mohua_anniversary_photo", dataUrl);
-            } catch (err) {}
-            playRomanticChime();
-          };
-          reader.readAsDataURL(file);
-        });
 
       /* ──────────────────────────────────────────────
    9. LIVE ANNIVERSARY COUNTER

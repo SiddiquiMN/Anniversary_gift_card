@@ -476,7 +476,9 @@
         height: 170px;
         margin: 0 auto 16px;
         border-radius: 50%;
-        transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.3s ease;
+        transition:
+          transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+          box-shadow 0.3s ease;
       }
       .ring-box:active {
         transform: scale(0.96);
@@ -492,13 +494,17 @@
         z-index: 8;
       }
       .ring-charge-bg {
-        cx: 91; cy: 91; r: 84;
+        cx: 91;
+        cy: 91;
+        r: 84;
         fill: none;
         stroke: rgba(223, 179, 107, 0.15);
         stroke-width: 4;
       }
       .ring-charge-bar {
-        cx: 91; cy: 91; r: 84;
+        cx: 91;
+        cy: 91;
+        r: 84;
         fill: none;
         stroke: url(#ringChargeGradient);
         stroke-width: 5;
@@ -555,12 +561,19 @@
         pointer-events: none;
         transform: rotate(0deg) translateY(-84px) rotate(0deg);
         animation: ringOrbit 8s linear infinite;
-        transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2), opacity 0.4s ease, filter 0.4s ease;
+        transition:
+          transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+          opacity 0.4s ease,
+          filter 0.4s ease;
         filter: drop-shadow(0 4px 12px rgba(214, 74, 112, 0.4));
       }
       @keyframes ringOrbit {
-        0%   { transform: rotate(0deg) translateY(-84px) rotate(0deg); }
-        100% { transform: rotate(360deg) translateY(-84px) rotate(-360deg); }
+        0% {
+          transform: rotate(0deg) translateY(-84px) rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg) translateY(-84px) rotate(-360deg);
+        }
       }
 
       /* When tapped/holding or proposed: ring stops orbiting and glides smoothly into the EXACT DEAD CENTER! */
@@ -568,7 +581,9 @@
       .ring-box.proposed .ring-orbit-item {
         animation: none !important;
         transform: rotate(0deg) translateY(0px) rotate(0deg) scale(1.3) !important;
-        filter: drop-shadow(0 0 22px rgba(223, 179, 107, 0.95)), drop-shadow(0 0 40px rgba(214, 74, 112, 0.7));
+        filter:
+          drop-shadow(0 0 22px rgba(223, 179, 107, 0.95)),
+          drop-shadow(0 0 40px rgba(214, 74, 112, 0.7));
       }
       .ring-box.proposed .ring-orbit-item {
         opacity: 0;
@@ -593,7 +608,12 @@
         transform: scale(0.5);
         transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
         z-index: 15;
-        background: radial-gradient(circle, rgba(255, 245, 248, 0.95) 0%, rgba(253, 230, 238, 0.9) 70%, transparent 100%);
+        background: radial-gradient(
+          circle,
+          rgba(255, 245, 248, 0.95) 0%,
+          rgba(253, 230, 238, 0.9) 70%,
+          transparent 100%
+        );
       }
       .ring-box.proposed .engagement-layer {
         opacity: 1;
@@ -610,8 +630,14 @@
       }
 
       @keyframes ringGlowPulse {
-        from { box-shadow: 0 0 30px rgba(223, 179, 107, 0.5); }
-        to { box-shadow: 0 0 65px rgba(214, 74, 112, 0.8), 0 0 90px rgba(223, 179, 107, 0.6); }
+        from {
+          box-shadow: 0 0 30px rgba(223, 179, 107, 0.5);
+        }
+        to {
+          box-shadow:
+            0 0 65px rgba(214, 74, 112, 0.8),
+            0 0 90px rgba(223, 179, 107, 0.6);
+        }
       }
 
       .propose-visual {
@@ -634,9 +660,20 @@
         animation: slipOnRing 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
       }
       @keyframes slipOnRing {
-        0% { transform: translate(-50%, -24px) scale(0.5); opacity: 0; }
-        50% { transform: translate(-50%, -4px) scale(1.2); opacity: 1; filter: drop-shadow(0 0 16px gold); }
-        100% { transform: translate(-50%, 6px) scale(1); opacity: 1; filter: drop-shadow(0 0 24px rgba(214, 74, 112, 0.9)); }
+        0% {
+          transform: translate(-50%, -24px) scale(0.5);
+          opacity: 0;
+        }
+        50% {
+          transform: translate(-50%, -4px) scale(1.2);
+          opacity: 1;
+          filter: drop-shadow(0 0 16px gold);
+        }
+        100% {
+          transform: translate(-50%, 6px) scale(1);
+          opacity: 1;
+          filter: drop-shadow(0 0 24px rgba(214, 74, 112, 0.9));
+        }
       }
 
       .engagement-sparkles {
@@ -646,7 +683,7 @@
         animation: heartbeat 1.2s infinite;
       }
       .engagement-text {
-        font-family: 'Great Vibes', cursive;
+        font-family: "Great Vibes", cursive;
         font-size: clamp(1rem, 3.4vw, 1.18rem);
         line-height: 1.15;
         color: var(--rose-deep);
@@ -706,14 +743,30 @@
         box-shadow: 0 14px 32px rgba(196, 56, 96, 0.45);
       }
       @keyframes hintBlink {
-        0% { opacity: 0.85; transform: translateY(0); }
-        100% { opacity: 1; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(214, 74, 112, 0.22); }
+        0% {
+          opacity: 0.85;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(214, 74, 112, 0.22);
+        }
       }
 
       @keyframes shakeEl {
-        0%, 100% { transform: translateX(0); }
-        20%, 60% { transform: translateX(-7px); }
-        40%, 80% { transform: translateX(7px); }
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20%,
+        60% {
+          transform: translateX(-7px);
+        }
+        40%,
+        80% {
+          transform: translateX(7px);
+        }
       }
       .shake-hint {
         animation: shakeEl 0.5s ease !important;
@@ -1146,14 +1199,26 @@
           <div class="ring-box tilt-card" id="ring-box">
             <svg class="ring-charge-svg" viewBox="0 0 182 182">
               <defs>
-                <linearGradient id="ringChargeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <linearGradient
+                  id="ringChargeGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
                   <stop offset="0%" stop-color="#dfb36b" />
                   <stop offset="50%" stop-color="#e55c82" />
                   <stop offset="100%" stop-color="#a82e52" />
                 </linearGradient>
               </defs>
               <circle class="ring-charge-bg" cx="91" cy="91" r="84"></circle>
-              <circle class="ring-charge-bar" id="ring-charge-bar" cx="91" cy="91" r="84"></circle>
+              <circle
+                class="ring-charge-bar"
+                id="ring-charge-bar"
+                cx="91"
+                cy="91"
+                r="84"
+              ></circle>
             </svg>
             <div class="ring-spin"></div>
             <div class="ring-inner"></div>
@@ -1170,7 +1235,8 @@
             </div>
           </div>
           <div class="ring-tap-hint" id="ring-hint">
-            <span>✨</span> Press &amp; hold with your ring finger <span>💍</span>
+            <span>✨</span> Press &amp; hold with your ring finger
+            <span>💍</span>
           </div>
         </div>
         <h2 class="title-script" style="font-size: clamp(2.6rem, 8vw, 4.2rem)">
@@ -1195,8 +1261,16 @@
         <div class="glass-badge">◆ Beautiful Memory ◆</div>
         <div class="photo-wrapper tilt-card">
           <div class="photo-frame" id="photo-frame">
-            <img src="photo.jpg" alt="Sowmik & Mohua" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';" />
-            <div class="photo-ph" style="display: none;">
+            <img
+              src="photo.jpg"
+              alt="Sowmik & Mohua"
+              onerror="
+                this.style.display = 'none';
+                if (this.nextElementSibling)
+                  this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div class="photo-ph" style="display: none">
               <span class="photo-ph-icon">📸</span>
               <span class="photo-ph-txt">Our Picture</span>
               <span class="photo-ph-hint">Tap to upload your photo</span>
@@ -1255,7 +1329,11 @@
           <div class="letter-sig">— Yours always, Sowmik ❤</div>
           <div class="letter-date">November 14, 2026 · 1st Anniversary</div>
 
-          <div class="reason-pill" id="reason-pill" onclick="popLoveReason(event)">
+          <div
+            class="reason-pill"
+            id="reason-pill"
+            onclick="popLoveReason(event)"
+          >
             <span>💌</span> Tap for a reason why I love you!
           </div>
         </div>
@@ -1395,7 +1473,10 @@
               osc.type = "sine";
               osc.frequency.setValueAtTime(freq, ctx.currentTime);
               gain.gain.setValueAtTime(0.09, ctx.currentTime);
-              gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.4);
+              gain.gain.exponentialRampToValueAtTime(
+                0.0001,
+                ctx.currentTime + 1.4,
+              );
               osc.connect(gain);
               gain.connect(ctx.destination);
               osc.start();
@@ -1613,7 +1694,11 @@
       document.addEventListener("keydown", (e) => {
         if (currentScreen === 0 && !hasUnlockedGate) return;
         if (currentScreen === 1 && !hasWornRing) {
-          if (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === " ") {
+          if (
+            e.key === "ArrowRight" ||
+            e.key === "ArrowLeft" ||
+            e.key === " "
+          ) {
             shakeRingPrompt();
           }
           return;
@@ -1635,7 +1720,10 @@
         if (currentScreen === 0 && !hasUnlockedGate) return;
         // Block swiping ANY direction on Screen 1 until ring animation completes!
         if (currentScreen === 1 && !hasWornRing) {
-          if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > Math.abs(deltaY) * 0.7) {
+          if (
+            Math.abs(deltaX) > 35 &&
+            Math.abs(deltaX) > Math.abs(deltaY) * 0.7
+          ) {
             shakeRingPrompt();
           }
           return;
@@ -1752,7 +1840,9 @@
         { passive: true },
       );
 
-      document.addEventListener("touchcancel", finishPtrTouch, { passive: true });
+      document.addEventListener("touchcancel", finishPtrTouch, {
+        passive: true,
+      });
 
       // 2. Mouse Drag Slide (Desktop & Laptop)
       document.addEventListener("mousedown", (e) => {
@@ -1869,7 +1959,8 @@
           ringBox.classList.add("proposed");
         }
         if (ringHint) {
-          ringHint.innerHTML = "<span>💖</span> She Said Yes! Forever &amp; Always <span>💍</span>";
+          ringHint.innerHTML =
+            "<span>💖</span> She Said Yes! Forever &amp; Always <span>💍</span>";
           ringHint.style.borderColor = "var(--rose-primary)";
           ringHint.style.color = "var(--rose-deep)";
           ringHint.style.background = "#fff";
@@ -1881,7 +1972,10 @@
           const cx = rect.left + rect.width / 2;
           const cy = rect.top + rect.height / 2;
           for (let i = 0; i < 28; i++) {
-            addSparkle(cx + (Math.random() - 0.5) * 80, cy + (Math.random() - 0.5) * 80);
+            addSparkle(
+              cx + (Math.random() - 0.5) * 80,
+              cy + (Math.random() - 0.5) * 80,
+            );
           }
         }
 
@@ -2308,8 +2402,7 @@
             if (!reasonPill) return;
             if (isAllViewed) {
               canMoveNextFromReasons = true;
-              reasonPill.innerHTML =
-                "<span>👉</span> Now you can move next ✨";
+              reasonPill.innerHTML = "<span>👉</span> Now you can move next ✨";
             } else {
               reasonPill.innerHTML = "<span>💌</span> Tap Again ✨";
             }
@@ -2440,13 +2533,16 @@
       function playMusic() {
         if (!bgMusic) return;
         bgMusic.volume = 0.7;
-        bgMusic.play().then(() => {
-          isMusicPlaying = true;
-          musicBtn.classList.remove("muted");
-          musicBtn.innerHTML = "♫";
-        }).catch(() => {
-          if (!isAmbientPlaying) toggleAmbientMusic();
-        });
+        bgMusic
+          .play()
+          .then(() => {
+            isMusicPlaying = true;
+            musicBtn.classList.remove("muted");
+            musicBtn.innerHTML = "♫";
+          })
+          .catch(() => {
+            if (!isAmbientPlaying) toggleAmbientMusic();
+          });
       }
 
       function pauseMusic() {

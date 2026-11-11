@@ -397,6 +397,14 @@
         white-space: nowrap;
         z-index: 999;
       }
+      .btn-no.smooth-dodge {
+        transition:
+          left 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+          top 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.22s ease,
+          background 0.22s ease;
+      }
 
       /* ══════════ S2 — OUR STORY / RINGS & ENGAGEMENT ANIMATION ══════════ */
       #s2 {
@@ -409,7 +417,9 @@
         align-items: center;
         cursor: pointer;
         user-select: none;
-        touch-action: manipulation;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        touch-action: none;
       }
 
       .ring-box {
@@ -447,7 +457,7 @@
         stroke-linecap: round;
         stroke-dasharray: 528;
         stroke-dashoffset: 528;
-        transition: stroke-dashoffset 0.08s linear;
+        transition: none;
       }
 
       .ring-spin {
@@ -707,7 +717,7 @@
       }
 
       .upload-pill {
-        display: inline-flex;
+        display: none;
         align-items: center;
         gap: 6px;
         background: #fff;
@@ -944,8 +954,19 @@
         border: 2px solid rgba(255, 255, 255, 0.95) !important;
         border-radius: 28px !important;
         box-shadow: 0 24px 60px rgba(214, 74, 112, 0.32) !important;
-        padding: 24px 18px 28px !important;
+        padding: 24px 18px 30px !important;
         font-family: "Montserrat", sans-serif !important;
+        overflow: hidden !important;
+      }
+      .swal2-popup.romantic-swal-popup .swal2-timer-progress-bar-container {
+        left: 22px !important;
+        right: 22px !important;
+        bottom: 10px !important;
+        width: auto !important;
+        height: 5px !important;
+        border-radius: 999px !important;
+        overflow: hidden !important;
+        background: rgba(214, 74, 112, 0.12) !important;
       }
       .swal2-timer-progress-bar.romantic-swal-timer {
         background: linear-gradient(
@@ -954,8 +975,8 @@
           #e55c82 50%,
           #a82e52 100%
         ) !important;
-        height: 5px !important;
-        border-radius: 6px !important;
+        height: 100% !important;
+        border-radius: 999px !important;
       }
       .swal2-backdrop-show {
         backdrop-filter: blur(6px) !important;
@@ -1054,7 +1075,7 @@
             </div>
           </div>
           <div class="ring-tap-hint" id="ring-hint">
-            <span>✨</span> Tap with your ring finger <span>💍</span>
+            <span>✨</span> Press &amp; hold with your ring finger <span>💍</span>
           </div>
         </div>
         <h2 class="title-script" style="font-size: clamp(2.6rem, 8vw, 4.2rem)">
@@ -1375,7 +1396,7 @@
         dot.id = "dot-" + i;
         dot.addEventListener("click", () => {
           if (currentScreen === 0 && !hasUnlockedGate) return;
-          if (currentScreen === 1 && i > 1 && !hasWornRing) {
+          if (currentScreen === 1 && !hasWornRing) {
             shakeRingPrompt();
             return;
           }
@@ -1385,17 +1406,22 @@
       });
 
       function updateNavControls() {
-        // Left arrow hidden on screen 0
+        const isScreen1Locked = currentScreen === 1 && !hasWornRing;
+        // Left arrow hidden on screen 0 and on locked screen 1
         document
           .getElementById("arr-left")
-          .classList.toggle("hide", currentScreen === 0);
+          .classList.toggle("hide", currentScreen === 0 || isScreen1Locked);
         // Right arrow: Hidden on screen 0, hidden on screen 1 until ring is worn, and hidden on final screen
-        const hideRight = (currentScreen === 0) || (currentScreen === 1 && !hasWornRing) || (currentScreen === totalScreens - 1);
+        const hideRight =
+          currentScreen === 0 ||
+          isScreen1Locked ||
+          currentScreen === totalScreens - 1;
         document
           .getElementById("arr-right")
           .classList.toggle("hide", hideRight);
-        // Hide dots on screen 0
-        dotsContainer.style.display = currentScreen === 0 ? "none" : "flex";
+        // Hide dots on screen 0 and while screen 1 is locked
+        dotsContainer.style.display =
+          currentScreen === 0 || isScreen1Locked ? "none" : "flex";
       }
       updateNavControls();
 
@@ -1405,8 +1431,8 @@
           return;
         }
 
-        // STRICT LOCK 2: Unless Ring is worn, NEVER leave screen 1!
-        if (currentScreen === 1 && targetIndex > 1 && !hasWornRing) {
+        // STRICT LOCK 2: Unless Ring hold animation completed, NEVER leave screen 1!
+        if (currentScreen === 1 && targetIndex !== 1 && !hasWornRing) {
           shakeRingPrompt();
           return;
         }
@@ -1465,14 +1491,20 @@
         goToScreen(currentScreen + 1);
       }
       function prevScreen() {
+        if (currentScreen === 1 && !hasWornRing) {
+          shakeRingPrompt();
+          return;
+        }
         goToScreen(currentScreen - 1);
       }
 
-      // Keyboard navigation (Blocked on Screen 0 and Screen 1)
+      // Keyboard navigation (Blocked on Screen 0 and Screen 1 while locked)
       document.addEventListener("keydown", (e) => {
         if (currentScreen === 0 && !hasUnlockedGate) return;
-        if (currentScreen === 1 && (e.key === "ArrowRight" || e.key === " ") && !hasWornRing) {
-          shakeRingPrompt();
+        if (currentScreen === 1 && !hasWornRing) {
+          if (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === " ") {
+            shakeRingPrompt();
+          }
           return;
         }
         if (e.key === "ArrowRight" || e.key === " ") nextScreen();
@@ -1488,11 +1520,13 @@
       let mouseMovedSignificant = false;
 
       function handleGestureSwipe(deltaX, deltaY) {
-        // Block swiping forward on Screen 0!
+        // Block swiping on Screen 0!
         if (currentScreen === 0 && !hasUnlockedGate) return;
-        // Block swiping forward on Screen 1 until ring is worn!
-        if (currentScreen === 1 && deltaX < 0 && !hasWornRing) {
-          shakeRingPrompt();
+        // Block swiping ANY direction on Screen 1 until ring animation completes!
+        if (currentScreen === 1 && !hasWornRing) {
+          if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > Math.abs(deltaY) * 0.7) {
+            shakeRingPrompt();
+          }
           return;
         }
         if (
@@ -1568,7 +1602,7 @@
         handleGestureSwipe(deltaX, deltaY);
       });
 
-      // 3. Mouse Wheel / Trackpad Scroll Slide (Debounced, Blocked on Screen 0)
+      // 3. Mouse Wheel / Trackpad Scroll Slide (Debounced, Blocked on Screen 0 and locked Screen 1)
       let wheelCooldown = false;
       document.addEventListener(
         "wheel",
@@ -1577,7 +1611,9 @@
           if (wheelCooldown) return;
           if (Math.abs(e.deltaY) > 25 || Math.abs(e.deltaX) > 25) {
             wheelCooldown = true;
-            if (e.deltaY > 0 || e.deltaX > 0) {
+            if (currentScreen === 1 && !hasWornRing) {
+              shakeRingPrompt();
+            } else if (e.deltaY > 0 || e.deltaX > 0) {
               nextScreen();
             } else {
               prevScreen();
@@ -1591,7 +1627,7 @@
       );
 
       /* ──────────────────────────────────────────────
-   RING INTERACTION: PRESS & HOLD / CLICK FOR ENGAGEMENT ANIMATION
+   RING INTERACTION: PRESS & HOLD FOR ENGAGEMENT ANIMATION
 ────────────────────────────────────────────── */
       const ringWrap = document.getElementById("ring-interactive-wrap");
       const ringChargeBar = document.getElementById("ring-charge-bar");
@@ -1599,12 +1635,14 @@
       const ringHint = document.getElementById("ring-hint");
       let ringHoldTimer = null;
       let ringHoldStart = 0;
+      let isRingHolding = false;
       let isProposing = false;
-      const RING_HOLD_DURATION = 850; // ms to complete hold
+      const RING_HOLD_DURATION = 1100; // ms to complete hold
 
       function triggerEngagementProposal() {
         if (isProposing) return;
         isProposing = true;
+        isRingHolding = false;
 
         if (ringHoldTimer) {
           cancelAnimationFrame(ringHoldTimer);
@@ -1614,10 +1652,6 @@
         if (ringChargeBar) {
           ringChargeBar.style.strokeDashoffset = "0";
         }
-
-        // UNLOCK SCREEN 2: Ring has been successfully worn!
-        hasWornRing = true;
-        updateNavControls();
 
         playEngagementChime();
 
@@ -1642,8 +1676,10 @@
           }
         }
 
-        // Wait ~1.5s for the proposal animation, then route to next slide (Screen 3: Photo)!
+        // Wait ~1.5s for the proposal animation, then unlock and route to next slide (Screen 3: Photo)!
         setTimeout(() => {
+          hasWornRing = true;
+          updateNavControls();
           goToScreen(2);
           setTimeout(() => {
             isProposing = false;
@@ -1653,7 +1689,7 @@
             }
             if (ringChargeBar) ringChargeBar.style.strokeDashoffset = "528";
             if (ringHint) {
-              ringHint.innerHTML = "<span>✨</span> Tap with your ring finger <span>💍</span>";
+              ringHint.innerHTML = "<span>✨</span> Press &amp; hold with your ring finger <span>💍</span>";
               ringHint.style.borderColor = "";
               ringHint.style.color = "";
               ringHint.style.background = "";
@@ -1663,11 +1699,14 @@
       }
 
       function startRingHold(e) {
-        if (currentScreen !== 1 || isProposing) return;
+        if (currentScreen !== 1 || isProposing || isRingHolding) return;
+        if (e && e.type === "mousedown" && e.button !== 0) return;
+        isRingHolding = true;
         ringHoldStart = performance.now();
         if (ringBox) ringBox.classList.add("holding");
 
         function updateCharge() {
+          if (!isRingHolding || isProposing) return;
           const elapsed = performance.now() - ringHoldStart;
           const progress = Math.min(1, elapsed / RING_HOLD_DURATION);
           const offset = 528 * (1 - progress);
@@ -1682,40 +1721,38 @@
         ringHoldTimer = requestAnimationFrame(updateCharge);
       }
 
-      function stopRingHold(e) {
-        if (isProposing) return;
+      function stopRingHold() {
+        if (isProposing || !isRingHolding) return;
+        isRingHolding = false;
         if (ringHoldTimer) {
           cancelAnimationFrame(ringHoldTimer);
           ringHoldTimer = null;
         }
         if (ringBox) ringBox.classList.remove("holding");
-        const elapsed = performance.now() - ringHoldStart;
         if (ringChargeBar) {
           ringChargeBar.style.strokeDashoffset = "528";
         }
-        // If it was a quick click / tap (between 40ms and 400ms), also trigger proposal!
-        if (elapsed > 40 && elapsed < 400 && currentScreen === 1) {
-          triggerEngagementProposal();
+        if (currentScreen === 1 && !hasWornRing) {
+          shakeRingPrompt();
         }
       }
 
       if (ringWrap) {
         ringWrap.addEventListener("mousedown", startRingHold);
         window.addEventListener("mouseup", stopRingHold);
-        ringWrap.addEventListener("touchstart", (e) => {
-          e.stopPropagation();
-          startRingHold(e);
-        }, { passive: true });
+        ringWrap.addEventListener(
+          "touchstart",
+          (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            startRingHold(e);
+          },
+          { passive: false },
+        );
         window.addEventListener("touchend", stopRingHold, { passive: true });
         window.addEventListener("touchcancel", stopRingHold, { passive: true });
-
-        // Direct click fallback
-        ringWrap.addEventListener("click", (e) => {
-          e.stopPropagation();
-          if (!isProposing && currentScreen === 1) {
-            triggerEngagementProposal();
-          }
-        });
+        ringWrap.addEventListener("contextmenu", (e) => e.preventDefault());
+        ringWrap.addEventListener("click", (e) => e.stopPropagation());
       }
 
       /* ──────────────────────────────────────────────
@@ -1724,6 +1761,10 @@
       const noBtn = document.getElementById("btn-no");
       const yesBtn = document.getElementById("btn-yes");
       let dodgeCount = 0;
+      let lastTouchTime = 0;
+      let lastQuoteChangeTime = 0;
+      let lastDesktopMoveTime = 0;
+      let noBtnTarget = null;
 
       const funnyQuotes = [
         "No, i don't 🙈",
@@ -1738,72 +1779,158 @@
 
       function resetNoButtonPosition() {
         dodgeCount = 0;
+        noBtnTarget = null;
+        lastQuoteChangeTime = 0;
+        lastDesktopMoveTime = 0;
+        noBtn.classList.remove("smooth-dodge");
         noBtn.textContent = funnyQuotes[0];
         noBtn.style.position = "";
+        noBtn.style.margin = "";
         noBtn.style.left = "";
         noBtn.style.top = "";
         noBtn.style.transform = "";
       }
 
-      function moveNoButton() {
-        dodgeCount++;
-        noBtn.textContent = funnyQuotes[dodgeCount % funnyQuotes.length];
-        playWhooshSound();
+      function getRectEdgeDistance(rect, px, py) {
+        const dx = Math.max(rect.left - px, 0, px - rect.right);
+        const dy = Math.max(rect.top - py, 0, py - rect.bottom);
+        return Math.hypot(dx, dy);
+      }
 
-        noBtn.style.position = "fixed";
+      function moveNoButton(pointerX, pointerY, smoothMode = false) {
+        const now = performance.now();
+
+        if (noBtn.style.position !== "fixed") {
+          const startRect = noBtn.getBoundingClientRect();
+          noBtn.classList.remove("smooth-dodge");
+          noBtn.style.position = "fixed";
+          noBtn.style.margin = "0";
+          noBtn.style.left = `${startRect.left}px`;
+          noBtn.style.top = `${startRect.top}px`;
+          if (smoothMode) {
+            void noBtn.offsetWidth;
+          }
+        }
+
+        if (smoothMode) {
+          if (now - lastQuoteChangeTime > 260) {
+            dodgeCount++;
+            noBtn.textContent = funnyQuotes[dodgeCount % funnyQuotes.length];
+            lastQuoteChangeTime = now;
+            playWhooshSound();
+          }
+          noBtn.classList.add("smooth-dodge");
+        } else {
+          dodgeCount++;
+          noBtn.textContent = funnyQuotes[dodgeCount % funnyQuotes.length];
+          playWhooshSound();
+          noBtn.classList.remove("smooth-dodge");
+        }
 
         const btnWidth = noBtn.offsetWidth || 140;
         const btnHeight = noBtn.offsetHeight || 48;
         const margin = 20;
+        const minTop = 72;
 
-        const maxW = window.innerWidth - btnWidth - margin;
-        const maxH = window.innerHeight - btnHeight - margin;
+        const maxW = Math.max(margin, window.innerWidth - btnWidth - margin);
+        const maxH = Math.max(minTop, window.innerHeight - btnHeight - margin);
 
         const yesRect = yesBtn.getBoundingClientRect();
-        let randomX,
-          randomY,
-          attempts = 0;
+        let bestX = margin;
+        let bestY = minTop;
+        let bestScore = -Infinity;
 
-        do {
-          randomX = margin + Math.random() * (maxW - margin);
-          randomY = margin + Math.random() * (maxH - margin);
-          attempts++;
-        } while (
-          attempts < 15 &&
-          Math.abs(randomX - yesRect.left) < 130 &&
-          Math.abs(randomY - yesRect.top) < 70
-        );
+        const hasPointer =
+          typeof pointerX === "number" && typeof pointerY === "number";
 
-        const randomRotate = (Math.random() - 0.5) * 24;
-        noBtn.style.left = `${randomX}px`;
-        noBtn.style.top = `${randomY}px`;
+        for (let i = 0; i < 30; i++) {
+          const candX = margin + Math.random() * Math.max(0, maxW - margin);
+          const candY = minTop + Math.random() * Math.max(0, maxH - minTop);
+
+          const overlapsYes =
+            candX < yesRect.right + 28 &&
+            candX + btnWidth > yesRect.left - 28 &&
+            candY < yesRect.bottom + 24 &&
+            candY + btnHeight > yesRect.top - 24;
+
+          if (overlapsYes && i < 25) continue;
+
+          if (!hasPointer) {
+            bestX = candX;
+            bestY = candY;
+            break;
+          }
+
+          const candCenterX = candX + btnWidth / 2;
+          const candCenterY = candY + btnHeight / 2;
+          const cursorDist = Math.hypot(
+            candCenterX - pointerX,
+            candCenterY - pointerY,
+          );
+          const score = cursorDist - (overlapsYes ? 1000 : 0);
+
+          if (score > bestScore) {
+            bestScore = score;
+            bestX = candX;
+            bestY = candY;
+          }
+          if (!overlapsYes && cursorDist > 260) {
+            break;
+          }
+        }
+
+        const randomRotate = (Math.random() - 0.5) * 18;
+        noBtnTarget = {
+          left: bestX,
+          top: bestY,
+          right: bestX + btnWidth,
+          bottom: bestY + btnHeight,
+        };
+        lastDesktopMoveTime = now;
+
+        noBtn.style.left = `${bestX}px`;
+        noBtn.style.top = `${bestY}px`;
         noBtn.style.transform = `rotate(${randomRotate}deg) scale(0.96)`;
       }
 
-      // Proximity evasion
+      // Desktop proximity evasion: smoothly glides away before mouse can touch it
       document.addEventListener("mousemove", (e) => {
         if (currentScreen !== 0) return;
-        const rect = noBtn.getBoundingClientRect();
-        const btnCenterX = rect.left + rect.width / 2;
-        const btnCenterY = rect.top + rect.height / 2;
-        const distance = Math.hypot(
-          e.clientX - btnCenterX,
-          e.clientY - btnCenterY,
-        );
+        if (Date.now() - lastTouchTime < 700) return;
 
-        if (distance < 95) {
-          moveNoButton();
+        const rect = noBtn.getBoundingClientRect();
+        const edgeDist = getRectEdgeDistance(rect, e.clientX, e.clientY);
+        const targetEdgeDist = noBtnTarget
+          ? getRectEdgeDistance(noBtnTarget, e.clientX, e.clientY)
+          : Infinity;
+
+        const now = performance.now();
+        const needsEscape =
+          (edgeDist < 85 && !noBtnTarget) ||
+          edgeDist < 38 ||
+          targetEdgeDist < 100 ||
+          (edgeDist < 85 && now - lastDesktopMoveTime > 360);
+
+        if (needsEscape && now - lastDesktopMoveTime > 55) {
+          moveNoButton(e.clientX, e.clientY, true);
         }
       });
 
-      noBtn.addEventListener("mouseenter", moveNoButton);
-      noBtn.addEventListener("mouseover", moveNoButton);
+      noBtn.addEventListener("mouseenter", (e) => {
+        if (Date.now() - lastTouchTime < 700) return;
+        moveNoButton(e.clientX, e.clientY, true);
+      });
+      noBtn.addEventListener("mouseover", (e) => {
+        if (Date.now() - lastTouchTime < 700) return;
+        moveNoButton(e.clientX, e.clientY, true);
+      });
       noBtn.addEventListener(
         "touchstart",
         (e) => {
+          lastTouchTime = Date.now();
           e.preventDefault();
           e.stopPropagation();
-          moveNoButton();
+          moveNoButton(null, null, false);
         },
         { passive: false },
       );
@@ -1811,7 +1938,11 @@
       noBtn.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
-        moveNoButton();
+        if (Date.now() - lastTouchTime < 700) {
+          moveNoButton(null, null, false);
+        } else {
+          moveNoButton(e.clientX, e.clientY, true);
+        }
         return false;
       });
 
